@@ -56,49 +56,12 @@ class DirectionToDegree:
       self.df[column] = self.df[column].round(1)
       self.df.to_csv(self.csv_path, index=False)
 
-    def upwelling(self, temp_drop_threshold=0.5, ocean_bay_diff_threshold=0.5, wind_speed_threshold=8.0):
-        """
-        Mark upwelling events based on:
-        1. Wind from S, SE, or SSE
-        2. Bay temperature dropping below 24-hour average
-        3. Ocean cooler than bay
-        4. Wind speed above threshold
-        
-        Parameters:
-        - temp_drop_threshold: How much bay temp must drop below 24h average (°F)
-        - ocean_bay_diff_threshold: How much colder ocean must be than bay (°F)
-        - wind_speed_threshold: Minimum wind speed (mph)
-        """
-        
-        # Define upwelling-favorable wind directions (S, SSE, SE)
-        upwelling_directions = [180, 157.5, 135]
-        
-        # Calculate rolling 24-hour bay temperature average
-        self.df['bay_temp_24h_avg'] = self.df[self.bay_temp_column].rolling(
-            window=24, 
-            min_periods=1
-        ).mean()
-        
-        # Calculate how much bay temp has dropped from 24h average
-        self.df['bay_temp_drop'] = self.df['bay_temp_24h_avg'] - self.df[self.bay_temp_column]
-        
-        # Calculate ocean-bay temperature difference
-        self.df['ocean_bay_diff'] = self.df[self.bay_temp_column] - self.df[self.ocean_temp_column]
-        
-        # Initialize upwelling column with 0s
+    def upwelling(self):
+        # Mark upwelling events (1 = upwelling, 0 = no upwelling)
+        upwelling_directions = [180, 157.5, 135]  # S, SSE, SE
         self.df[self.upwelling_column] = 0
         
-        # Mark upwelling (1) where all conditions are met
-        upwelling_mask = (
-            self.df[self.directions_column].isin(upwelling_directions) &
-            (self.df['bay_temp_drop'] >= temp_drop_threshold) &
-            (self.df['ocean_bay_diff'] >= ocean_bay_diff_threshold) &
-            (self.df[self.wind_speed_column] >= wind_speed_threshold)
-        )
         
-        self.df.loc[upwelling_mask, self.upwelling_column] = 1
         
-        # Clean up temporary columns (optional - remove if you want to keep them for analysis)
-        #self.df.drop(['bay_temp_24h_avg', 'bay_temp_drop', 'ocean_bay_diff'], axis=1, inplace=True)
-        self.df.to_csv(self.csv_path, index=False)
+
 

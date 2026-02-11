@@ -49,9 +49,6 @@ class direction_to_degrees:
        onshore_degrees = [180, 135, 157.5, 90, 67.5, 45, 22.5]
          #S, SE, SSE, E, ENE, NE, NNE
 
-      # start with all 0s
-       self.df[self.onshore_column] = 0
-
        # set to 1 where the other column has an onshore degree
        self.df.loc[
        self.df[self.directions_column].isin(onshore_degrees),

@@ -192,17 +192,23 @@ Because this is time series, the split is **chronological**, not random:
 <img width="1147" height="656" alt="image" src="https://github.com/user-attachments/assets/1dd77f8e-6a9c-4ed1-9bf3-ee3c4ca68945" />
 <img width="1149" height="648" alt="image" src="https://github.com/user-attachments/assets/c419ee1f-3a04-44de-b9a5-fc6194be273f" />
 
-### Virtual Enviroment Creation - (A virtual enviroment is a seperate python installation than the base system)
+### Virtual Enviroment Creation and Dependencies Installation - (A virtual enviroment is a seperate python installation than the base system)
 
 1. Download the project files from this github and put them in a place of your choosing all in a single folder. (For this guide I will place them on my desktop in a folder called `lstm`)
 <img width="192" height="186" alt="image" src="https://github.com/user-attachments/assets/d4c0b64d-f73d-429e-a443-e3b14bb8ec1c" />
 
-2. In the command prompt, we need to get to the **full** file location of the project (C:\Users\(your_user)\Desktop\lstm) using the `cd` command. So find your full file path and take note of it.
+2. In the command prompt, we need to get to the **full** file location of the project (C:\Users\<your_user>\Desktop\lstm) using the `cd` command. So find your full file path and take note of it.
 3. Type in `cd` and then the file path. Then hit enter, the command prompt will display the location on the very left before the left angle bracket (>). (If you every get lost you can run the `dir` command to list the files in your directory)
 <img width="1164" height="672" alt="image" src="https://github.com/user-attachments/assets/ef92d47b-1c7b-4b88-9d19-c4ae4eaca892" />
 
+3. To create the actual virtual enviroment run `python.exe -m venv <env_name>`. You can choose the name Eg. lstmenv. (You can do a .<env_name> to make the files invisible to make working in the project easier. This is what I will do)
+<img width="1138" height="649" alt="image" src="https://github.com/user-attachments/assets/9d42aa73-06f5-4e1b-84f3-a5adabb6c49b" />
 
+4. Now we must activate the virtual enviroment. Run: <env_name>\Scripts\activate.bat
+<img width="1132" height="641" alt="image" src="https://github.com/user-attachments/assets/2456cb29-82b2-44dd-be84-7f13f226bc5c" />
 
+5. Finally we can install the dependencies. Run: `pip install -r requirements.txt` to install from the list in requirements.txt. It will install Pandas, Tensorflow, Numpy, and Scikit-Learn
+<img width="1134" height="645" alt="image" src="https://github.com/user-attachments/assets/e41a7226-5e1b-41e3-aeb1-c10da55bf7f0" />
 
 
 

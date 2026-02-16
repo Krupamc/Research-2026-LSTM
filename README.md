@@ -170,4 +170,40 @@ Because this is time series, the split is **chronological**, not random:
 - First 90% of windows → Training set
 - Final 10% → Test set (never seen during training)
 
+## Setup and Installation
+
+### This tutorial will be for *Windows* machines. A Macos Tutorial will soon follow.
+
+### Python Installation
+
+1. Go download python from: https://www.python.org/downloads/  The images below will show the process from the standalone installer of python 3.14.3. (3.11.14 or above will work)
+<img width="891" height="316" alt="image" src="https://github.com/user-attachments/assets/f2208c30-e02b-427b-9c75-2f879e6b32b7" />
+
+2. Run the downloaded file and click `Add python.eve to PATH` and `Install now`.
+<img width="743" height="497" alt="image" src="https://github.com/user-attachments/assets/9a9a9964-bb7b-49ea-b152-8fca585f039e" />
+<img width="711" height="448" alt="image" src="https://github.com/user-attachments/assets/457d5a4e-725e-4726-801f-15dbd378a6e8" />
+
+4. Once setup is successful you can close the installer.
+5. In the Window's start bar search for `cmd` or the command prompt (also known as a terminal) and open the application.
+<img width="940" height="564" alt="image" src="https://github.com/user-attachments/assets/53a04308-01f7-43e7-994e-7892c6c67c64" />
+<img width="1148" height="645" alt="image" src="https://github.com/user-attachments/assets/a5a4d218-dc5a-42ce-8be0-e674f5268de8" />
+
+6. Now we need to update pip, python's package manager to be able to download the required dependancies. So type into the terminal `python.exe -m pip install --upgrade pip` and hit enter to run the command
+<img width="1147" height="656" alt="image" src="https://github.com/user-attachments/assets/1dd77f8e-6a9c-4ed1-9bf3-ee3c4ca68945" />
+<img width="1149" height="648" alt="image" src="https://github.com/user-attachments/assets/c419ee1f-3a04-44de-b9a5-fc6194be273f" />
+
+### Virtual Enviroment Creation - (A virtual enviroment is a seperate python installation than the base system)
+
+1. Download the project files from this github and put them in a place of your choosing all in a single folder. (For this guide I will place them on my desktop in a folder called `lstm`)
+<img width="192" height="186" alt="image" src="https://github.com/user-attachments/assets/d4c0b64d-f73d-429e-a443-e3b14bb8ec1c" />
+
+2. In the command prompt, we need to get to the **full** file location of the project (C:\Users\(your_user)\Desktop\lstm) using the `cd` command. So find your full file path and take note of it.
+3. Type in `cd` and then the file path. Then hit enter, the command prompt will display the location on the very left before the left angle bracket (>). (If you every get lost you can run the `dir` command to list the files in your directory)
+<img width="1164" height="672" alt="image" src="https://github.com/user-attachments/assets/ef92d47b-1c7b-4b88-9d19-c4ae4eaca892" />
+
+
+
+
+
+
 

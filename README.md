@@ -207,7 +207,7 @@ Because this is time series, the split is **chronological**, not random:
 4. Now we must activate the virtual enviroment. Run: <env_name>\Scripts\activate.bat
 <img width="1132" height="641" alt="image" src="https://github.com/user-attachments/assets/2456cb29-82b2-44dd-be84-7f13f226bc5c" />
 
-5. Finally we can install the dependencies. Run: `pip install -r requirements.txt` to install from the list in requirements.txt. It will install Pandas, Tensorflow, Numpy, and Scikit-Learn
+5. Finally we can install the dependencies. Run: `pip install pandas tensorflow numpy scikit-learn nbformat` to install from the list in requirements.txt. It will install Pandas, Tensorflow, Numpy, and Scikit-Learn
 <img width="1134" height="645" alt="image" src="https://github.com/user-attachments/assets/e41a7226-5e1b-41e3-aeb1-c10da55bf7f0" />
 
 

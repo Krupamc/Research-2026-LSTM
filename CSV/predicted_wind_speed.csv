@@ -1,4 +1,4 @@
-Date,Mainland Air Temp,Humidity (%),Direction (A),Wind Speed (A),Gusting,Atmospheric Pressure (IN),Precipitation Rate,Bay Temp,Salinity,LBI Air Temp,Ocean Temp,Onshore,upwelling_flag,wind_pred_linear
+Date,Mainland Air Temp,Humidity (%),Direction (A),Wind Speed (A),Gusting,Atmospheric Pressure (IN),Precipitation Rate,Bay Temp,Salinity,LBI Air Temp,Ocean Temp,Onshore,upwelling_flag,wind_speed_pred_linear
 2025-08-22 22:00:00,19.1,75.0,8,3.0,4.5,30.03,0.0,22.18,29.66,22.3,21.8,0,0,2.2
 2025-08-22 23:00:00,18.1,77.0,10,1.5,3.1,30.04,0.0,22.27,29.82,22.2,21.5,0,0,1.4
 2025-08-23 00:00:00,16.9,82.0,10,2.6,4.6,30.04,0.0,21.92,30.05,22.1,21.5,0,0,2.2

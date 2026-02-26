@@ -1,5 +1,5 @@
-Wind Speed Linear MAE: 4.383491
-Wind Gust Linear MAE: 4.860550
+Wind Speed Linear MAE: 0.611009
+Wind Gust Linear MAE: 3.696789
 Wind Direction Naive MAE: 1.683486
 Onshore Breeze Naive MAE: 0.133028
 Upwelling Naive MAE: 0.006873

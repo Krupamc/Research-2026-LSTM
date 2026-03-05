@@ -100,8 +100,8 @@ bouncing_bar()
 print()
 print()
 print()
-
 #Read the file and watch for errors
+print("-----Please make sure your file is in the 'observed_data' folder and has been renamed 'RAW_data.csv'-----")
 bouncing_bar()
 filename = 'Csv/observed_data/RAW_data.csv'
 
@@ -118,18 +118,16 @@ print("-----Opening your csv...-----")
 bouncing_bar()
 print("-----Reading all it's goodies....------")
 bouncing_bar()
-
 pd.set_option('future.no_silent_downcasting', True)  #no pandas warning
 #replace the direction column with the corresponding degree values
 direction_map = {'N': 0,'NNE': 1,'NE': 2,'ENE': 3,'E': 4,'ESE': 5,'SE': 6,'SSE': 7,
             'S': 8,'SSW': 9,'SW': 10,'WSW': 11,'W': 12,'WNW': 13,'NW': 14,'NNW': 15
         }
 
-untouched_csv['Direction (A)'] = untouched_csv['Direction (A)'].replace(direction_map)
-untouched_csv['Direction (A)'] = untouched_csv['Direction (A)'].astype(int)
+untouched_csv['Direction (A)'] = untouched_csv['Direction (A)'].replace(direction_map).infer_objects(copy = False)
+untouched_csv['Direction (A)'] = untouched_csv['Direction (A)'].astype('int')
 print("-----Remapped Directions to Bins...-----")
 bouncing_bar()
-
 #make sure values are in celsius
 while True:
     reply = input("-----Are your Air Tempuratures in Celsius (y/n)?").strip().lower()
@@ -156,7 +154,6 @@ if reply=='n':
     bouncing_bar()
 else:
     print("-----Thanks! Less work for me-----")
-
 #round all of the columns
 untouched_csv['Humidity (%)'] = round(untouched_csv['Humidity (%)'], 1)
 untouched_csv['Wind Speed (A)'] = round(untouched_csv['Wind Speed (A)'], 1)
@@ -169,7 +166,6 @@ untouched_csv['LBI Air Temp'] = round(untouched_csv['LBI Air Temp'], 1)
 untouched_csv['Ocean Temp'] = round(untouched_csv['Ocean Temp'], 1)
 print("-----Rounded Data...-----")
 bouncing_bar()
-
 #determines if its a onshore breeze and adds a new column for it
 onshore_degrees = [8, 6, 7, 4, 3, 2, 1]
 untouched_csv['Onshore'] = untouched_csv['Direction (A)'].isin(onshore_degrees)
@@ -179,52 +175,57 @@ bouncing_bar()
 total = untouched_csv["Onshore"].sum()
 print("-----Found ", total, " onshore wind events...-----")
 bouncing_bar()
-
 #thresholds
 ocean_thresh = 1.0
 wind_thresh = 7.0
+#Find rolling means for last few days and for the last few hours
+backround_ocean = untouched_csv['Ocean Temp'].rolling(48, min_periods=12).mean()
+recent_ocean = untouched_csv['Ocean Temp'].rolling(6, min_periods=3).mean()
+delta = recent_ocean - backround_ocean
 
-#average of two lowest ocean points in a day
-untouched_csv['ocean_min1'] = untouched_csv['Ocean Temp'].rolling(24).min()
-untouched_csv['ocean_min2'] = (
-    untouched_csv['Ocean Temp'].rolling(24).apply(lambda x: np.sort(x)[1], raw=False)
-)
-untouched_csv['ocean_min'] = (untouched_csv['ocean_min1']+untouched_csv['ocean_min2'])/2
-untouched_csv['Ocean Temp'] = round(untouched_csv['Ocean Temp'], 1)
-print("-----Determined Upwelling...------")
-bouncing_bar()
-
+#threshols
+drop_threshold = -1.5
+min_sustain_hours = 7
 #Check if its a upwelling direction
 upwell_wind = [6, 7, 8, 12]
-untouched_csv['upwell_wind'] = untouched_csv['Direction (A)'].isin(upwell_wind)
-untouched_csv['upwell_wind'] = untouched_csv['upwell_wind'].astype(int)
+upwell_wind = untouched_csv["Direction (A)"].isin(upwell_wind)
 
-#bools:
-#There are two tide cycles in a day, if you take the two lowest values and average them together. 
-#Taking the difference of the low values and the current temperature and if this is bigger than the threshold the Ocean boolean is true. 
-untouched_csv['big_wind'] = (untouched_csv['Wind Speed (A)'] > wind_thresh).astype(int)
-untouched_csv['upwell_wind'] = (untouched_csv['upwell_wind'] == 1).astype(int)
-untouched_csv['ocean_bool'] = ((untouched_csv['ocean_min'] - untouched_csv['Ocean Temp']) > ocean_thresh).astype(int)
-untouched_csv["upwelling_flag"] = ((untouched_csv['ocean_bool'] == 1) & (untouched_csv['big_wind'] == 1)).astype(int)
-print("-----Checking my answers...------")
-bouncing_bar()
-total = untouched_csv["upwelling_flag"].sum()
-print("-----Found ", total, " upwelling events...-----")
-bouncing_bar()
 
+candidate = (delta <= drop_threshold)
+
+# sustained: run-length filtering
+candidate_int = candidate.astype(int)
+run_lengths = candidate_int.groupby(
+    (candidate_int != candidate_int.shift()).cumsum()
+).transform("size")
+
+sustained = (candidate & (run_lengths >= min_sustain_hours))
+
+untouched_csv["upwelling_sustained_drop_flag"] = sustained.astype(int)
+
+untouched_csv["upwelling_flag"] = (untouched_csv["upwelling_sustained_drop_flag"] & upwell_wind).astype(int)
+
+print("-----Found upwelling events...-----")
+bouncing_bar()
+total = untouched_csv.index[untouched_csv["upwelling_flag"] == 1]
+print("-----Checking my answers...-----")
+bouncing_bar()
+print("-----Found ", len(total), " upwelling events...-----")
+bouncing_bar()
+#List the indices of the upwell events
+#print(list(total))
+untouched_csv.head()
 #drop the colomns
-untouched_csv.drop(['ocean_bool', 'big_wind', 'ocean_min1', 'ocean_min2', 'upwell_wind', 'ocean_min'], axis=1, inplace=True)
+untouched_csv.drop(['upwelling_sustained_drop_flag'], axis=1, inplace=True)
 untouched_csv = untouched_csv.dropna(how="all").reset_index(drop=True)
 print("-----Fixing typos....-----")
 bouncing_bar()
-
+untouched_csv.head()
 #Save this data frame to a Finished csv
 #Removes first 24 hrs of data to remove NA's
 untouched_csv = untouched_csv[24:]
 untouched_csv.to_csv('Csv/CLEAN.csv', index=False)
-
-
-
+print("-----Saved cleaned data to 'Csv/CLEAN.csv'-----")
 print()
 print()
 print()
@@ -232,23 +233,18 @@ print("-----Hazah! You've made it thus far. Your data has been cleaned for the m
 bouncing_bar()
 print()
 print()
-
-
-
 #Opens a new dataframe with the Clean csv
 cleancsv = pd.read_csv('Csv/CLEAN.csv')
 print("-----Opened our cleaned up csv...-----")
 bouncing_bar()
 print("-----Gobbling up all the tasty data....-----")
 bouncing_bar()
-
 #Convert data into Date time and create date filter
 cleancsv['Date'] = pd.to_datetime(cleancsv['Date'])
 cleancsv['Date'] = cleancsv['Date'] + pd.to_timedelta(cleancsv["Hr"], unit="h")
 cleancsv.drop('Hr', axis=1, inplace=True)
 print("-----Converted Date and Hour to DateTime...------")
 bouncing_bar()
-
 #Ask if they want a date filter
 while True:
     reply = input("------Would you like to filter your data by date? (y/n)-----").strip().lower()
@@ -279,7 +275,6 @@ if reply == "y":
 else:
     print("-----Continuing without filtering data...-----")
     bouncing_bar()
-
 #Create month colomn and restrict to only summer months
 summer_mask = cleancsv["Date"].dt.month.isin([6, 7, 8, 9])
 cleancsv = cleancsv[summer_mask].reset_index(drop=True)
@@ -290,7 +285,6 @@ print()
 print()
 print("-----Now the fun part! Model time! With your results you also get a four course meal of models with a side of Numpy(pie)-----")
 bouncing_bar()
-
 #Prepare colomns into variables
 data_main_air_temp = cleancsv['Mainland Air Temp']
 data_humidity_per = cleancsv['Humidity (%)']
@@ -307,17 +301,11 @@ data_onshore_flag = cleancsv['Onshore']
 data_upwelling_flag = cleancsv['upwelling_flag']
 print("-----Converting Columns to variables------")
 bouncing_bar()
-
-
-
 print()
 print()
 print()
 print("-----Model One: Wind Speed-----")
 bouncing_bar()
-
-
-
 #saves all input data into one Numpy array
 dataset = np.column_stack([
     data_main_air_temp.values,
@@ -336,18 +324,15 @@ dataset = np.column_stack([
 ])
 print("-----Cooking up a nice Numpy array...-----")
 bouncing_bar()
-
 #Save output data into variables and reshape it to be a 1d array
 output_data = data_wind_speed.values
 output_data = np.array(output_data).reshape(-1, 1)
 print("-----Reshaping our output to a 1D array...-----")
 bouncing_bar()
-
 #Length of training data
 training_data_len = int(np.ceil(len(dataset) * 0.90)) #Use 90% of training data
 print("-----Setting the length of the training data...-----")
 bouncing_bar()
-
 #Scaler
 scaler_x= StandardScaler()
 scaler_y= StandardScaler()
@@ -357,13 +342,11 @@ scaledx = scaler_x.fit_transform(dataset)
 scaledy = scaler_y.fit_transform(output_data)
 print("-----Scaling with love...-----")
 bouncing_bar()
-
 #Setting to all
 X_all = scaledx          # (N, 12)
 y_all = output_data
 print("-----Scaling with everything in mind...-----")
 bouncing_bar()
-
 #Train's and test
 X_train = X_all[:training_data_len]
 y_train = y_all[:training_data_len]
@@ -372,12 +355,10 @@ y_test  = y_all[training_data_len:]
 print("-----Chooo-chooooo! Setting up our X/y trains-----")
 print("-----Don't forget about our X/y tests-----")
 bouncing_bar()
-
 #Open the model
 reg_speed = load("models/wind_speed_linear.joblib")
 print("-----Opening up the model...-----")
 bouncing_bar()
-
 #Predict
 speed_pred_lr = reg_speed.predict(X_test)
 speed_pred_lr = np.maximum(speed_pred_lr, 0.0)
@@ -386,7 +367,6 @@ print("-----Doing the math...-----")
 bouncing_bar()
 print("-----It's a lot of math okay?-----")
 bouncing_bar()
-
 #MAE
 speed_mae_lr = mean_absolute_error(y_test, speed_pred_lr)
 speed_mae_lr = round(speed_mae_lr, 2)
@@ -394,7 +374,6 @@ print("-----Checking my work...-----")
 bouncing_bar()
 print("-----Linear MAE of:", speed_mae_lr, "-----")
 bouncing_bar()
-
 # attach to dataframe for export
 speed_linear = cleancsv.iloc[training_data_len:training_data_len + len(speed_pred_lr)].copy()
 speed_linear["wind_speed_pred_linear"] = speed_pred_lr
@@ -403,13 +382,10 @@ print("----Typing up a essay of data for you...-----")
 bouncing_bar()
 print("-----YES! All saved. Moving on....-----")
 bouncing_bar()
-
-
 print()
 print()
 print("-----Model Two: Wind Gust Speed-----")
 bouncing_bar()
-
 #saves all input data into one Numpy array
 dataset = np.column_stack([
     data_main_air_temp.values,
@@ -428,18 +404,15 @@ dataset = np.column_stack([
 ])
 print("-----Cooking up a nice Numpy array...-----")
 bouncing_bar()
-
 #Save output data into variables and reshape it to be a 2d array
 output_data = data_gusting.values
 output_data = np.array(output_data).reshape(-1, 1)
 print("-----Reshaping our output to a 1D array...-----")
 bouncing_bar()
-
 #Length of training data
 training_data_len = int(np.ceil(len(dataset) * 0.90)) #Use 90% of training data
 print("-----Setting the length of the training data...-----")
 bouncing_bar()
-
 #Scaler
 scaler_x= StandardScaler()
 scaler_y= StandardScaler()
@@ -449,13 +422,11 @@ scaledx = scaler_x.fit_transform(dataset)
 scaledy = scaler_y.fit_transform(output_data)
 print("-----Scaling with love...-----")
 bouncing_bar()
-
 #Setting to all
-X_all = scaledx          # (N, 12)
+X_all = scaledx
 y_all = output_data
 print("-----Scaling with everything in mind...-----")
 bouncing_bar()
-
 #Train's and test
 X_train = X_all[:training_data_len]
 y_train = y_all[:training_data_len]
@@ -465,12 +436,10 @@ print("-----Chooo-chooooo! Setting up our X/y trains-----")
 bouncing_bar()
 print("-----Don't forget about our X/y tests-----")
 bouncing_bar()
-
 #Open the model
 reg_gust = load("models/wind_gust_linear.joblib")
 print("-----Opening up the model...-----")
 bouncing_bar()
-
 #Predict
 gust_pred_lr = reg_gust.predict(X_test)
 gust_pred_lr = np.maximum(gust_pred_lr, 0.0)
@@ -479,7 +448,6 @@ print("-----Doing the math...-----")
 bouncing_bar()
 print("-----It's a lot of math okay?-----")
 bouncing_bar()
-
 #MAE
 gust_mae_lr = mean_absolute_error(y_test, gust_pred_lr)
 gust_mae_lr = round(gust_mae_lr, 2)
@@ -487,37 +455,29 @@ print("-----Checking my work...-----")
 bouncing_bar()
 print("-----Linear MAE of:", gust_mae_lr, "-----")
 bouncing_bar()
-
 # attach to dataframe for export
 linear_df = cleancsv.iloc[training_data_len:training_data_len + len(gust_pred_lr)].copy()
 linear_df["wind_gust_pred_linear"] = gust_pred_lr
 linear_df.to_csv("Csv/predictions/predicted_wind_gust.csv", index=False)
 print("-----YES! All saved. Moving on....-----")
 bouncing_bar()
-
-
 print()
 print()
 print("-----Model Three: Wind Direction-----")
 bouncing_bar()
-
-
 #Create Naive model
 wd = cleancsv['Direction (A)'].values.astype(int)
 print("-----Creating a Naive model...-----")
 bouncing_bar()
-
 #Train the model
 direction_pred = wd[training_data_len-1:-1]
 direction_true = wd[training_data_len:]
 print("-----Teaching the model a few tricks...-----")
 bouncing_bar()
-
 #Stop negatives and round to X.X
 direction_pred_pred = np.maximum(direction_pred, 0.0)
 print("-----Stopping negatives and rounding...-----")
 bouncing_bar()
-
 #Find MAE
 direction_mae_naive = mean_absolute_error(direction_true, direction_pred_pred)
 direction_mae_naive = round(direction_mae_naive, 2)
@@ -531,20 +491,17 @@ print()
 print()
 print("-----Model Four: Onshore Breezes-----")
 bouncing_bar()
-
 #Save onshore to variable and check if the predicted direction is onshore
 onshore_degrees = [8, 6, 7, 4, 3, 2, 1]
 onshore_pred_flag = np.isin(direction_pred, onshore_degrees).astype(int)
 print("-----Determining onshore breezes...-----")
 bouncing_bar()
-
 #Find MAE of onshore
 onshore_check = cleancsv['Onshore'].iloc[training_data_len:].values.astype(int)
 mae_onshore = mean_absolute_error(onshore_check, onshore_pred_flag)
 mae_onshore = round(mae_onshore, 2)
 print("-----Onshore flag MAE (naive-direction):", mae_onshore, "-----")
 bouncing_bar()
-
 #Save to csv
 naive_df = cleancsv.iloc[training_data_len:].copy()
 naive_df["wind_direction_pred_naive"] = direction_pred
@@ -557,21 +514,17 @@ print()
 print("-----Model Five: Upwelling-----")
 print("-----This model uses less data for training and more for testing due to lack of later upwelling events-----") 
 bouncing_bar()
-
 #Length of training data
 training_data_len = int(np.ceil(len(dataset) * 0.60)) #Use 90% of training data
 print("-----Setting the length of the training data...-----")
 bouncing_bar()
-
 #Naive model creation
 up = cleancsv['upwelling_flag'].values
 print("-----Creating a Naive model...-----")   
 bouncing_bar()
-
 #Fitting the model
 upwell_pred = up[training_data_len-1:-1]
 upwell_true = up[training_data_len:]
-
 #Calculate MAE
 upwell_mae_naive = mean_absolute_error(upwell_true, upwell_pred)
 upwell_mae_naive = round(upwell_mae_naive, 2)
@@ -579,7 +532,6 @@ print("-----Checking my work...-----")
 bouncing_bar()
 print("-----Naive MAE of:", upwell_mae_naive, "-----")
 bouncing_bar()
-
 #Save to csv
 upwell_df = cleancsv.iloc[training_data_len:].copy()
 upwell_df["upwelling_pred_naive"] = upwell_pred
@@ -592,7 +544,6 @@ print()
 print()
 print("-----Whew! That was a lot! But we are almost there! Just a few more steps-----")
 bouncing_bar()
-
 #Load clean csv to use to merge data
 clean = pd.read_csv("Csv/CLEAN.csv")
 clean["Date"] = pd.to_datetime(clean["Date"]) + pd.to_timedelta(clean["Hr"], unit="h")
@@ -601,7 +552,6 @@ print("-----Opening your csv...-----")
 bouncing_bar()
 print("-----Time is nothing...But thats why we have Datetime...-----")
 bouncing_bar()
-
 #Data frames for every csv
 pred_direction = pd.read_csv('Csv/predictions/predicted_direction.csv', sep=',')
 pred_upwelling = pd.read_csv('Csv/predictions/predicted_upwelling.csv', sep=',')
@@ -612,9 +562,6 @@ for df in [pred_direction, pred_upwelling, pred_wind_gust, pred_wind_speed]:
     df["Date"] = pd.to_datetime(df["Date"])
     print("-----Opening even more csvs...-----")
     bouncing_bar()
-
-
-
 #Merge all the csv's into one using the dates
 merged = clean.merge(
     pred_upwelling[["Date", "upwelling_pred_naive"]],
@@ -652,26 +599,23 @@ print("-----Merging all the csvs together...-----")
 bouncing_bar()
 print("-----Alright that's enough of that-----")
 bouncing_bar()
-
 #Sort by date
 merged = merged.sort_values("Date").reset_index(drop=True)
-
 #Make warning colomn if wind speeds are over 10 mph
 merged["Wind_pred_warning"] = ((merged["wind_speed_pred_linear"] > 10) | (merged["wind_gust_pred_linear"] > 10))
-
 #Save to csv
 merged.to_csv("Csv/predictions/all_predictions.csv", index=False)
 print("-----Saving the final csv with all the predictions...-----")
 bouncing_bar()
 with open("Csv/predictions/mae_report.txt", "w") as f:
-    f.write(f"Wind Speed Linear MAE: {speed_mae_lr:.2f}\n")
-    f.write(f"Wind Gust Linear MAE: {gust_mae_lr:.2f}\n")
-    f.write(f"Upwelling Naive MAE: {upwell_mae_naive:.2f}\n")
-    f.write(f"Wind Direction Naive MAE: {direction_mae_naive:.2f}\n")
-    f.write(f"Onshore Breeze from Direction MAE: {mae_onshore:.2f}\n")
+    f.write(f"Wind Speed Linear MAE: {round(speed_mae_lr, 2)}\n")
+    f.write(f"Wind Gust Linear MAE: {round(gust_mae_lr, 2)}\n")
+    f.write(f"Upwelling Naive MAE: {round(upwell_mae_naive, 2)}\n")
+    f.write(f"Wind Direction Naive MAE: {round(direction_mae_naive, 2)}\n")
+    f.write(f"Onshore Breeze from Direction MAE: {round(mae_onshore, 2)}\n")
     
 print("---------")
 print("---------")
-print("---------\n")
+print("---------")
 print("-----Huh. That's it. If you would like to do some more predicting, you know where to go-----"    )
 print("-----You can find your 'all_predictions.csv' csv with all the predictions in the 'predictions' folder as well as all the MAE values saved to a 'mae_report.txt' file in the 'predictions' folder-----")   

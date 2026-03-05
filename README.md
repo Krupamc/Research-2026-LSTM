@@ -3,7 +3,7 @@
 
 # South Barnegat Bay Onshore Wind & Upwelling Predictor
 
-A time‑series deep learning project that uses an LSTM (Long Short‑Term Memory) neural network to predict sudden onshore wind events and upwelling conditions in southern Barnegat Bay, New Jersey. The model learns from hourly data to forecast the **next hour’s** wind speed, wind direction, onshore status, and upwelling status to help local boaters avoid hazardous conditions.
+A time‑series deep learning project that uses an LSTM (Long Short‑Term Memory) neural network, Linear Regression model, and Naive persistance model to predict sudden onshore wind events and upwelling conditions in southern Barnegat Bay, New Jersey. The model learns from hourly data to forecast the **next hour’s** wind speed, wind gusting speed, wind direction, onshore status, and upwelling status to help local boaters avoid hazardous conditions.
 ---
 
 ## Table of Contents
@@ -41,18 +41,19 @@ This project explores whether a **local LSTM model** trained on detailed hourly 
 
 ## Project Goals
 
-1. **Predict four key quantities one hour ahead** at a mainland station near Stafford:
+1. **Predict five key quantities one hour ahead** at a mainland station near Stafford:
    - Wind speed
+   - Wind gust speed
    - Wind direction
    - Onshore flag (1 = onshore, 0 = offshore)
    - Upwelling flag (1 = likely upwelling‑driven conditions, 0 = not)
 
-2. **Use only the previous 24 hours of data** (a sliding window) to make each prediction.[web:18]
+2. Use LSTM, Linear Regression, and Naive models and **Use only the previous 24 hours of data** (a sliding window) to make each prediction.
 
-3. **Evaluate model accuracy** using Mean Absolute Error (MAE), targeting **< 10% error** for wind speed/direction, comparable to short‑range weather forecasts.
+3. **Evaluate accuracy of the models** using Mean Absolute Error (MAE), targeting **< 10% error** for wind speed/direction, comparable to short‑range weather forecasts.
 
-4. Eventually **deploy the trained model** on a home server (Proxmox) and expose predictions via:
-   - A simple website (Flask app),
+4. Eventually **deploy the trained model** via:
+   - A simple website (unfinished)
    - A local desktop/terminal script.
 
 ---

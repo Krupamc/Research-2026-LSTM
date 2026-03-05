@@ -25,10 +25,6 @@ def bouncing_bar():
             direction *= -1
     print()
 
-#Enter variables
-enter = "------Press Enter to continue-----"
-plsenter = "-----Please press enter to continue-----"
-
 print()
 print()
 print("South Barnegat Bay Onshore Wind Model Prediction with the Use of Long Short-Term Memory Neural Networks - Training and Predictions\n")

@@ -39,7 +39,7 @@ print()
 print()
 print()
 
-print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes\nthat can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear Regression algorithms to verify its effectiveness. To utilize these models, thirteen variables\nwere collected on an hourly basis for June-August. Once the models were created and trained, the mean absolute error was calculated for each of the\nmodels as a comparison. Shockingly, it seemed that Linear Regressions and Naive models performed marginally better than the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests. Accurate wind speeds and direction were still predicted, as the hypothesis says, just with\ndifferent models. With the rarity of upwelling events and their spontaneity, it’s a wonder that the models could predict them in any way.\n")
+print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes\nthat can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear\nRegression algorithms to verify its effectiveness. To utilize these models, thirteen variables\nwere collected on an hourly basis for June-August. Once the models were created and trained, the mean absolute error was calculated for each of the\nmodels as a comparison. Shockingly, it seemed that Linear\nRegressions and Naive models performed marginally better than the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests. Accurate wind speeds and direction were still predicted, as the hypothesis says, just with\ndifferent models. With the rarity of upwelling events and their spontaneity, it’s a wonder that the models could predict them in any way.\n")
 
 while True:
     reply = input("------Press Enter to continue-----").strip().lower()
@@ -50,7 +50,7 @@ print()
 print()
 print()
 
-print("This file contains all the code for training the Linear\nRegression models and the Naive models and finding their MAE values. If you would like to take a look at the LSTM code go to 'Source Code/Unused LSTM'. Also within that folder is some code for a Linear Regression predicition for onshore flags.")
+print("This file contains all the code for training the Linear\nRegression models and the Naive models and finding their MAE values. If you would like to take a look at the LSTM code go to 'Source Code/Unused LSTM'. Also within that folder is some code for a Linear Regression predicition for onshore\nflags.")
 print()
 while True:
     reply = input("------Press Enter to continue-----").strip().lower()
@@ -97,7 +97,7 @@ print()
 print()
 print()
 #Read the file and watch for errors
-print("-----Please make sure your file is in the 'observed_data' folder and has been renamed 'RAW_data.csv'-----")
+print("-----Please make sure your file is in the 'observed_data'\nfolder and has been renamed 'RAW_data.csv'-----")
 bouncing_bar()
 filename = 'Csv/observed_data/RAW_data.csv'
 
@@ -135,11 +135,12 @@ if reply=='n':
     #convert to Celsius
     untouched_csv['Mainland Air Temp'] = round((untouched_csv['Mainland Air Temp']-32) * 5.0/9.0, 1)
     untouched_csv['LBI Air Temp'] = round((untouched_csv['LBI Air Temp']-32) * 5.0/9.0, 1)
-    print("-----Converted air temperatures from Fahrenheit to Celsius...-----")
+    print("-----Converted air temperatures from\nFahrenheit to Celsius...-----")
     bouncing_bar()
     
 else:
     print("-----Thanks! Less work for me-----")
+    print()
 
 reply = input("-----Are your Water Tempuratures in Celsius (y/n)?").strip().lower()
 if reply=='n':
@@ -150,6 +151,8 @@ if reply=='n':
     bouncing_bar()
 else:
     print("-----Thanks! Less work for me-----")
+    print()
+
 #round all of the columns
 untouched_csv['Humidity (%)'] = round(untouched_csv['Humidity (%)'], 1)
 untouched_csv['Wind Speed (A)'] = round(untouched_csv['Wind Speed (A)'], 1)
@@ -279,7 +282,7 @@ bouncing_bar()
 print()
 print()
 print()
-print("-----Now the fun part! Model time! With your results you also get a four course meal of models with a side of Numpy(pie)-----")
+print("-----Now the fun part! Model time! With your results you also get a four\ncourse meal of models with a side of Numpy(pie)-----")
 bouncing_bar()
 #Prepare colomns into variables
 data_main_air_temp = cleancsv['Mainland Air Temp']
@@ -508,7 +511,7 @@ bouncing_bar()
 print()
 print()
 print("-----Model Five: Upwelling-----")
-print("-----This model uses less data for training and more for testing due to lack of later upwelling events-----") 
+print("-----This model uses less data for training and more for\ntesting due to lack of later upwelling events-----") 
 bouncing_bar()
 #Length of training data
 training_data_len = int(np.ceil(len(dataset) * 0.60)) #Use 90% of training data
@@ -622,5 +625,7 @@ print()
 print("---------")
 print("---------")
 print("---------")
-print("-----Huh. That's it. If you would like to do some more predicting, you know where to go-----"    )
-print("-----You can find your 'all_predictions.csv' csv with all the predictions in the 'predictions' folder as well as all the MAE values saved to a 'mae_report.txt' file in the 'predictions' folder-----")   
+print()
+print("-----Huh. That's it. If you would like to do some more predicting, you know where to go-----")
+print()
+print("-----You can find your 'all_predictions.csv' csv with all\nthe predictions in the 'predictions' folder as well as all\nthe MAE values saved to a 'mae_report.txt' file in the\n'predictions' folder-----")   

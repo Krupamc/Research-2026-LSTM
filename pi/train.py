@@ -39,7 +39,7 @@ print()
 print()
 print()
 
-print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes\nthat can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear\nRegression algorithms to verify its effectiveness. To\nutilize these models, thirteen variables were collected on an hourly\nbasis for June-August. Once the models were created and trained, the mean absolute error was calculated for each of the\nmodels as a comparison. Shockingly, it seemed that Linear\nRegressions and Naive models performed marginally better than the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests. Accurate wind speeds and direction were still predicted, as the hypothesis says, just with\ndifferent models. With the rarity of upwelling events and their spontaneity, it’s a wonder that the models could predict them in any way.\n")
+print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes\nthat can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear\nRegression algorithms to verify its effectiveness. To\nutilize these models, thirteen variables were collected on\nan hourly basis for June-August. Once the models were created and trained, the mean absolute error was calculated for each of the\nmodels as a comparison. Shockingly, it seemed that Linear\nRegressions and Naive models performed marginally better than the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests. Accurate wind speeds and direction were still predicted, as the hypothesis says, just with\ndifferent models. With the rarity of upwelling events and their spontaneity, it’s a wonder that the models could predict them in any way.\n")
 
 while True:
     reply = input("------Press Enter to continue-----").strip().lower()
@@ -282,7 +282,7 @@ bouncing_bar()
 print()
 print()
 print()
-print("-----Now the fun part! Model time! With your results you\nalso get a four course meal of models with a side of Numpy(pie)-----")
+print("-----Now the fun part! Model time! With your results you\nalso get a four course meal of models with a side\nof Numpy(pie)-----")
 bouncing_bar()
 #Prepare colomns into variables
 data_main_air_temp = cleancsv['Mainland Air Temp']
@@ -541,7 +541,7 @@ print("-----YES! All saved. Moving on....-----")
 bouncing_bar()
 print()
 print()
-print("-----Whew! That was a lot! But we are almost there! Just a few more steps-----")
+print("-----Whew! That was a lot! But we are almost there!\nJust a few more steps-----")
 bouncing_bar()
 #Load clean csv to use to merge data
 clean = pd.read_csv("Csv/CLEAN.csv")
@@ -629,3 +629,6 @@ print()
 print("-----Huh. That's it. If you would like to do some more\npredicting, you know where to go-----")
 print()
 print("-----You can find your 'all_predictions.csv' csv with all\nthe predictions in the 'predictions' folder as well as all\nthe MAE values saved to a 'mae_report.txt' file in the\n'predictions' folder-----")   
+print()
+print()
+print()

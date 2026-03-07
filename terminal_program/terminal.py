@@ -156,7 +156,7 @@ bouncing_bar()
 
 #make sure values are in celsius
 while True:
-    reply = input("-----Are your Air Tempuratures in Celsius (y/n)?").strip().lower()
+    reply = input("-----Are your Air Temperatures in Celsius (y/n)?").strip().lower()
     if reply in ("y", "n"):
         break
     print("-----Please enter 'y' or 'n'-----")
@@ -171,7 +171,7 @@ if reply=='n':
 else:
     print("-----Thanks! Less work for me-----")
 
-reply = input("-----Are your Water Tempuratures in Celsius (y/n)?").strip().lower()
+reply = input("-----Are your Water Temperatures in Celsius (y/n)?").strip().lower()
 if reply=='n':
     #convert to Celsius
     data_ocean_temp = round((data_ocean_temp-32) * 5.0/9.0, 1)

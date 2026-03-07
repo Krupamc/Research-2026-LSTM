@@ -39,7 +39,7 @@ print()
 print()
 print()
 
-print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes\nthat can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear\nRegression algorithms to verify its effectiveness. To\nutilize these models, thirteen variables were collected on\nan hourly basis for June-August. Once the models were created and trained, the mean absolute error was calculated for each of the\nmodels as a comparison. Shockingly, it seemed that Linear\nRegressions and Naive models performed marginally better than the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests. Accurate wind speeds and direction were still predicted, as the hypothesis says, just with\ndifferent models. With the rarity of upwelling events and their spontaneity, it’s a wonder that the models could predict them in any way.\n")
+print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes\nthat can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear\nRegression algorithms to verify its effectiveness. To\nutilize these models, thirteen variables were collected on\nan hourly basis for June-August. Once the models were\ncreated and trained, the mean absolute error was calculated for each of themodels as a comparison.\nShockingly, it seemed that Linear\nRegressions and Naive models performed marginally better than the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests. Accurate wind speeds and direction were still predicted, as the hypothesis says, just with\ndifferent models.\n")
 
 while True:
     reply = input("------Press Enter to continue-----").strip().lower()
@@ -142,7 +142,7 @@ else:
     print("-----Thanks! Less work for me-----")
     print()
 
-reply = input("-----Are your Water Tempuratures in Celsius (y/n)?").strip().lower()
+reply = input("-----Are your Water Temperatures in Celsius (y/n)?").strip().lower()
 if reply=='n':
     #convert to Celsius
     untouched_csv['Ocean Temp'] = round((untouched_csv['Ocean Temp']-32) * 5.0/9.0, 1)

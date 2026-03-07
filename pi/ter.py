@@ -240,7 +240,6 @@ print("-----No upwelling can be predicted for only one hour of data-----")
 data_upwelling_flag = 0
 bouncing_bar()
 print()
-
 #saves all input data into one Numpy array
 dataset = np.array([
     data_main_air_temp,
@@ -260,20 +259,17 @@ dataset = np.array([
 print("-----Loading 1/4...-----")
 dataset = dataset.reshape(1, -1)
 bouncing_bar()
-print()
 
 #Scaler
 scaler_x = load("models/scaler_x.joblib")
 scaledx = scaler_x.transform(dataset)
 print("-----Loading 2/4...-----")
 bouncing_bar()
-print()
 
 #Open the model
 reg_speed = load("models/wind_speed_linear.joblib")
 print("-----Loading 3/4...-----")
 bouncing_bar()
-print()
 
 #Predict
 speed_pred_lr = reg_speed.predict(scaledx)
@@ -281,10 +277,8 @@ speed_pred_lr = np.maximum(speed_pred_lr, 0.0)
 speed_pred_lr = np.round(speed_pred_lr, 1)
 print("-----Loading 4/4...-----")
 bouncing_bar()
-print()
 print("-----Predicted Wind Speed!-----")
 bouncing_bar()
-print()
 
 #saves all input data into one Numpy array
 dataset = np.array([
@@ -305,19 +299,16 @@ dataset = np.array([
 print("-----Loading 1/4...-----")
 dataset = dataset.reshape(1, -1)
 bouncing_bar()
-print()
 
 #Scaler
 scaledx = scaler_x.transform(dataset)
 print("-----Loading 2/4...-----")
 bouncing_bar()
-print()
 
 #Open the model
 reg_gust = load("models/wind_gust_linear.joblib")
 print("-----Loading 3/4...-----")
 bouncing_bar()
-print()
 
 #Predict
 gust_pred_lr = reg_gust.predict(scaledx)
@@ -325,15 +316,12 @@ gust_pred_lr = np.maximum(gust_pred_lr, 0.0)
 gust_pred_lr = np.round(gust_pred_lr, 1)
 print("-----Loading 4/4...-----")
 bouncing_bar()
-print()
 print("-----Predicted Wind Gust Speed!-----")
 bouncing_bar()
-print()
 
 direction_pred = data_wind_direction
 print("-----Loading 1/3...-----")
 bouncing_bar()
-print()
 
 #Convert to degrees
 allowed_dirs_deg = np.array([
@@ -343,7 +331,6 @@ allowed_dirs_deg = np.array([
 direction_pred_deg = allowed_dirs_deg[direction_pred]
 print("-----Loading 2/3...-----")
 bouncing_bar()
-print()
 
 #Convert to cardinal directions
 direction_pred_label = data_wind_direction
@@ -353,15 +340,12 @@ compass = [
 direction_pred_label = compass[direction_pred_label]
 print("-----Loading 3/3...-----")
 bouncing_bar()
-print()
 print("-----Predicted Wind Direction!-----")
 bouncing_bar()
-print()
 
 #Onshore from direction
 print("-----Loading 1/2...-----")
 bouncing_bar()
-print()
 
 onshore_bins = [8, 6, 7, 4, 3, 2, 1]
 
@@ -372,7 +356,6 @@ else:
 
 print("-----Loading 2/2...-----")
 bouncing_bar()
-print()
 print("-----Predicted if it's an Onshore Breeze!-----")
 print()
 time.sleep(0.05)

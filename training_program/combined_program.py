@@ -609,7 +609,15 @@ with open("Csv/predictions/mae_report.txt", "w") as f:
     f.write(f"Upwelling Naive MAE: {round(upwell_mae_naive, 2)}\n")
     f.write(f"Wind Direction Naive MAE: {round(direction_mae_naive, 2)}\n")
     f.write(f"Onshore Breeze from Direction MAE: {round(mae_onshore, 2)}\n")
-    
+print()
+
+#Print the MAE report to the terminal as well
+print(f"-----Wind Speed Linear MAE: {round(speed_mae_lr, 2)}-----")
+print(f"-----Wind Gust Linear MAE: {round(gust_mae_lr, 2)}-----")
+print(f"-----Upwelling Naive MAE: {round(upwell_mae_naive, 2)}-----")
+print(f"-----Wind Direction Naive MAE: {round(direction_mae_naive, 2)}-----")
+print(f"-----Onshore Breeze from Direction MAE: {round(mae_onshore, 2)}-----")
+
 print("---------")
 print("---------")
 print("---------")

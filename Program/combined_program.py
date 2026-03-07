@@ -27,7 +27,7 @@ def bouncing_bar():
 
 print()
 print()
-print("South Barnegat Bay Onshore Wind Model Prediction with the Use of Long Short-Term Memory Neural Networks - Training and Predictions\n")
+print("South Barnegat Bay Onshore Wind Model Prediction with the Use of Long Short-Term Memory Neural Networks - Training and MAE\n")
 print("Written by ----- \nWritten in Python 3.11.14\n")
 
 while True:
@@ -64,7 +64,7 @@ print()
 print("-----Hello! Welcome to combined_program.py!-----")
 print("-----I would like to thank for taking time to use my predition model for Barnegat Bay!-----")
 print("-----If you encounter any problems, please let me know!------")
-print("-----(This model is only trained for summer (June-August) and will not perform accurately if given data outside this period)-----")
+print("-----(This model is only trained for summer (June-August) and will not perform if given data outside this period)-----")
 print()
 
 while True:

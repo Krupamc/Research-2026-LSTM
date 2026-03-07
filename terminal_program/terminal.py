@@ -50,10 +50,10 @@ print()
 print()
 print()
 
-print("-----Hello! Welcome to combined_program.py!-----")
+print("-----Hello! Welcome to terminal.py!-----")
 print("-----I would like to thank for taking time to use my predition model for Barnegat Bay!-----")
 print("-----If you encounter any problems, please let me know!------")
-print("-----(This model is only trained for summer (June-August) and will not perform accurately if given data outside this period)-----")
+print("-----(This model is only trained for summer (June-August) and will not perform if given data outside this period)-----")
 print()
 
 while True:
@@ -65,8 +65,15 @@ print()
 print()
 print()
 
-print("-----This program will take a csv of your choosing, (make sure it is formatted as specified in the readme)-----")
-print("-----return your orginal data (in the same location), a editied version for the model, and a results csv-----")
+print("-----This program will ask for the weather conditions, and predict the next hour for you and save the results in a results file-----")
+
 
 print("-----Several times you may be asked 'Yes' or 'No' questions and reply with (y/n) in the terminal-----")
 print()
+print()
+print()
+while True:
+    reply = input("------Are you ready to start? (You have no choice in this one :D)-----").strip().lower()
+    if reply in ("y"):
+        break
+    print("-----Please enter 'y' to continue-----")

@@ -28,7 +28,7 @@ def bouncing_bar():
 
 print()
 print()
-print("South Barnegat Bay Onshore Wind Model Prediction with the Use of Long Short-Term Memory Neural Networks - Terminal Program for Real-Time Predictions\n")
+print("South Barnegat Bay Onshore Wind Model Prediction with the\nUse of Long Short-Term Memory Neural Networks - Terminal\nProgram for Real-Time Predictions\n")
 print("Written by ----- \nWritten in Python 3.11.14\n")
 
 while True:
@@ -40,7 +40,7 @@ print()
 print()
 print()
 
-print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes that can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear Regression algorithms to verify its effectiveness. To utilize these models, thirteen variables\nwere collected on an hourly basis for June-August. Once the models were created and trained, the mean absolute error was calculated for each of the\nmodels as a comparison. Shockingly, it seemed that Linear Regressions and Naive models performed marginally better than the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests. Accurate wind speeds and direction were still predicted, as the hypothesis says, just with\ndifferent models. With the rarity of upwelling events and their spontaneity, it’s a wonder that the models could predict them in any way.\n")
+print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes\nthat can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear\nRegression algorithms to verify its effectiveness. To\nutilize these models, thirteen variables were collected on\nan hourly basis for June-August. Once the models were\ncreated and trained, the mean absolute error was calculated for each of themodels as a comparison.\nShockingly, it seemed that Linear\nRegressions and Naive models performed marginally better\nthan the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests.\nAccurate wind speeds and direction were still predicted, as the hypothesis says, just with different models.\n")
 
 while True:
     reply = input("------Press Enter to continue-----").strip().lower()
@@ -51,10 +51,10 @@ print()
 print()
 print()
 
-print("-----Hello! Welcome to terminal.py!-----")
-print("-----I would like to thank for taking time to use my predition model for Barnegat Bay!-----")
-print("-----If you encounter any problems, please let me know!------")
-print("-----(This model is only trained for summer (June-August) and will not perform if given data outside this period)-----")
+print("-----Hello! Welcome to combined_program.py!-----\n")
+print("-----I would like to thank for taking time to use my\npredition model for Barnegat Bay!-----\n")
+print("-----If you encounter any problems, please let me know!-----\n")
+print("-----(This model is only trained for summer (June-August)\nand will not perform if given data outside this period)-----")
 print()
 
 while True:
@@ -66,15 +66,15 @@ print()
 print()
 print()
 
-print("-----This program will ask for the weather conditions, and predict the next hour for you and save the results in a results file-----")
-
-
+print("-----This program will ask for the weather conditions,\nand predict the next hour for you and save the\nresults in a results csv and txt-----")
+print("\n")
+print()
 print("-----Several times you may be asked 'Yes' or 'No' questions and reply with (y/n) in the terminal-----")
 print()
 print()
 print()
 while True:
-    reply = input("------Are you ready to start? (You have no choice in this one :D)-----").strip().lower()
+    reply = input("------Are you ready to start?\n(You have no choice in this one :D)-----").strip().lower()
     if reply in ("y"):
         break
     print("-----Please enter 'y' to continue-----")
@@ -348,54 +348,6 @@ print()
 time.sleep(0.05)
 print()
 time.sleep(0.05)
-
-#Make a array of data for the csv file
-record = {
-    "timestamp": datetime.now().isoformat(timespec="seconds"),
-    "Mainland Air Temp": data_main_air_temp,
-    "Humidity (%)": data_humidity_per,
-    "Direction Degree": direction_deg,
-    "Direction label": direction_label,
-    "Gusting": data_gusting,
-    "Atmospheric Pressure (IN)": data_pressure,
-    "Precipitation Rate": data_rainfall,
-    "Bay Temp": data_bay_temp,
-    "Salinity": data_salinity,
-    "LBI Air Temp": data_lbi_temp,
-    "Ocean Temp": data_ocean_temp,
-    "Onshore flag": data_onshore_flag,
-    "Pred Direction Degree": direction_deg,
-    "Pred Direction label": direction_label,
-    "Pred Wind Speed": speed_pred_lr,
-    "Pred Wind Gust": gust_pred_lr,
-    "Pred Onshore flag": onshore_pred_flag,
-}
-
-#Save the record to a csv file
-pred_path = "results/prediction_results.csv"
-
-if os.path.exists(pred_path):
-    pred = pd.read_csv(pred_path)
-    pred = pd.concat([pred, pd.DataFrame([record])], ignore_index=True)
-else:
-    pred = pd.DataFrame([record])
-
-pred.to_csv(pred_path, index=False)
-print(f"-----Saved results to {pred_path}-----")
-bouncing_bar()
-pred_path = "results/prediction_results.txt"
-os.makedirs(os.path.dirname(pred_path), exist_ok=True)
-
-# Build a one-line, human-readable string (key=value; ...)
-line_parts = [f"{k}={v}" for k, v in record.items()]
-line = "; ".join(line_parts)
-
-# Append to the txt file (create if it doesn't exist)
-with open(pred_path, "a", encoding="utf-8") as f:
-    f.write(line + "\n")
-print(f"-----Saved results to {pred_path}-----")
-bouncing_bar()
-print()
 
 #Print the MAE report to the terminal
 print(f"-----Wind Speed: {speed_pred_lr}-----")

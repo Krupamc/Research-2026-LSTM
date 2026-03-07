@@ -80,7 +80,8 @@ while True:
     print("-----Please enter 'y' to continue-----")
 bouncing_bar()
 print()
-
+print()
+print("\n\n\n\n\n\n\n\n\n\n")
 
 #Get all variables
 print("-----Please keep water temperature in the same unit (C or F) and air temperature in the same unit (C or F)-----")
@@ -89,8 +90,10 @@ print("-----Please enter the following variables from the Stafford Weather Stati
 print()
 data_main_air_temp = float(input("------What is the current air temperature? (C or F)-----"))
 bouncing_bar()
+print()
 data_humidity_per = float(input("------What is the current humidity percentage?-----"))
 bouncing_bar()
+print()
 
 #replace the direction column with the corresponding degree values
 direction_map = {'N': 0,'NNE': 1,'NE': 2,'ENE': 3,'E': 4,'ESE': 5,'SE': 6,'SSE': 7,
@@ -102,7 +105,9 @@ while True:
     data_wind_direction = data_wind_direction.strip().upper()
     bouncing_bar()
     if data_wind_direction not in direction_map:
+        print()
         print("Unknown direction, please enter one of:", ", ".join(direction_map.keys()))
+        print()
     else:
         data_wind_direction = direction_map[data_wind_direction]
         break
@@ -133,26 +138,37 @@ direction_label = compass[direction_label]
 #Get variables continued
 data_wind_speed = float(input("------What is the current wind speed in mph?-----"))
 bouncing_bar()
+print()
 data_gusting = float(input("------What is the current gusting (max wind speed) in mph?-----"))
 bouncing_bar()
+print()
 data_pressure = float(input("------What is the current atmospheric pressure in IN?-----"))
 bouncing_bar()
+print()
 data_rainfall = float(input("------What is the current rainfall in inches?-----"))
 bouncing_bar()
+print()
 
 print("-----Please enter the following variables from the nearby water body or the NJDEP MB_01 Buoy-----")
+print()
 data_bay_temp = float(input("------What is the current bay temperature in degrees (C or F)?-----"))
 bouncing_bar()
+print()
 data_salinity = float(input("------What is the current salinity in ppt?-----"))
 bouncing_bar()
+print()
 
 print("-----Please enter the following variables from the SCYC Weather Station-----")
+print()
 data_lbi_temp = float(input("------What is the current LBI temperature in degrees (C or F)?-----"))
 bouncing_bar()
+print()
 
 print("-----Please enter the following variables from the NDBC Station 44091-----")
+print()
 data_ocean_temp = float(input("------What is the current ocean temperature in degrees (C or F)?-----"))
 bouncing_bar()
+print()
 
 #make sure values are in celsius
 while True:
@@ -160,6 +176,7 @@ while True:
     if reply in ("y", "n"):
         break
     print("-----Please enter 'y' or 'n'-----")
+    print()
     
 if reply=='n':
     #convert to Celsius
@@ -167,6 +184,7 @@ if reply=='n':
     data_lbi_temp = round((data_lbi_temp  -32) * 5.0/9.0, 1)
     print("-----Converted air temperatures from Fahrenheit to Celsius...-----")
     bouncing_bar()
+    print()
     
 else:
     print("-----Thanks! Less work for me-----")
@@ -178,9 +196,11 @@ if reply=='n':
     data_bay_temp = round((data_bay_temp-32) * 5.0/9.0, 1)
     print("-----Converted water temperatures from Fahrenheit to Celsius...-----")
     bouncing_bar()
+    print()
 
 else:
     print("-----Thanks! Less work for me-----")
+    print()
 
 #round all of the columns
 data_main_air_temp = round(data_main_air_temp, 1)
@@ -195,6 +215,7 @@ data_lbi_temp = round(data_lbi_temp, 1)
 data_ocean_temp = round(data_ocean_temp, 1)
 print("-----Loading...-----")
 bouncing_bar()
+print()
 
 #determines if its a onshore breeze and adds a new column for it
 onshore_degrees = [8, 6, 7, 4, 3, 2, 1]
@@ -205,17 +226,20 @@ else:
 
 print("-----Determined if it's an Onshore Breeze...------")
 bouncing_bar()
+print()
 
 if data_onshore_flag == 1:
     print("-----It's an Onshore Breeze!-----")
 else:    
     print("-----It's not an Onshore Breeze!-----")
 bouncing_bar()
+print()
 
 #No upwelling can be predicted
 print("-----No upwelling can be predicted for only one hour of data-----")
 data_upwelling_flag = 0
 bouncing_bar()
+print()
 
 #saves all input data into one Numpy array
 dataset = np.array([
@@ -236,17 +260,20 @@ dataset = np.array([
 print("-----Loading 1/4...-----")
 dataset = dataset.reshape(1, -1)
 bouncing_bar()
+print()
 
 #Scaler
 scaler_x = load("models/scaler_x.joblib")
 scaledx = scaler_x.transform(dataset)
 print("-----Loading 2/4...-----")
 bouncing_bar()
+print()
 
 #Open the model
 reg_speed = load("models/wind_speed_linear.joblib")
 print("-----Loading 3/4...-----")
 bouncing_bar()
+print()
 
 #Predict
 speed_pred_lr = reg_speed.predict(scaledx)
@@ -254,8 +281,10 @@ speed_pred_lr = np.maximum(speed_pred_lr, 0.0)
 speed_pred_lr = np.round(speed_pred_lr, 1)
 print("-----Loading 4/4...-----")
 bouncing_bar()
+print()
 print("-----Predicted Wind Speed!-----")
 bouncing_bar()
+print()
 
 #saves all input data into one Numpy array
 dataset = np.array([
@@ -276,16 +305,19 @@ dataset = np.array([
 print("-----Loading 1/4...-----")
 dataset = dataset.reshape(1, -1)
 bouncing_bar()
+print()
 
 #Scaler
 scaledx = scaler_x.transform(dataset)
 print("-----Loading 2/4...-----")
 bouncing_bar()
+print()
 
 #Open the model
 reg_gust = load("models/wind_gust_linear.joblib")
 print("-----Loading 3/4...-----")
 bouncing_bar()
+print()
 
 #Predict
 gust_pred_lr = reg_gust.predict(scaledx)
@@ -293,12 +325,15 @@ gust_pred_lr = np.maximum(gust_pred_lr, 0.0)
 gust_pred_lr = np.round(gust_pred_lr, 1)
 print("-----Loading 4/4...-----")
 bouncing_bar()
+print()
 print("-----Predicted Wind Gust Speed!-----")
 bouncing_bar()
+print()
 
 direction_pred = data_wind_direction
 print("-----Loading 1/3...-----")
 bouncing_bar()
+print()
 
 #Convert to degrees
 allowed_dirs_deg = np.array([
@@ -308,6 +343,7 @@ allowed_dirs_deg = np.array([
 direction_pred_deg = allowed_dirs_deg[direction_pred]
 print("-----Loading 2/3...-----")
 bouncing_bar()
+print()
 
 #Convert to cardinal directions
 direction_pred_label = data_wind_direction
@@ -317,12 +353,15 @@ compass = [
 direction_pred_label = compass[direction_pred_label]
 print("-----Loading 3/3...-----")
 bouncing_bar()
+print()
 print("-----Predicted Wind Direction!-----")
 bouncing_bar()
+print()
 
 #Onshore from direction
 print("-----Loading 1/2...-----")
 bouncing_bar()
+print()
 
 onshore_bins = [8, 6, 7, 4, 3, 2, 1]
 
@@ -333,6 +372,7 @@ else:
 
 print("-----Loading 2/2...-----")
 bouncing_bar()
+print()
 print("-----Predicted if it's an Onshore Breeze!-----")
 print()
 time.sleep(0.05)

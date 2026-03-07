@@ -617,6 +617,7 @@ print(f"-----Wind Gust Linear MAE: {round(gust_mae_lr, 2)}-----")
 print(f"-----Upwelling Naive MAE: {round(upwell_mae_naive, 2)}-----")
 print(f"-----Wind Direction Naive MAE: {round(direction_mae_naive, 2)}-----")
 print(f"-----Onshore Breeze from Direction MAE: {round(mae_onshore, 2)}-----")
+print()
 
 print("---------")
 print("---------")

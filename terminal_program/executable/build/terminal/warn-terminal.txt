@@ -32,7 +32,7 @@ missing module named multiprocessing.get_context - imported by multiprocessing (
 missing module named multiprocessing.TimeoutError - imported by multiprocessing (top-level), multiprocessing.pool (top-level), joblib.parallel (top-level)
 missing module named multiprocessing.set_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
 missing module named multiprocessing.get_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level), scipy._lib._util (delayed, conditional)
-missing module named pyimod02_importers - imported by C:\Users\Krupam\StudioProjects\Research-2026\terminal_program\test\Lib\site-packages\PyInstaller\hooks\rthooks\pyi_rth_pkgutil.py (delayed)
+missing module named pyimod02_importers - imported by C:\Users\Krupam\StudioProjects\Research-2026\terminal_program\exe_env\Lib\site-packages\PyInstaller\hooks\rthooks\pyi_rth_pkgutil.py (delayed)
 missing module named collections.Mapping - imported by collections (optional), pytz.lazy (optional)
 missing module named numpy.VisibleDeprecationWarning - imported by numpy (conditional), sklearn.utils.fixes (conditional)
 missing module named numpy.ComplexWarning - imported by numpy (conditional), sklearn.utils.fixes (conditional)

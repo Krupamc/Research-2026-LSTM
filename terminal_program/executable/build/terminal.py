@@ -1,0 +1,425 @@
+from joblib import dump, load
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_absolute_error
+from sklearn.linear_model import LinearRegression
+from datetime import datetime
+import time, sys
+import os
+import pandas as pd
+import numpy as np
+
+#create variables for loading screen
+def bouncing_bar():
+    width = 20
+    pos = 0
+    direction = 1
+
+    for _ in range(20):  # number of animation steps
+        bar = [" "] * width
+        bar[pos] = "#"
+        sys.stdout.write("\r[" + "".join(bar) + "]")
+        sys.stdout.flush()
+        time.sleep(0.01)
+
+        pos += direction
+        if pos == 0 or pos == width - 1:
+            direction *= -1
+    print()
+
+print()
+print("South Barnegat Bay Onshore Wind Model Prediction with the Use of Long Short-Term Memory Neural Networks - Terminal Program for Real-Time Predictions\n")
+print("Written by ----- \nWritten in Python 3.11.14\n")
+
+while True:
+    reply = input("------Press Enter to continue-----").strip().lower()
+    if reply in (""):
+        break
+    print("-----Please press enter to continue-----")
+print()
+print()
+print()
+
+print("Damp South and Western onshore winds initiate the summertime event known as upwelling.\nUpwelling in small, localized areas like Barnegat Bay has a significant impact on bay temperature, creating a large land-sea temperature difference.\nThis difference can lead to harsh and fast onshore breezes that can “swamp” small watercraft. This study uses an LSTM, a deep learning neural network,\nto predict these large gusts, along with Naive and Linear Regression algorithms to verify its effectiveness. To utilize these models, thirteen variables\nwere collected on an hourly basis for June-August. Once the models were created and trained, the mean absolute error was calculated for each of the\nmodels as a comparison. Shockingly, it seemed that Linear Regressions and Naive models performed marginally better than the LSTM, which had collapsed to\npredicting a value close to the mean in almost all tests. Accurate wind speeds and direction were still predicted, as the hypothesis says, just with\ndifferent models. With the rarity of upwelling events and their spontaneity, it’s a wonder that the models could predict them in any way.\n")
+
+while True:
+    reply = input("------Press Enter to continue-----").strip().lower()
+    if reply in (""):
+        break
+    print("-----Please press enter to continue-----")
+print()
+print()
+print()
+
+print("-----Hello! Welcome to terminal.py!-----")
+print("-----I would like to thank for taking time to use my predition model for Barnegat Bay!-----")
+print("-----If you encounter any problems, please let me know!------")
+print("-----(This model is only trained for summer (June-August) and will not perform if given data outside this period)-----")
+print()
+
+while True:
+    reply = input("------Press Enter to continue-----").strip().lower()
+    if reply in (""):
+        break
+    print("-----Please press enter to continue-----")
+print()
+print()
+print()
+
+print("-----This program will ask for the weather conditions, and predict the next hour for you and save the results in a results file-----")
+
+
+print("-----Several times you may be asked 'Yes' or 'No' questions and reply with (y/n) in the terminal-----")
+print()
+print()
+print()
+while True:
+    reply = input("------Are you ready to start? (You have no choice in this one :D)-----").strip().lower()
+    if reply in ("y"):
+        break
+    print("-----Please enter 'y' to continue-----")
+bouncing_bar()
+print()
+
+
+#Get all variables
+print("-----Please keep water temperature in the same unit (C or F) and air temperature in the same unit (C or F)-----")
+print()
+print("-----Please enter the following variables from the Stafford Weather Station-----")
+print()
+data_main_air_temp = float(input("------What is the current air temperature? (C or F)-----"))
+bouncing_bar()
+data_humidity_per = float(input("------What is the current humidity percentage?-----"))
+bouncing_bar()
+
+#replace the direction column with the corresponding degree values
+direction_map = {'N': 0,'NNE': 1,'NE': 2,'ENE': 3,'E': 4,'ESE': 5,'SE': 6,'SSE': 7,
+            'S': 8,'SSW': 9,'SW': 10,'WSW': 11,'W': 12,'WNW': 13,'NW': 14,'NNW': 15
+        }
+
+while True:
+    data_wind_direction = (input("------What is the current wind direction in characters (ex. N, SE, NNE)?-----"))
+    data_wind_direction = data_wind_direction.strip().upper()
+    bouncing_bar()
+    if data_wind_direction not in direction_map:
+        print("Unknown direction, please enter one of:", ", ".join(direction_map.keys()))
+    else:
+        data_wind_direction = direction_map[data_wind_direction]
+        break
+    
+
+
+direction_deg = data_wind_direction
+
+#Convert to degrees
+allowed_dirs_deg = np.array([
+    0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5,
+    180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5
+])
+
+direction_deg = allowed_dirs_deg[direction_deg]
+
+#Convert to cardinal directions
+direction_label = data_wind_direction
+compass = [
+    "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"
+]
+
+direction_label = compass[direction_label]
+
+
+
+
+#Get variables continued
+data_wind_speed = float(input("------What is the current wind speed in mph?-----"))
+bouncing_bar()
+data_gusting = float(input("------What is the current gusting (max wind speed) in mph?-----"))
+bouncing_bar()
+data_pressure = float(input("------What is the current atmospheric pressure in IN?-----"))
+bouncing_bar()
+data_rainfall = float(input("------What is the current rainfall in inches?-----"))
+bouncing_bar()
+
+print("-----Please enter the following variables from the nearby water body or the NJDEP MB_01 Buoy-----")
+data_bay_temp = float(input("------What is the current bay temperature in degrees (C or F)?-----"))
+bouncing_bar()
+data_salinity = float(input("------What is the current salinity in ppt?-----"))
+bouncing_bar()
+
+print("-----Please enter the following variables from the SCYC Weather Station-----")
+data_lbi_temp = float(input("------What is the current LBI temperature in degrees (C or F)?-----"))
+bouncing_bar()
+
+print("-----Please enter the following variables from the NDBC Station 44091-----")
+data_ocean_temp = float(input("------What is the current ocean temperature in degrees (C or F)?-----"))
+bouncing_bar()
+
+#make sure values are in celsius
+while True:
+    reply = input("-----Are your Air Temperatures in Celsius (y/n)?").strip().lower()
+    if reply in ("y", "n"):
+        break
+    print("-----Please enter 'y' or 'n'-----")
+    
+if reply=='n':
+    #convert to Celsius
+    data_main_air_temp = round((data_main_air_temp-32) * 5.0/9.0, 1)
+    data_lbi_temp = round((data_lbi_temp  -32) * 5.0/9.0, 1)
+    print("-----Converted air temperatures from Fahrenheit to Celsius...-----")
+    bouncing_bar()
+    
+else:
+    print("-----Thanks! Less work for me-----")
+
+reply = input("-----Are your Water Temperatures in Celsius (y/n)?").strip().lower()
+if reply=='n':
+    #convert to Celsius
+    data_ocean_temp = round((data_ocean_temp-32) * 5.0/9.0, 1)
+    data_bay_temp = round((data_bay_temp-32) * 5.0/9.0, 1)
+    print("-----Converted water temperatures from Fahrenheit to Celsius...-----")
+    bouncing_bar()
+
+else:
+    print("-----Thanks! Less work for me-----")
+
+#round all of the columns
+data_main_air_temp = round(data_main_air_temp, 1)
+data_humidity_per = round(data_humidity_per, 1)
+data_wind_speed = round(data_wind_speed, 1)
+data_gusting = round(data_gusting, 1)
+data_pressure = round(data_pressure, 2)
+data_rainfall = round(data_rainfall, 2)
+data_bay_temp = round(data_bay_temp, 2)
+data_salinity = round(data_salinity, 2)
+data_lbi_temp = round(data_lbi_temp, 1)
+data_ocean_temp = round(data_ocean_temp, 1)
+print("-----Loading...-----")
+bouncing_bar()
+
+#determines if its a onshore breeze and adds a new column for it
+onshore_degrees = [8, 6, 7, 4, 3, 2, 1]
+if data_wind_direction in onshore_degrees:
+    data_onshore_flag = 1
+else:
+    data_onshore_flag = 0  
+
+print("-----Determined if it's an Onshore Breeze...------")
+bouncing_bar()
+
+if data_onshore_flag == 1:
+    print("-----It's an Onshore Breeze!-----")
+else:    
+    print("-----It's not an Onshore Breeze!-----")
+bouncing_bar()
+
+#No upwelling can be predicted
+print("-----No upwelling can be predicted for only one hour of data-----")
+data_upwelling_flag = 0
+bouncing_bar()
+
+#saves all input data into one Numpy array
+dataset = np.array([
+    data_main_air_temp,
+    data_humidity_per,
+    data_wind_direction,
+    #data_wind_speed,
+    data_gusting,
+    data_pressure,
+    data_rainfall,
+    data_bay_temp,
+    data_salinity,
+    data_lbi_temp,
+    data_ocean_temp,
+    data_onshore_flag,
+    data_upwelling_flag,
+])
+print("-----Loading 1/4...-----")
+dataset = dataset.reshape(1, -1)
+bouncing_bar()
+
+#Scaler
+scaler_x = load("models/scaler_x.joblib")
+scaledx = scaler_x.transform(dataset)
+print("-----Loading 2/4...-----")
+bouncing_bar()
+
+#Open the model
+reg_speed = load("models/wind_speed_linear.joblib")
+print("-----Loading 3/4...-----")
+bouncing_bar()
+
+#Predict
+speed_pred_lr = reg_speed.predict(scaledx)
+speed_pred_lr = np.maximum(speed_pred_lr, 0.0)
+speed_pred_lr = np.round(speed_pred_lr, 1)
+print("-----Loading 4/4...-----")
+bouncing_bar()
+print("-----Predicted Wind Speed!-----")
+bouncing_bar()
+
+#saves all input data into one Numpy array
+dataset = np.array([
+    data_main_air_temp,
+    data_humidity_per,
+    data_wind_direction,
+    data_wind_speed,
+    #data_gusting,
+    data_pressure,
+    data_rainfall,
+    data_bay_temp,
+    data_salinity,
+    data_lbi_temp,
+    data_ocean_temp,
+    data_onshore_flag,
+    data_upwelling_flag,
+])
+print("-----Loading 1/4...-----")
+dataset = dataset.reshape(1, -1)
+bouncing_bar()
+
+#Scaler
+scaledx = scaler_x.transform(dataset)
+print("-----Loading 2/4...-----")
+bouncing_bar()
+
+#Open the model
+reg_gust = load("models/wind_gust_linear.joblib")
+print("-----Loading 3/4...-----")
+bouncing_bar()
+
+#Predict
+gust_pred_lr = reg_gust.predict(scaledx)
+gust_pred_lr = np.maximum(gust_pred_lr, 0.0)
+gust_pred_lr = np.round(gust_pred_lr, 1)
+print("-----Loading 4/4...-----")
+bouncing_bar()
+print("-----Predicted Wind Gust Speed!-----")
+bouncing_bar()
+
+direction_pred = data_wind_direction
+print("-----Loading 1/3...-----")
+bouncing_bar()
+
+#Convert to degrees
+allowed_dirs_deg = np.array([
+    0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5,
+    180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5
+])
+direction_pred_deg = allowed_dirs_deg[direction_pred]
+print("-----Loading 2/3...-----")
+bouncing_bar()
+
+#Convert to cardinal directions
+direction_pred_label = data_wind_direction
+compass = [
+    "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"
+]
+direction_pred_label = compass[direction_pred_label]
+print("-----Loading 3/3...-----")
+bouncing_bar()
+print("-----Predicted Wind Direction!-----")
+bouncing_bar()
+
+#Onshore from direction
+print("-----Loading 1/2...-----")
+bouncing_bar()
+
+onshore_bins = [8, 6, 7, 4, 3, 2, 1]
+
+if data_wind_direction in onshore_bins:
+    onshore_pred_flag = 1
+else:
+    onshore_pred_flag = 0
+
+print("-----Loading 2/2...-----")
+bouncing_bar()
+print("-----Predicted if it's an Onshore Breeze!-----")
+print()
+time.sleep(0.05)
+print()
+time.sleep(0.05)
+print()
+time.sleep(0.05)
+print()
+time.sleep(0.05)
+print()
+time.sleep(0.05)
+print()
+time.sleep(0.05)
+print()
+time.sleep(0.05)
+
+#Make a array of data for the csv file
+record = {
+    "timestamp": datetime.now().isoformat(timespec="seconds"),
+    "Mainland Air Temp": data_main_air_temp,
+    "Humidity (%)": data_humidity_per,
+    "Direction Degree": direction_deg,
+    "Direction label": direction_label,
+    "Gusting": data_gusting,
+    "Atmospheric Pressure (IN)": data_pressure,
+    "Precipitation Rate": data_rainfall,
+    "Bay Temp": data_bay_temp,
+    "Salinity": data_salinity,
+    "LBI Air Temp": data_lbi_temp,
+    "Ocean Temp": data_ocean_temp,
+    "Onshore flag": data_onshore_flag,
+    "Pred Direction Degree": direction_deg,
+    "Pred Direction label": direction_label,
+    "Pred Wind Speed": speed_pred_lr,
+    "Pred Wind Gust": gust_pred_lr,
+    "Pred Onshore flag": onshore_pred_flag,
+}
+
+#Save the record to a csv file
+pred_path = "results/prediction_results.csv"
+
+if os.path.exists(pred_path):
+    pred = pd.read_csv(pred_path)
+    pred = pd.concat([pred, pd.DataFrame([record])], ignore_index=True)
+else:
+    pred = pd.DataFrame([record])
+
+pred.to_csv(pred_path, index=False)
+print(f"-----Saved results to {pred_path}-----")
+bouncing_bar()
+pred_path = "results/prediction_results.txt"
+os.makedirs(os.path.dirname(pred_path), exist_ok=True)
+
+# Build a one-line, human-readable string (key=value; ...)
+line_parts = [f"{k}={v}" for k, v in record.items()]
+line = "; ".join(line_parts)
+
+# Append to the txt file (create if it doesn't exist)
+with open(pred_path, "a", encoding="utf-8") as f:
+    f.write(line + "\n")
+print(f"-----Saved results to {pred_path}-----")
+bouncing_bar()
+print()
+
+#Print the MAE report to the terminal
+print(f"-----Wind Speed: {speed_pred_lr}-----")
+print(f"-----Wind Gust: {gust_pred_lr}-----")
+print(f"-----Wind Direction Degrees: {direction_pred_deg}-----")
+print(f"-----Wind Direction Label: {direction_pred_label}-----")
+print(f"-----Onshore Breeze from Direction: {onshore_pred_flag}-----")
+if (speed_pred_lr >= 10) or (gust_pred_lr >= 10):
+    print("\nBe careful on the water. High wind speeds predicted.\n")
+print()
+print("---------")
+print("---------")
+print("---------")
+print()
+print("-----Huh. That's it. If you would like to do some more predicting, you know where to go-----"    )
+print()
+print("-----You can find your predictions as a csv and a txt file in the results folder. When you run this program again, the results will be appended to the existing files-----")  
+print("\n\n\n")
+while True:
+    reply = input("------Press Enter to close the program-----").strip().lower()
+    if reply in (""):
+        break
+    print()
+    print("-----Please press enter to close-----")
+    print()
+print()
+print()
+print()

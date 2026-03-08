@@ -403,6 +403,8 @@ print(f"-----Wind Gust: {gust_pred_lr}-----")
 print(f"-----Wind Direction Degrees: {direction_pred_deg}-----")
 print(f"-----Wind Direction Label: {direction_pred_label}-----")
 print(f"-----Onshore Breeze from Direction: {onshore_pred_flag}-----")
+if (speed_pred_lr >= 10) or (gust_pred_lr >= 10):
+    print("\nBe careful on the water. High wind speeds predicted.\n")
 print()
 print("---------")
 print("---------")

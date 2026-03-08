@@ -27,7 +27,7 @@ def bouncing_bar():
     print()
 
 print()
-print()
+print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 print("South Barnegat Bay Onshore Wind Model Prediction with the Use of Long Short-Term Memory Neural Networks - Terminal Program for Real-Time Predictions\n")
 print("Written by ----- \nWritten in Python 3.11.14\n")
 
@@ -407,5 +407,18 @@ print()
 print("---------")
 print("---------")
 print("---------")
+print()
 print("-----Huh. That's it. If you would like to do some more predicting, you know where to go-----"    )
-print("-----You can find your predictions as a csv and a txt file in the results folder. When you run this program again, the results will be appended to the existing files-----")   
+print()
+print("-----You can find your predictions as a csv and a txt file in the results folder. When you run this program again, the results will be appended to the existing files-----")  
+print("\n\n\n")
+while True:
+    reply = input("------Press Enter to close the program-----").strip().lower()
+    if reply in (""):
+        break
+    print()
+    print("-----Please press enter to close-----")
+    print()
+print()
+print()
+print()

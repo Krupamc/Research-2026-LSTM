@@ -32,7 +32,7 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 
 South Barnegat Bay frequently experiences **sudden, powerful onshore wind gusts** during summer, often connected to local upwelling events that bring cold water from deeper parts of the bay or nearby ocean to the surface. These gusts can rapidly create steep, choppy waves that are dangerous for kayaks, canoes, and personal watercraft.
 
-Traditional weather models and public forecasts operate at regional scales (tens of kilometers, hours to days) and often **miss small‑scale, bay‑specific changes**, leaving local boaters with little warning.
+Traditional weather models and public forecasts operate at regional scales and often **miss small‑scale, bay‑specific changes**, leaving local boaters with little warning.
 
 This project explores whether a **local LSTM model** trained on detailed hourly observations can provide more accurate, location‑specific, one‑hour‑ahead warnings.
 
@@ -48,13 +48,14 @@ This project explores whether a **local LSTM model** trained on detailed hourly 
    - Onshore flag (1 = onshore, 0 = offshore)
    - Upwelling flag (1 = likely upwelling‑driven conditions, 0 = not)
 
-2. Use LSTM, Linear Regression, and Naive models and **Use only the previous 24 hours of data** (a sliding window) to make each prediction.
+2. Use LSTM (With a 24 hour sliding window), Linear Regression, and Naive models to make each prediction.
 
 3. **Evaluate accuracy of the models** using Mean Absolute Error (MAE), targeting **< 10% error** for wind speed/direction, comparable to short‑range weather forecasts.
 
 4. Eventually **deploy the trained model** via:
-   - A simple website (unfinished)
-   - A local desktop/terminal script.
+   - [ ] A simple website
+   - [x] A local desktop/terminal script.
+   - [x] A executable program.
 
 ---
 
@@ -62,10 +63,10 @@ This project explores whether a **local LSTM model** trained on detailed hourly 
 
 The model uses hourly observations from June 1 – September 24, 2025 (June 1 is excluded in the making of the upwelling flags) from multiple stations:
 
-- **Mainland weather station** (Stafford area).
-- **Long Beach Island (LBI) station** (e.g., Surf City Yacht Club).
-- **Bay buoy** (NJDEP inside Barnegat Bay).
-- **Offshore buoy** (NDBC).
+- **Mainland weather station** (Stafford Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJMANAH7/table/2025-08-10/2025-08-10/daily).
+- **Long Beach Island (LBI) station** (e.g., Surf City Yacht Club Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJSURFC12/table/2025-08-8/2025-08-8/daily).
+- **Bay buoy** (NJDEP MB_01 Buoy - https://njdep.rutgers.edu/continuous/graphing/NJBuoy767/).
+- **Offshore buoy** (NDBC Station 44091 - https://www.ndbc.noaa.gov/station_page.php?station=44091).
 
 Typical variables include:
 
@@ -75,28 +76,32 @@ Typical variables include:
 - Humidity
 - Precipitation
 - Atmospheric pressure
-- Bay water temperature
+- Bay water temperature and salinity
 - Ocean water temperature
 
 All data are combined into a single time‑indexed CSV with one row per hour.
 
 ---
 
-## Labels: Onshore and Upwelling
+## Data Cleaning
 
-### Wind direction → degrees
+### Wind direction converted to Bins
 
-Wind directions such as N, NNE, NE, … are converted to degrees using a 16‑point compass mapping:
+Wind directions such as N, NNE, NE, … are converted to 'bins' using a 16‑point (0-15) compass mapping:
 
-- N = 0°, NNE = 22.5°, NE = 45°, …, NNW = 337.5°.
+- N = 0°, NNE = 1°, NE = 2°, …, NNW = 15°.
 
-A helper class handles this conversion and stores the degree values in the wind direction column.
+### Convert Farenheit to Celsius
+Converted all of the Land Air tempertures to Celsius using `C° = (F°-32) x 5/9`
+
+### Round all the columns
+All 
 
 ### Onshore flag
 
 An `Onshore` column (0/1) is created based on **direction sectors that blow from the ocean/bay toward the mainland**. For this project, directions roughly from **S through NE** are considered onshore, for example:
 
-- S (180°), SSE (157.5°), SE (135°), ESE (112.5°), E (90°), ENE (67.5°), NE (45°), NNE (22.5°).
+- S (8), SSE (7), SE (6), ESE (5), E (5), ENE (67.5°), NE (45°), NNE (22.5°).
 
 Rows with directions in this set are labeled `Onshore = 1`; all others are `0`.
 

@@ -11,7 +11,7 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 - [Background](#background)
 - [Project Goals](#project-goals)
 - [Data Sources](#data-sources)
-- [Labels: Onshore and Upwelling](#labels-onshore-and-upwelling)
+- [Data Cleaning](#data-cleaning)
 - [Model Design](#model-design)
 - [Setup and Installation (To be writen)](#setup-and-installation)
 - [How to Run (To be writen)](#how-to-run)
@@ -87,7 +87,7 @@ All data are combined into a single time‑indexed CSV with one row per hour.
 
 ### Wind direction converted to Bins
 
-Wind directions such as N, NNE, NE, … are converted to 'bins' using a 16‑point (0-15) compass mapping:
+Wind directions such as N, NNE, NE, … are converted to **'bins'** using a 16‑point (0-15) compass mapping:
 
 - N = 0°, NNE = 1°, NE = 2°, …, NNW = 15°.
 
@@ -95,13 +95,17 @@ Wind directions such as N, NNE, NE, … are converted to 'bins' using a 16‑poi
 Converted all of the Land Air tempertures to Celsius using `C° = (F°-32) x 5/9`
 
 ### Round all the columns
-All 
+All columns were rounded to `1` decimal place except:
+- Bay Temperature `(2 places)`
+- Bay Salinity `(2 places)`
+- Precipitation `(2 places)`
+- Atmospheric Pressure `(2 places)`
 
 ### Onshore flag
 
-An `Onshore` column (0/1) is created based on **direction sectors that blow from the ocean/bay toward the mainland**. For this project, directions roughly from **S through NE** are considered onshore, for example:
+An `Onshore` column (0/1) is created based on **direction sectors that blow from the ocean/bay toward Long Beach Island**. For this project, directions roughly from **S through NE** are considered onshore, for example:
 
-- S (8), SSE (7), SE (6), ESE (5), E (5), ENE (67.5°), NE (45°), NNE (22.5°).
+- S (8), SSE (7), SE (6), ESE (5), E (4), ENE (3), NE (2), NNE (1).
 
 Rows with directions in this set are labeled `Onshore = 1`; all others are `0`.
 
@@ -111,17 +115,13 @@ Upwelling in shallow coastal systems is often associated with:
 
 - Persistent along‑shore/onshore winds, and
 - Sudden drops in surface water temperature,
-- Often with ocean water colder than recent bay temperatures.
+- Often with ocean water colder than recent ocean temperatures.
 
-This project’s simple definition for an `upwelling_flag` (0/1) is:
-
-1. Onshore winds (Onshore = 1)
-2. Wind speeds greater than a set threshold 
-3. The absolute value of the two lowest ocean temps of the day averaged together with the curent bay temp subtracted being greator than a set threshold.
-
-These conditions are implemented with tunable thresholds in code (e.g., ≥1–2°F difference).
-
-The result is a labelled `upwelling_flag` column that the LSTM can try to predict.
+To find out if the current hour is upwelling:
+1. Check if the wind direction is a **damp** upwelling wind `(S, SE, W)` 
+2. The rolling the mean of the last `48` hours of ocean temperature is subtracted from the rolling mean of the last `6` hours of ocean temperature.
+3. If this number is less or equal to than a defined threshold `(-3.0)`, and is sustained for `6` hours it is considered upwelling.
+4. The result is a labelled `upwelling_flag` column that the models can try to predict. **(All numbers mentioned above can be configured and changed in the training program)**
 
 ---
 

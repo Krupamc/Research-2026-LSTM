@@ -1,2 +1,4 @@
 timestamp,Mainland Air Temp,Humidity (%),Direction Degree,Direction label,Gusting,Atmospheric Pressure (IN),Precipitation Rate,Bay Temp,Salinity,LBI Air Temp,Ocean Temp,Onshore flag,Pred Direction Degree,Pred Direction label,Pred Wind Speed,Pred Wind Gust,Pred Onshore flag
 2026-03-07T22:29:04,15.6,80.0,270.0,W,20.0,29.86,0.0,10.0,20.0,4.4,20.0,0,270.0,W,[[11.2]],[[9.5]],0
+2026-03-08T17:01:20,11.8,88.0,270.0,W,12.1,29.54,17.52,28.34,28.34,13.4,14.5,0,270.0,W,[[0.]],[[26.2]],0
+2026-03-08T17:02:10,11.8,88.0,270.0,W,12.1,29.54,0.0,17.52,28.34,13.4,14.5,0,270.0,W,[[7.]],[[6.4]],0

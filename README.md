@@ -11,7 +11,7 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 - [Background](#background)
 - [Project Goals](#project-goals)
 - [Data Sources](#data-sources)
-- [Labels: Onshore and Upwelling](#labels-onshore-and-upwelling)
+- [Data Cleaning](#data-cleaning)
 - [Model Design](#model-design)
 - [Setup and Installation (To be writen)](#setup-and-installation)
 - [How to Run (To be writen)](#how-to-run)
@@ -87,7 +87,7 @@ All data are combined into a single time‑indexed CSV with one row per hour.
 
 ### Wind direction converted to Bins
 
-Wind directions such as N, NNE, NE, … are converted to 'bins' using a 16‑point (0-15) compass mapping:
+Wind directions such as N, NNE, NE, … are converted to **'bins'** using a 16‑point (0-15) compass mapping:
 
 - N = 0°, NNE = 1°, NE = 2°, …, NNW = 15°.
 
@@ -95,13 +95,17 @@ Wind directions such as N, NNE, NE, … are converted to 'bins' using a 16‑poi
 Converted all of the Land Air tempertures to Celsius using `C° = (F°-32) x 5/9`
 
 ### Round all the columns
-All 
+All columns were rounded to `1` decimal place except:
+- Bay Temperature `(2 places)`
+- Bay Salinity `(2 places)`
+- Precipitation `(2 places)`
+- Atmospheric Pressure `(2 places)`
 
 ### Onshore flag
 
-An `Onshore` column (0/1) is created based on **direction sectors that blow from the ocean/bay toward the mainland**. For this project, directions roughly from **S through NE** are considered onshore, for example:
+An `Onshore` column (0/1) is created based on **direction sectors that blow from the ocean/bay toward Long Beach Island**. For this project, directions roughly from **S through NE** are considered onshore, for example:
 
-- S (8), SSE (7), SE (6), ESE (5), E (5), ENE (67.5°), NE (45°), NNE (22.5°).
+- S (8), SSE (7), SE (6), ESE (5), E (4), ENE (3), NE (2), NNE (1).
 
 Rows with directions in this set are labeled `Onshore = 1`; all others are `0`.
 
@@ -111,17 +115,13 @@ Upwelling in shallow coastal systems is often associated with:
 
 - Persistent along‑shore/onshore winds, and
 - Sudden drops in surface water temperature,
-- Often with ocean water colder than recent bay temperatures.
+- Often with ocean water colder than recent ocean temperatures.
 
-This project’s simple definition for an `upwelling_flag` (0/1) is:
-
-1. Onshore winds (Onshore = 1)
-2. Wind speeds greater than a set threshold 
-3. The absolute value of the two lowest ocean temps of the day averaged together with the curent bay temp subtracted being greator than a set threshold.
-
-These conditions are implemented with tunable thresholds in code (e.g., ≥1–2°F difference).
-
-The result is a labelled `upwelling_flag` column that the LSTM can try to predict.
+To find out if the current hour is upwelling:
+1. Check if the wind direction is a **damp** upwelling wind `(SE, SSE, S, W)` 
+2. The rolling mean of the last `48` hours of ocean temperature is subtracted from the rolling mean of the last `6` hours of ocean temperature.
+3. If this number is less or equal to than a defined threshold `(-3.0)`, and is sustained for `6` hours it is considered upwelling.
+4. The result is a labelled `upwelling_flag` column that the models can try to predict. **(All numbers mentioned above can be configured and changed in the training program)**
 
 ---
 
@@ -201,19 +201,23 @@ Because this is time series, the split is **chronological**, not random:
 ### Virtual Enviroment Creation and Dependencies Installation - (A virtual enviroment is a seperate python installation than the base system)
 
 1. Download the project files from this github and put them in a place of your choosing all in a single folder. (For this guide I will place them on my desktop in a folder called `lstm`)
+<img width="953" height="421" alt="image" src="https://github.com/user-attachments/assets/4df3a0c8-7a10-4c0f-9a8f-9e12e96ba3ca" />
+3. Download as a zip file and then unzip it.
+<img width="448" height="320" alt="image" src="https://github.com/user-attachments/assets/8e0180b7-0186-4de6-8ae9-ac642585f685" />
+
 <img width="192" height="186" alt="image" src="https://github.com/user-attachments/assets/d4c0b64d-f73d-429e-a443-e3b14bb8ec1c" />
 
-2. In the command prompt, we need to get to the **full** file location of the project (C:\Users\<your_user>\Desktop\lstm) using the `cd` command. So find your full file path and take note of it.
-3. Type in `cd` and then the file path. Then hit enter, the command prompt will display the location on the very left before the left angle bracket (>). (If you every get lost you can run the `dir` command to list the files in your directory)
+4. In the command prompt, we need to get to the **full** file location of the project (C:\Users\<your_user>\Desktop\lstm) using the `cd` command. So find your full file path and take note of it.
+4. Type in `cd` and then the file path. Then hit enter, the command prompt will display the location on the very left before the left angle bracket (>). (If you every get lost you can run the `dir` command to list the files in your directory)
 <img width="1164" height="672" alt="image" src="https://github.com/user-attachments/assets/ef92d47b-1c7b-4b88-9d19-c4ae4eaca892" />
 
-3. To create the actual virtual enviroment run `python.exe -m venv <env_name>`. You can choose the name Eg. lstmenv. (You can do a .<env_name> to make the files invisible to make working in the project easier. This is what I will do)
+5. To create the actual virtual enviroment run `python.exe -m venv <env_name>`. You can choose the name Eg. lstmenv. (You can do a .<env_name> to make the files invisible to make working in the project easier. This is what I will do)
 <img width="1138" height="649" alt="image" src="https://github.com/user-attachments/assets/9d42aa73-06f5-4e1b-84f3-a5adabb6c49b" />
 
-4. Now we must activate the virtual enviroment. Run: <env_name>\Scripts\activate.bat
+6. Now we must activate the virtual enviroment. Run: <env_name>\Scripts\activate.bat
 <img width="1132" height="641" alt="image" src="https://github.com/user-attachments/assets/2456cb29-82b2-44dd-be84-7f13f226bc5c" />
 
-5. Finally we can install the dependencies. Run: `pip install pandas tensorflow numpy scikit-learn nbformat` to install from the list in requirements.txt. It will install Pandas, Tensorflow, Numpy, and Scikit-Learn
+7. Finally we can install the dependencies. Run: `pip install pandas tensorflow numpy scikit-learn nbformat` to install from the list in requirements.txt. It will install Pandas, Tensorflow, Numpy, and Scikit-Learn
 <img width="1134" height="645" alt="image" src="https://github.com/user-attachments/assets/e41a7226-5e1b-41e3-aeb1-c10da55bf7f0" />
 
 

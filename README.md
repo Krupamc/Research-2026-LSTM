@@ -118,8 +118,8 @@ Upwelling in shallow coastal systems is often associated with:
 - Often with ocean water colder than recent ocean temperatures.
 
 To find out if the current hour is upwelling:
-1. Check if the wind direction is a **damp** upwelling wind `(S, SE, W)` 
-2. The rolling the mean of the last `48` hours of ocean temperature is subtracted from the rolling mean of the last `6` hours of ocean temperature.
+1. Check if the wind direction is a **damp** upwelling wind `(SE, SSE, S, W)` 
+2. The rolling mean of the last `48` hours of ocean temperature is subtracted from the rolling mean of the last `6` hours of ocean temperature.
 3. If this number is less or equal to than a defined threshold `(-3.0)`, and is sustained for `6` hours it is considered upwelling.
 4. The result is a labelled `upwelling_flag` column that the models can try to predict. **(All numbers mentioned above can be configured and changed in the training program)**
 

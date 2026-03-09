@@ -10,9 +10,11 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 
 - [Background](#background)
 - [Project Goals](#project-goals)
+- [Current Model Setup](#current-model-setup)
 - [Data Sources](#data-sources)
 - [Data Cleaning](#data-cleaning)
 - [Model Design](#model-design)
+- [Model Evaluation](#model-evaluation)
 - [Setup and Installation (To be writen)](#setup-and-installation)
 - [How to Run (To be writen)](#how-to-run)
   - [1. Preprocess data](#1-preprocess-data)
@@ -20,7 +22,6 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
   - [3. Train the models](#3-train-the-models)
   - [4. Evaluate with MAE](#4-evaluate-with-mae)
   - [5. Make a one‑hour‑ahead prediction](#5-make-a-one-hour-ahead-prediction)
-- [Model Evaluation (To be writen)](#model-evaluation)
 - [Planned Deployment (To be writen)](#planned-deployment)
 - [Limitations (To be writen)](#limitations)
 - [Future Work (To be writen)](#future-work)
@@ -58,6 +59,49 @@ This project explores whether a **local LSTM model** trained on detailed hourly 
    - [x] A executable program.
 
 ---
+
+## Model Design
+
+The project currently uses **five** separate models. (Every older model version can be found under source_code/unused_models) Including one for each target:
+
+1. Wind speed
+2. Wind Gusting speed
+3. Wind direction (in bins)
+4. Onshore flag (binary)
+5. Upwelling flag (binary)
+
+Each model:
+
+- Takes as input the previous hour of multivariate data (all feature columns).
+- Predicts the **next hour’s** value of its target.
+
+### Features
+
+- Mainland air temperature
+- Long Beach Island air temperature
+- Bay water temperature
+- Ocean water temperature
+- Wind speed and gusts
+- Wind direction (bins)
+- Humidity
+- Atmospheric pressure
+- Precipitation
+- `Onshore` flag (current hour)
+- `upwelling_flag` 
+
+All numeric features are standardized with `StandardScaler` before training.
+
+---
+
+## Current Model Setup
+
+Currently this project is using:
+
+- `Linear Regression`: Wind Speed
+- `Linear Regression`: Wind Gusting Speed
+- `Naive`: Wind Direction
+- `Derived from Direction Prediction`: Onshore flag (binary)
+- No models were able to predict for Upwelling events due to the low chances of occurance, leading to the models all collasping.
 
 ## Data Sources
 
@@ -125,56 +169,8 @@ To find out if the current hour is upwelling:
 
 ---
 
-## Model Design
+## Model Evaluation
 
-The project currently uses **four** separate LSTM models, one for each target:
-
-1. Wind speed
-2. Wind direction (in degrees)
-3. Onshore flag (classification)
-4. Upwelling flag (classification)
-
-Each model:
-
-- Takes as input the previous 24 hours of multivariate data (all feature columns).
-- Predicts the **next hour’s** value of its target.
-
-### Features
-
-Example feature set used for each 24‑hour input window:
-
-- Mainland air temperature
-- Island air temperature
-- Bay water temperature
-- Ocean water temperature
-- Wind speed and gusts
-- Wind direction (degrees)
-- Humidity
-- Atmospheric pressure
-- Precipitation
-- `Onshore` flag (current hour)
-- `upwelling_flag` (optional as an input, depending on experiment)
-
-All numeric features are standardized with `StandardScaler` before training.
-
-### Time‑series windowing
-
-For each sample:
-
-- **Input**: rows [t‑23, …, t] with all feature columns  
-- **Target**: row [t+1] with the single target column (e.g., wind speed at t+1)
-
-These windows are built with a sliding‐window function that converts the cleaned DataFrame into NumPy arrays of shape:
-
-- `X.shape = (num_samples, 24, num_features)`
-- `y.shape = (num_samples,)` (or `(num_samples, 1)`)
-
-### Train / validation / test split
-
-Because this is time series, the split is **chronological**, not random:
-
-- First 90% of windows → Training set
-- Final 10% → Test set (never seen during training)
 
 ## Setup and Installation
 

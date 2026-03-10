@@ -186,12 +186,14 @@ In this folder there are several files:
 - A requirements.txt in order for you to download the dependencies to run these files for yourself. (more on this in the [Installation guide](#setup-and-installation))
 - A `models` folder containing the saved scaler `.joblib` files and the Linear Regression `.joblib` model files. (Naive requires no model as it is just a formula)
 - A notebook and regular python file version of the training program.
+  - (Quick Summary)
   - Cleans the data. (as mentioned above in [Data Cleaning](#data-cleaning))
   - Changed date and hour columns into single **pandas** `Datetime` column.
   - Saved all input features into one **numpy** array.
   - Scale input array and output data.
-  - Create X_train, y_train, X_test, y_test.
-  - Convert the X vairbales to 3D arrays, and the y variables to a 1D array.
+  - Setup training length.
+  - Predict values and calculate MAE.
+  - Save to csv.
 ## Setup and Installation
 
 ### This tutorial will be for *Windows* machines. A Macos Tutorial will soon follow.

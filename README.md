@@ -17,8 +17,8 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 - [Model Evaluation](#model-evaluation)
 - [Training Program](#training-program)
 - [Terminal Program](#terminal-program)
-- [Graphs](#graphs)
-- [Pi](#pi)
+- [Graphs Program](#graphs-program)
+- [Raspberry Pi Program](#raspberry-pi-program)
 - [Source Code](#source-code)
 - [Setup and Installation (To be writen)](#setup-and-installation)
 - [How to Run (To be writen)](#how-to-run)
@@ -222,13 +222,13 @@ In this folder there are several files:
     
 ---
 
-## Graphs
+## Graphs Program
 
 The data cleaned before being graphed using `Matplotlib`. All variables are graphed on their own and with their predicted values for comparison. You can see all of the graphs in the `graphs.ipynb` file.
 
 ---
 
-## Pi
+## Raspberry Pi Program
 
 The same Train and Terminal program was used for application on a 3.5 `Raspberry PI` screen. Functionality is all the same except for the print lines being reshaped to fit on the smaller screen.
 

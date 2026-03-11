@@ -16,6 +16,10 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 - [Model Design](#model-design)
 - [Model Evaluation](#model-evaluation)
 - [Training Program](#training-program)
+- [Terminal Program](#terminal-program)
+- [Graphs](#graphs)
+- [Pi](#pi)
+- [Source Code](#source-code)
 - [Setup and Installation (To be writen)](#setup-and-installation)
 - [How to Run (To be writen)](#how-to-run)
   - [1. Preprocess data](#1-preprocess-data)
@@ -194,6 +198,20 @@ In this folder there are several files:
   - Setup training length.
   - Predict values and calculate MAE.
   - Save to csv.
+
+---
+
+## Terminal Program
+In this folder there are several files:
+`executable` folder:
+  - A .exe version of the program that requires no further steps to run. (more on this in the [Installation guide](#setup-and-installation))
+  - - A `models` folder containing the saved scaler `.joblib` files, Linear Regression `.joblib` model files, and the saved scaler from the training program. (Naive requires no model as it is just a formula)
+- `python` folder:
+  - A requirements.txt in order for you to download the dependencies to run these files for yourself. (again more on this in the [Installation guide](#setup-and-installation))
+  - A `models` folder containing the saved scaler `.joblib` files, Linear Regression `.joblib` model files, and the saved scaler from the training program. (Naive requires no model as it is just a formula)
+  - A notebook and regular python file version of the training program.
+    - (Quick Summary)
+
 ## Setup and Installation
 
 ### This tutorial will be for *Windows* machines. A Macos Tutorial will soon follow.

@@ -202,6 +202,7 @@ In this folder there are several files:
 ---
 
 ## Terminal Program
+
 In this folder there are several files:
 `executable` folder:
   - A .exe version of the program that requires no further steps to run. (more on this in the [Installation guide](#setup-and-installation))
@@ -219,6 +220,27 @@ In this folder there are several files:
     - Predict values and report the results.
     - Save to csv and txt.
     
+---
+
+## Graphs
+
+The data cleaned before being graphed using `Matplotlib`. All variables are graphed on their own and with their predicted values for comparison. You can see all of the graphs in the `graphs.ipynb` file.
+
+---
+
+## Pi
+
+The same Train and Terminal program was used for application on a 3.5 `Raspberry PI` screen. Functionality is all the same except for the print lines being reshaped to fit on the smaller screen.
+
+---
+
+## Source Code
+
+In this folder there are several files:
+- A requirements.txt in order for you to download the dependencies to run these files for yourself. (more on this in the [Installation guide](#setup-and-installation))
+- A `models` folder containing the saved scaler `.joblib` files and the Linear Regression `.joblib` model files. (Naive requires no model as it is just a formula)
+
+---
 
 ## Setup and Installation
 

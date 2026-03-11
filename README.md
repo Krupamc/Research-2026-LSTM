@@ -310,14 +310,17 @@ In this folder there are several files:
 7. To create the actual virtual enviroment run `python.exe -m venv <env_name>`. You can choose the name Eg. lstmenv. (You can do a .<env_name> to make the files invisible to make working in the project easier. This is what I will do)
 <img width="1138" height="649" alt="image" src="https://github.com/user-attachments/assets/9d42aa73-06f5-4e1b-84f3-a5adabb6c49b" />
 
-8. Now we must activate the virtual enviroment. Run: <env_name>\Scripts\activate.bat
+8. Now we must activate the virtual enviroment. Run: `<env_name>\Scripts\activate.bat` (Make sure you use `\`'s and not `/`)
 <img width="1132" height="641" alt="image" src="https://github.com/user-attachments/assets/2456cb29-82b2-44dd-be84-7f13f226bc5c" />
 
 9. Finally we can install the dependencies. (If you are trying to run the `Terminal Program`, run `cd terminal_program/python` or cd into whatever folder of the program you are trying to run, and then run following command) Run: `pip install -r requirements.txt` to install from the list in requirements.txt. 
-<img width="1132" height="483" alt="image" src="https://github.com/user-attachments/assets/5e81ee62-b1f9-4ac0-8e69-05211d60af71" />
+<img width="1129" height="326" alt="image" src="https://github.com/user-attachments/assets/70b85b04-f918-4bae-bef8-031cd0e174ab" />
+<img width="1134" height="642" alt="image" src="https://github.com/user-attachments/assets/0b8960d0-4834-4739-a3b9-25db23ee78ae" />
+<img width="1129" height="635" alt="image" src="https://github.com/user-attachments/assets/68690444-7876-44f3-8a02-c792fd38aefa" />
 
 
-10. Tada! You have succesfully installed the program and are ready to start using it.
+
+10. Tada! You have succesfully installed the program and are ready to start using it. (You can close the command prompt)
 
 
 

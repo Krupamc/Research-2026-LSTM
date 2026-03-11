@@ -313,8 +313,9 @@ In this folder there are several files:
 8. Now we must activate the virtual enviroment. Run: <env_name>\Scripts\activate.bat
 <img width="1132" height="641" alt="image" src="https://github.com/user-attachments/assets/2456cb29-82b2-44dd-be84-7f13f226bc5c" />
 
-9. Finally we can install the dependencies. (If you are trying to run the `Terminal Program`, run `cd terminal_program` or cd into whatever folder of the program you are trying to run, and then run following command) Run: `pip install -r requirements.txt` to install from the list in requirements.txt. 
-<img width="1134" height="645" alt="image" src="https://github.com/user-attachments/assets/e41a7226-5e1b-41e3-aeb1-c10da55bf7f0" />
+9. Finally we can install the dependencies. (If you are trying to run the `Terminal Program`, run `cd terminal_program/python` or cd into whatever folder of the program you are trying to run, and then run following command) Run: `pip install -r requirements.txt` to install from the list in requirements.txt. 
+<img width="1132" height="483" alt="image" src="https://github.com/user-attachments/assets/5e81ee62-b1f9-4ac0-8e69-05211d60af71" />
+
 
 10. Tada! You have succesfully installed the program and are ready to start using it.
 

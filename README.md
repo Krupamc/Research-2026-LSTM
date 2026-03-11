@@ -15,6 +15,11 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 - [Data Cleaning](#data-cleaning)
 - [Model Design](#model-design)
 - [Model Evaluation](#model-evaluation)
+- [Training Program](#training-program)
+- [Terminal Program](#terminal-program)
+- [Graphs](#graphs)
+- [Pi](#pi)
+- [Source Code](#source-code)
 - [Setup and Installation (To be writen)](#setup-and-installation)
 - [How to Run (To be writen)](#how-to-run)
   - [1. Preprocess data](#1-preprocess-data)
@@ -171,6 +176,71 @@ To find out if the current hour is upwelling:
 
 ## Model Evaluation
 
+The models were all evaulated using the `Mean Absolute Value` or MAE. MAE values are a measure of the average difference in units that forecasts may vary from the observed values.
+- The Onshore wind model using values derived from the wind prediction is called the **Derived MAE**.
+
+### MAE values of every model tested, with the chosen models highlighted.
+<img width="734" height="187" alt="image" src="https://github.com/user-attachments/assets/e340c875-0073-4993-8ad4-a02eabd9e278" />
+
+---
+
+## Training Program
+
+In this folder there are several files:
+- A requirements.txt in order for you to download the dependencies to run these files for yourself. (more on this in the [Installation guide](#setup-and-installation))
+- A `models` folder containing the saved scaler `.joblib` files and the Linear Regression `.joblib` model files. (Naive requires no model as it is just a formula)
+- A notebook and regular python file version of the training program.
+  - (Quick Summary)
+  - Cleans the data. (as mentioned above in [Data Cleaning](#data-cleaning))
+  - Changed date and hour columns into single **pandas** `Datetime` column.
+  - Saved all input features into one **numpy** array.
+  - Scale input array and output data.
+  - Setup training length.
+  - Predict values and calculate MAE.
+  - Save to csv.
+
+---
+
+## Terminal Program
+
+In this folder there are several files:
+`executable` folder:
+  - A .exe version of the program that requires no further steps to run. (more on this in the [Installation guide](#setup-and-installation))
+  - - A `models` folder containing the saved scaler `.joblib` files, Linear Regression `.joblib` model files, and the saved scaler from the training program. (Naive requires no model as it is just a formula)
+- `python` folder:
+  - A requirements.txt in order for you to download the dependencies to run these files for yourself. (again more on this in the [Installation guide](#setup-and-installation))
+  - A `models` folder containing the saved scaler `.joblib` files, Linear Regression `.joblib` model files, and the saved scaler from the training program. (Naive requires no model as it is just a formula)
+  - A notebook and regular python file version of the training program.
+    - (Quick Summary)
+    - Cleans the data. (as mentioned above in [Data Cleaning](#data-cleaning))
+    - Asks for data input from the users
+    - Saved all input features into one **numpy** array.
+    - Import saved models and scaler.
+    - Scale the input data.
+    - Predict values and report the results.
+    - Save to csv and txt.
+    
+---
+
+## Graphs
+
+The data cleaned before being graphed using `Matplotlib`. All variables are graphed on their own and with their predicted values for comparison. You can see all of the graphs in the `graphs.ipynb` file.
+
+---
+
+## Pi
+
+The same Train and Terminal program was used for application on a 3.5 `Raspberry PI` screen. Functionality is all the same except for the print lines being reshaped to fit on the smaller screen.
+
+---
+
+## Source Code
+
+In this folder there are several files:
+- A requirements.txt in order for you to download the dependencies to run these files for yourself. (more on this in the [Installation guide](#setup-and-installation))
+- A `models` folder containing the saved scaler `.joblib` files and the Linear Regression `.joblib` model files. (Naive requires no model as it is just a formula)
+
+---
 
 ## Setup and Installation
 

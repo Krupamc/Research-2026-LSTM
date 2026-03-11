@@ -239,6 +239,8 @@ The same Train and Terminal program was used for application on a 3.5 `Raspberry
 In this folder there are several files:
 - A requirements.txt in order for you to download the dependencies to run these files for yourself. (more on this in the [Installation guide](#setup-and-installation))
 - A `models` folder containing the saved scaler `.joblib` files and the Linear Regression `.joblib` model files. (Naive requires no model as it is just a formula)
+- A `unused_models` folder containing other model prototypes. (Like the LSTM models and a few Linear Regression variations)
+- All of the notebooks contain code for each final model. (A lot of this code is redundant which is why it was all summed up in the [Terminal Program](#training-program))
 
 ---
 

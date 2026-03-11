@@ -211,6 +211,14 @@ In this folder there are several files:
   - A `models` folder containing the saved scaler `.joblib` files, Linear Regression `.joblib` model files, and the saved scaler from the training program. (Naive requires no model as it is just a formula)
   - A notebook and regular python file version of the training program.
     - (Quick Summary)
+    - Cleans the data. (as mentioned above in [Data Cleaning](#data-cleaning))
+    - Asks for data input from the users
+    - Saved all input features into one **numpy** array.
+    - Import saved models and scaler.
+    - Scale the input data.
+    - Predict values and report the results.
+    - Save to csv and txt.
+    
 
 ## Setup and Installation
 

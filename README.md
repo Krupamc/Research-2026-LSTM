@@ -21,8 +21,12 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 - [Graphs Program](#graphs-program)
 - [Raspberry Pi Program](#raspberry-pi-program)
 - [Source Code](#source-code)
-- [Setup and Installation (To be writen)](#setup-and-installation)
-- [How to Run (To be writen)](#how-to-run)
+- [Setup and Installation](#setup-and-installation)
+  -[Executable Program Installation](#executable-program-installation)
+  -[Python Installation](#python-installation)
+- [How to Run](#how-to-run)
+  -[Executable Program](#executable-program)
+  -[Python Program](#python-program)
 - [Planned Deployment (To be writen)](#planned-deployment)
 - [Limitations (To be writen)](#limitations)
 - [Future Work (To be writen)](#future-work)
@@ -112,7 +116,7 @@ The model uses hourly observations from June 1 – September 24, 2025 (June 1 is
 - **Mainland weather station** (Stafford Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJMANAH7/table/2025-08-10/2025-08-10/daily).
 - **Long Beach Island (LBI) station** (e.g., Surf City Yacht Club Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJSURFC12/table/2025-08-8/2025-08-8/daily).
 - **Bay buoy** (NJDEP MB_01 Buoy - https://njdep.rutgers.edu/continuous/graphing/NJBuoy767/).
-- **Offshore buoy** (NDBC Station 44091 - https://www.ndbc.noaa.gov/station_page.php?station=44091).
+- **Ocean buoy** (NDBC Station 44091 - https://www.ndbc.noaa.gov/station_page.php?station=44091).
 
 Typical variables include:
 
@@ -216,6 +220,7 @@ In this folder there are several files:
     - Scale the input data.
     - Predict values and report the results.
     - Save to csv and txt.
+    - If the wind speed/wind gust speed prediction is over ten miles per hour, the user will be warned!
     
 ---
 
@@ -322,6 +327,54 @@ In this folder there are several files:
 
 10. Tada! You have succesfully installed the program and are ready to start using it. (You can close the command prompt)
 
+---
 
+## How to run
 
+We can start predicting the wind any moment now! If the wind speed/wind gust speed prediction is over ten miles per hour, the user will be warned! The program will ask you for the current, mainland air temperature, humidity, wind direction, wind speed, wind gusting speed (or max wind), atmospheric pressure, precipitation rate, bay temperature, bay salinity, LBI air temperature, and the ocean temperature. You can get these values from these weather stations:
 
+- **Mainland weather station** (Stafford Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJMANAH7/table/2025-08-10/2025-08-10/daily).
+- **Long Beach Island (LBI) station** (e.g., Surf City Yacht Club Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJSURFC12/table/2025-08-8/2025-08-8/daily).
+- **Bay buoy** (NJDEP MB_01 Buoy - https://njdep.rutgers.edu/continuous/graphing/NJBuoy767/).
+- **Ocean buoy** (NDBC Station 44091 - https://www.ndbc.noaa.gov/station_page.php?station=44091).
+
+- Due to the offline activity of the NJDEP buoy, you can collect bay temperature and bay salinity in the bay water near your location. (Or any other buoy inside of Barnegat Bay by LBI)
+- Collect LBI air temperature from the Surf City Yacht Club weather station.
+- Get the LBI ocean temperature from the NDBC buoy.
+- Gather all other values from the Stafford Weather station.
+- You can keep all of your temperatures in Celsius or Fahrenheit but keep it consistant for each type (Air vs Water)
+
+Once you give the program the weather conditions and it predicts whats going to happen, it will save these results within the `results` folder of the `terminal_program` folder (Depends on if you use executable or python version!!! `...\lstm\terminal_program\executable\results` **or** `...\lstm\terminal_program\python\results`) as a csv and a txt. You can open the txt right away or open the csv in `Microsoft Excel`/`Google Sheets`. The time, current weather conditions, predicted conditions, and a few extra infomation is printed.
+
+### Executable Program
+
+1. Now that the program is all unzipped, go to where you put your `lstm` (Or whatever you renamed it to) folder and open the `terminal_program` folder.
+<img width="192" height="186" alt="image" src="https://github.com/user-attachments/assets/d4c0b64d-f73d-429e-a443-e3b14bb8ec1c" />
+
+2. Open the `executable` folder
+<img width="1144" height="652" alt="image" src="https://github.com/user-attachments/assets/59bbdd49-c496-44c1-8fbf-c400b421bde7" />
+<img width="1138" height="643" alt="image" src="https://github.com/user-attachments/assets/290d1722-35c2-49cf-be59-c5f88fc0751c" />
+4. Double click the `Terminal Program` app to run it. (The one with the weather icon!)
+5. Depending on your computer, you may encounter a pop up about a unknown app. (This program is safe. But if you would like to be make sure that the file was not modified you can run the file through a `SHA256` checksum (You can use: https://emn178.github.io/online-tools/sha256_checksum.html). If the result is not `c9aebca26523454a67853b6cc1e40ffc4ce1c1fc9f966f42a6f66629c722e3a3`, you downloaded a modified file, please delete it and then empty the `Recycling Bin`.
+<img width="1153" height="668" alt="image" src="https://github.com/user-attachments/assets/0e6b0208-40d8-42f6-9eb7-723cdda4b0b0" />
+6. Now hit the `More info` button.
+<img width="1152" height="667" alt="image" src="https://github.com/user-attachments/assets/0085ad4d-974e-43c5-9c46-b3567a50d911" />
+7. Finally, you can hit `Run anyway`.
+<img width="1157" height="680" alt="image" src="https://github.com/user-attachments/assets/90666e81-8612-412b-8777-25ba21004543" />
+8. The program is now running and ready for your inputs!
+<img width="2301" height="1171" alt="image" src="https://github.com/user-attachments/assets/93504a22-3ba0-457a-bdc9-441d0ea58d2f" />
+
+### Python Program
+
+5. In the Window's start bar search for `cmd` or the command prompt (also known as a terminal) and open the application.
+<img width="940" height="564" alt="image" src="https://github.com/user-attachments/assets/53a04308-01f7-43e7-994e-7892c6c67c64" />
+<img width="1148" height="645" alt="image" src="https://github.com/user-attachments/assets/a5a4d218-dc5a-42ce-8be0-e674f5268de8" />
+6. Type in `cd` and then the file path of the `lstm` (Or whatever you renamed it to) folder.\ls
+<img width="1129" height="640" alt="image" src="https://github.com/user-attachments/assets/be4597d4-5626-42e5-a759-614b171d03cf" />
+7. Activate your python enviroment by running: `<env_name>\Scripts\activate.bat` (Make sure you use `\`'s and not `/`)
+<img width="1126" height="268" alt="image" src="https://github.com/user-attachments/assets/1c9f8117-62cc-4b36-8a88-23185e2f62f5" />
+8. Run: `cd terminal_program/python`
+<img width="1130" height="269" alt="image" src="https://github.com/user-attachments/assets/7336b8a2-2c97-48f3-924b-d6257a03be8f" />
+9. Finally run `python terminal.py` to open the program.
+<img width="1312" height="502" alt="image" src="https://github.com/user-attachments/assets/aaf0dcbb-40ca-4940-bee9-824bb7220083" />
+10. The program is now running and ready for your inputs!

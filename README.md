@@ -1,7 +1,7 @@
 
 # Research-2026-LSTM
 
-# South Barnegat Bay Onshore Wind & Upwelling Predictor
+# South Barnegat Bay Onshore Wind Model Prediction with the Use of Long Short-Term Memory Neural Networks
 
 A time‑series deep learning project that uses an LSTM (Long Short‑Term Memory) neural network, Linear Regression model, and Naive persistance model to predict sudden onshore wind events and upwelling conditions in southern Barnegat Bay, New Jersey. The model learns from hourly data to forecast the **next hour’s** wind speed, wind gusting speed, wind direction, onshore status, and upwelling status to help local boaters avoid hazardous conditions.
 

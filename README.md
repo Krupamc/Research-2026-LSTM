@@ -22,11 +22,11 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 - [Raspberry Pi Program](#raspberry-pi-program)
 - [Source Code](#source-code)
 - [Setup and Installation](#setup-and-installation)
-  -[Executable Program Installation](#executable-program-installation)
-  -[Python Installation](#python-installation)
+  - [Executable Program Installation](#executable-program-installation)
+  - [Python Installation](#python-installation)
 - [How to Run](#how-to-run)
-  -[Executable Program](#executable-program)
-  -[Python Program](#python-program)
+  - [Executable Program](#executable-program)
+  - [Python Program](#python-program)
 - [Limitations](#limitations)
 - [Planned Development](#planned-development)
 - [Acknowledgments](#acknowledgments)
@@ -176,7 +176,7 @@ To find out if the current hour is upwelling:
 
 ## Model Evaluation
 
-The models were all evaulated using the `Mean Absolute Value` or MAE. MAE values are a measure of the average difference in units that forecasts may vary from the observed values.
+The models were all evaulated using the `Mean Absolute Error` or MAE. MAE values are a measure of the average difference in units that forecasts may vary from the observed values.
 - The Onshore wind model using values derived from the wind prediction is called the **Derived MAE**.
 
 ### MAE values of every model tested, with the chosen models highlighted.
@@ -231,7 +231,7 @@ The data cleaned before being graphed using `Matplotlib`. All variables are grap
 
 ## Raspberry Pi Program
 
-The same Train and Terminal program was used for application on a 3.5 `Raspberry PI` screen. Functionality is all the same except for the print lines being reshaped to fit on the smaller screen.
+The same Train and Terminal program was used for application on a 3.5 `Raspberry Pi` screen. Functionality is all the same except for the print lines being reshaped to fit on the smaller screen.
 
 ---
 
@@ -247,7 +247,7 @@ In this folder there are several files:
 
 ## Setup and Installation
 
-### This tutorial will be for *Windows* machines. A Macos Tutorial will soon follow.
+### This tutorial is for *Windows* machines. A *macOS* Tutorial will soon follow.
 
 ### Executable Program Installation
 1. Download the project files from this github and put them in a place of your choosing all in a single folder. (For this guide I will place them on my desktop in a folder called `lstm`)
@@ -260,7 +260,7 @@ In this folder there are several files:
 <img width="425" height="287" alt="image" src="https://github.com/user-attachments/assets/939a9f63-9bd3-45bc-8e16-c3dda527dccc" />
 
 
-4. To unzip the file, go to your `Downloads` folder in `Windows`, click on the folder and than extract or use a program like `winrar`. Once you have the extracted folder, move it to where you want. (I moved it to the `Desktop`)
+4. To unzip the file, go to your `Downloads` folder in `Windows`, click on the folder and then extract or use a program like `winrar`. Once you have the extracted folder, move it to where you want. (I moved it to the `Desktop`)
 
 
 <img width="673" height="141" alt="image" src="https://github.com/user-attachments/assets/bcbf3fdd-9738-4bcb-80ba-dc0899db806f" />
@@ -268,7 +268,7 @@ In this folder there are several files:
 
 <img width="192" height="186" alt="image" src="https://github.com/user-attachments/assets/d4c0b64d-f73d-429e-a443-e3b14bb8ec1c" />
 
-5. Tada! You have succesfully installed the program and are ready to start using it.
+5. Tada! You have successfully installed the program and are ready to start using it.
 
 
 
@@ -278,20 +278,20 @@ In this folder there are several files:
 1. Go download python from: https://www.python.org/downloads/  The images below will show the process from the standalone installer of python 3.14.3. (3.11.14 or above will work)
 <img width="891" height="316" alt="image" src="https://github.com/user-attachments/assets/f2208c30-e02b-427b-9c75-2f879e6b32b7" />
 
-2. Run the downloaded file and click `Add python.eve to PATH` and `Install now`.
+2. Run the downloaded file and click `Add python.exe to PATH` and `Install now`.
 <img width="743" height="497" alt="image" src="https://github.com/user-attachments/assets/9a9a9964-bb7b-49ea-b152-8fca585f039e" />
 <img width="711" height="448" alt="image" src="https://github.com/user-attachments/assets/457d5a4e-725e-4726-801f-15dbd378a6e8" />
 
 4. Once setup is successful you can close the installer.
-5. In the Window's start bar search for `cmd` or the command prompt (also known as a terminal) and open the application.
+5. In the Windows start bar search for `cmd` or the command prompt (also known as a terminal) and open the application.
 <img width="940" height="564" alt="image" src="https://github.com/user-attachments/assets/53a04308-01f7-43e7-994e-7892c6c67c64" />
 <img width="1148" height="645" alt="image" src="https://github.com/user-attachments/assets/a5a4d218-dc5a-42ce-8be0-e674f5268de8" />
 
-6. Now we need to update pip, python's package manager to be able to download the required dependancies. So type into the terminal `python.exe -m pip install --upgrade pip` and hit enter to run the command
+6. Now we need to update pip, python's package manager to be able to download the required dependencies. So type into the terminal `python.exe -m pip install --upgrade pip` and hit enter to run the command
 <img width="1147" height="656" alt="image" src="https://github.com/user-attachments/assets/1dd77f8e-6a9c-4ed1-9bf3-ee3c4ca68945" />
 <img width="1149" height="648" alt="image" src="https://github.com/user-attachments/assets/c419ee1f-3a04-44de-b9a5-fc6194be273f" />
 
-### Virtual Enviroment Creation and Dependencies Installation - (A virtual enviroment is a seperate python installation than the base system)
+### Virtual Environment Creation and Dependencies Installation - (A virtual environment is a seperate python installation than the base system)
 
 1. Download the project files from this github and put them in a place of your choosing all in a single folder. (For this guide I will place them on my desktop in a folder called `lstm`)
 <img width="953" height="421" alt="image" src="https://github.com/user-attachments/assets/4df3a0c8-7a10-4c0f-9a8f-9e12e96ba3ca" />
@@ -311,10 +311,10 @@ In this folder there are several files:
 6. Type in `cd` and then the file path. Then hit enter, the command prompt will display the location on the very left before the left angle bracket (>). (If you every get lost you can run the `dir` command to list the files in your directory)
 <img width="1164" height="672" alt="image" src="https://github.com/user-attachments/assets/ef92d47b-1c7b-4b88-9d19-c4ae4eaca892" />
 
-7. To create the actual virtual enviroment run `python.exe -m venv <env_name>`. You can choose the name Eg. lstmenv. (You can do a .<env_name> to make the files invisible to make working in the project easier. This is what I will do)
+7. To create the actual virtual environment run `python.exe -m venv <env_name>`. You can choose the name Eg. lstmenv. (You can do a .<env_name> to make the files invisible to make working in the project easier. This is what I will do)
 <img width="1138" height="649" alt="image" src="https://github.com/user-attachments/assets/9d42aa73-06f5-4e1b-84f3-a5adabb6c49b" />
 
-8. Now we must activate the virtual enviroment. Run: `<env_name>\Scripts\activate.bat` (Make sure you use `\`'s and not `/`)
+8. Now we must activate the virtual environment. Run: `<env_name>\Scripts\activate.bat` (Make sure you use `\`'s and not `/`)
 <img width="1132" height="641" alt="image" src="https://github.com/user-attachments/assets/2456cb29-82b2-44dd-be84-7f13f226bc5c" />
 
 9. Finally we can install the dependencies. (If you are trying to run the `Terminal Program`, run `cd terminal_program/python` or cd into whatever folder of the program you are trying to run, and then run following command) Run: `pip install -r requirements.txt` to install from the list in requirements.txt. 
@@ -324,7 +324,7 @@ In this folder there are several files:
 
 
 
-10. Tada! You have succesfully installed the program and are ready to start using it. (You can close the command prompt)
+10. Tada! You have successfully installed the program and are ready to start using it. (You can close the command prompt)
 
 ---
 
@@ -341,9 +341,9 @@ We can start predicting the wind any moment now! If the wind speed/wind gust spe
 - Collect LBI air temperature from the Surf City Yacht Club weather station.
 - Get the LBI ocean temperature from the NDBC buoy.
 - Gather all other values from the Stafford Weather station.
-- You can keep all of your temperatures in Celsius or Fahrenheit but keep it consistant for each type (Air vs Water)
+- You can keep all of your temperatures in Celsius or Fahrenheit but keep it consistent for each type (Air vs Water)
 
-Once you give the program the weather conditions and it predicts whats going to happen, it will save these results within the `results` folder of the `terminal_program` folder (Depends on if you use executable or python version!!! `...\lstm\terminal_program\executable\results` **or** `...\lstm\terminal_program\python\results`) as a csv and a txt. You can open the txt right away or open the csv in `Microsoft Excel`/`Google Sheets`. The time, current weather conditions, predicted conditions, and a few extra infomation is printed.
+Once you give the program the weather conditions and it predicts what is going to happen, it will save these results within the `results` folder of the `terminal_program` folder (Depends on if you use executable or python version!!! `...\lstm\terminal_program\executable\results` **or** `...\lstm\terminal_program\python\results`) as a csv and a txt. You can open the txt right away or open the csv in `Microsoft Excel`/`Google Sheets`. The time, current weather conditions, predicted conditions, and a few extra information is printed.
 
 ### Executable Program
 
@@ -365,7 +365,7 @@ Once you give the program the weather conditions and it predicts whats going to 
 
 ### Python Program
 
-5. In the Window's start bar search for `cmd` or the command prompt (also known as a terminal) and open the application.
+5. In the Windows start bar search for `cmd` or the command prompt (also known as a terminal) and open the application.
 <img width="940" height="564" alt="image" src="https://github.com/user-attachments/assets/53a04308-01f7-43e7-994e-7892c6c67c64" />
 <img width="1148" height="645" alt="image" src="https://github.com/user-attachments/assets/a5a4d218-dc5a-42ce-8be0-e674f5268de8" />
 6. Type in `cd` and then the file path of the `lstm` (Or whatever you renamed it to) folder.\ls
@@ -393,7 +393,7 @@ This project did set out what it planned to do: Create a program to predict the 
 In the future, I would like to continue this project by:
 - Reduce MAE with the use of different or perhaps **more** models.
 - Gather historical data to train the models on.
-- Gather data year-round in order to have differernt **sets** of models for every season (Or more if needed)
+- Gather data year-round in order to have different **sets** of models for every season (Or more if needed)
 - Put this program onto a website for anyone to enjoy.
 - Please email me with any other ideas or questions!
 
@@ -401,6 +401,6 @@ In the future, I would like to continue this project by:
 
 ## Acknowledgments
 
-I would like to thank so many for the oppertunity to work on this project. I thank my reserach advisors for encouraging me. I thank my computer science teacher for providing feedback and ideas. I thank one of my older teachers for all I know about machine learning development. I thank my contact with a meteorologist for all his insight and explainations. I thank my family for putting up with my hours of work. I thank my friends for not thinking I went insane. And most of all I thank you. You for reading. You for using this program.
+I would like to thank so many for the oppertunity to work on this project. I thank my reserach advisors for encouraging me. I thank my computer science teacher for providing feedback and ideas. I thank one of my older teachers for all I know about machine learning development. I thank my contact with a meteorologist for all his insight and explanations. I thank my family for putting up with my hours of work. I thank my friends for not thinking I went insane. And most of all I thank you. You for reading. You for using this program.
 
 ----

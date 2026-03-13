@@ -27,9 +27,8 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
 - [How to Run](#how-to-run)
   -[Executable Program](#executable-program)
   -[Python Program](#python-program)
-- [Planned Deployment (To be writen)](#planned-deployment)
-- [Limitations (To be writen)](#limitations)
-- [Future Work (To be writen)](#future-work)
+- [Limitations](#limitations)
+- [Planned Development](#planned-development)
 - [Acknowledgments (To be writen)](#acknowledgments)
 
 ---
@@ -378,3 +377,15 @@ Once you give the program the weather conditions and it predicts whats going to 
 9. Finally run `python terminal.py` to open the program.
 <img width="1312" height="502" alt="image" src="https://github.com/user-attachments/assets/aaf0dcbb-40ca-4940-bee9-824bb7220083" />
 10. The program is now running and ready for your inputs!
+
+---
+
+## Limitations
+
+This project did set out what it planned to do: Create a program to predict the next hour's wind speed and even more! However, there are some limitations to the approach taken. 
+- Due to the volatility of the changes in weather in the beginning and end of summer, the models are most accurate in the middle of summer. If the NJDEP buoy stayed online, models could also be created for the other seasons as well to have a year-wide working system.
+- Naive persistance models were very effective when it came to predicting wind, however this type of model cannot handle great changes as it just assumes the last value is the current value.
+
+---
+
+## Planned Development

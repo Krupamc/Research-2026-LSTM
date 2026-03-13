@@ -29,7 +29,7 @@ A time‑series deep learning project that uses an LSTM (Long Short‑Term Memor
   -[Python Program](#python-program)
 - [Limitations](#limitations)
 - [Planned Development](#planned-development)
-- [Acknowledgments (To be writen)](#acknowledgments)
+- [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -389,3 +389,18 @@ This project did set out what it planned to do: Create a program to predict the 
 ---
 
 ## Planned Development
+
+In the future, I would like to continue this project by:
+- Reduce MAE with the use of different or perhaps **more** models.
+- Gather historical data to train the models on.
+- Gather data year-round in order to have differernt **sets** of models for every season (Or more if needed)
+- Put this program onto a website for anyone to enjoy.
+- Please email me with any other ideas or questions!
+
+---
+
+## Acknowledgments
+
+I would like to thank so many for the oppertunity to work on this project. I thank my reserach advisors for encouraging me. I thank my computer science teacher for providing feedback and ideas. I thank one of my older teachers for all I know about machine learning development. I thank my contact with a meteorologist for all his insight and explainations. I thank my family for putting up with my hours of work. I thank my friends for not thinking I went insane. And most of all I thank you. You for reading. You for using this program.
+
+----

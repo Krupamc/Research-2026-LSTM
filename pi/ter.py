@@ -83,45 +83,44 @@ print()
 print()
 print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
+#Read the file
+raw_data = pd.read_csv("Csv/observed_data/RAW_data.csv")
+
 #Get all variables
-print("-----Please keep water temperature in the same unit (C or F) and air temperature in the same unit (C or F)-----")
-print("\n\n\n\n")
-print("-----Please enter the following variables from the Stafford Weather Station-----")
-print()
-print()
-print()
-data_main_air_temp = float(input("------What is the current air temperature? (C or F)-----"))
-bouncing_bar()
-print()
-print()
-data_humidity_per = float(input("------What is the current humidity percentage?-----"))
-bouncing_bar()
-print()
-print()
+print("-----This program will ask you for the row number to get a prediction for the next row to showcase the program-----")
+while True:
+    print()
+    row = input("-----What is the row for which you are entering data?-----").strip().lower()
+    row = int(row)
+    row-=2
+    print()
+    print(raw_data.iloc[row])
+    reply = input("Is this the row you would like? (y/n)")
+    print()
+    if reply in ("y"):
+        break
+
+#set all variables
+data_main_air_temp = raw_data.iloc[row]['Mainland Air Temp']
+data_humidity_per = raw_data.iloc[row]['Humidity (%)']
+data_wind_direction = raw_data.iloc[row]['Direction (A)']
+data_wind_speed = raw_data.iloc[row]['Wind Speed (A)']
+data_gusting = raw_data.iloc[row]['Gusting']
+data_pressure = raw_data.iloc[row]['Atmospheric Pressure (IN)']
+data_rainfall = raw_data.iloc[row]['Precipitation Rate']
+data_bay_temp = raw_data.iloc[row]['Bay Temp']
+data_salinity = raw_data.iloc[row]['Salinity']
+data_lbi_temp = raw_data.iloc[row]['LBI Air Temp']
+data_ocean_temp = raw_data.iloc[row]['Ocean Temp']
+
 #replace the direction column with the corresponding degree values
 direction_map = {'N': 0,'NNE': 1,'NE': 2,'ENE': 3,'E': 4,'ESE': 5,'SE': 6,'SSE': 7,
             'S': 8,'SSW': 9,'SW': 10,'WSW': 11,'W': 12,'WNW': 13,'NW': 14,'NNW': 15
         }
-
-while True:
-    data_wind_direction = (input("------What is the current wind direction in characters (ex. N, SE, NNE)?-----"))
-    data_wind_direction = data_wind_direction.strip().upper()
-    bouncing_bar()
-    print()
-    print()
-    if data_wind_direction not in direction_map:
-        print()
-        print("Unknown direction, please enter one of:", ", ".join(direction_map.keys()))
-        print()
-    else:
-        data_wind_direction = direction_map[data_wind_direction]
-        break
-    
-
-
-direction_deg = data_wind_direction
+data_wind_direction = direction_map[data_wind_direction]
 
 #Convert to degrees
+direction_deg = data_wind_direction
 allowed_dirs_deg = np.array([
     0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5,
     180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5
@@ -136,54 +135,6 @@ compass = [
 ]
 
 direction_label = compass[direction_label]
-
-
-
-
-#Get variables continued
-data_wind_speed = float(input("------What is the current wind speed in mph?-----"))
-bouncing_bar()
-print()
-print()
-data_gusting = float(input("------What is the current gusting (max wind speed) in mph?-----"))
-bouncing_bar()
-print()
-print()
-data_pressure = float(input("------What is the current atmospheric pressure in IN?-----"))
-bouncing_bar()
-print()
-print()
-data_rainfall = float(input("------What is the current rainfall in inches?-----"))
-bouncing_bar()
-print()
-print()
-print("-----Please enter the following variables from the nearby water body or the NJDEP MB_01 Buoy-----")
-print()
-print()
-data_bay_temp = float(input("------What is the current bay temperature in degrees (C or F)?-----"))
-bouncing_bar()
-print()
-print()
-data_salinity = float(input("------What is the current salinity in ppt?-----"))
-bouncing_bar()
-print()
-print()
-
-print("-----Please enter the following variables from the SCYC Weather Station-----")
-print()
-print()
-print()
-data_lbi_temp = float(input("------What is the current LBI temperature in degrees (C or F)?-----"))
-bouncing_bar()
-print()
-print()
-print("-----Please enter the following variables from the NDBC Station 44091-----")
-print()
-print()
-data_ocean_temp = float(input("------What is the current ocean temperature in degrees (C or F)?-----"))
-bouncing_bar()
-print()
-print()
 
 #make sure values are in celsius
 while True:

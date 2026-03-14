@@ -112,8 +112,8 @@ Currently this project is using:
 
 The model uses hourly observations from June 1 – September 24, 2025 (June 1 is excluded in the making of the upwelling flags) from multiple stations:
 
-- **Mainland weather station** (Stafford Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJMANAH7/table/2025-08-10/2025-08-10/daily).
-- **Long Beach Island (LBI) station** (e.g., Surf City Yacht Club Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJSURFC12/table/2025-08-8/2025-08-8/daily).
+- **Mainland weather station** (Stafford Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJMANAH7.
+- **Long Beach Island (LBI) station** (e.g., Surf City Yacht Club Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJSURFC12.
 - **Bay buoy** (NJDEP MB_01 Buoy - https://njdep.rutgers.edu/continuous/graphing/NJBuoy767/).
 - **Ocean buoy** (NDBC Station 44091 - https://www.ndbc.noaa.gov/station_page.php?station=44091).
 
@@ -332,8 +332,8 @@ In this folder there are several files:
 
 We can start predicting the wind any moment now! If the wind speed/wind gust speed prediction is over ten miles per hour, the user will be warned! The program will ask you for the current, mainland air temperature, humidity, wind direction, wind speed, wind gusting speed (or max wind), atmospheric pressure, precipitation rate, bay temperature, bay salinity, LBI air temperature, and the ocean temperature. You can get these values from these weather stations:
 
-- **Mainland weather station** (Stafford Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJMANAH7/table/2025-08-10/2025-08-10/daily).
-- **Long Beach Island (LBI) station** (e.g., Surf City Yacht Club Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJSURFC12/table/2025-08-8/2025-08-8/daily).
+- **Mainland weather station** (Stafford Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJMANAH7.
+- **Long Beach Island (LBI) station** (e.g., Surf City Yacht Club Weather Underground Weather station - https://www.wunderground.com/dashboard/pws/KNJSURFC12.
 - **Bay buoy** (NJDEP MB_01 Buoy - https://njdep.rutgers.edu/continuous/graphing/NJBuoy767/).
 - **Ocean buoy** (NDBC Station 44091 - https://www.ndbc.noaa.gov/station_page.php?station=44091).
 

@@ -52,11 +52,11 @@ st.markdown(
     ### For Southern Barnegat Bay, you can get the current temperatures from these locations:
 
     - [Stafford Weather Station](https://www.wunderground.com/dashboard/pws/KNJMANAH7)  
-      - [Back-up Station](https://www.wunderground.com/dashboard/pws/KNJMANAH87)
+       - [Back-up Station](https://www.wunderground.com/dashboard/pws/KNJMANAH87)
     - [Ship Bottom NJDEP MB_01 Buoy](https://njdep.rutgers.edu/continuous/station/NJBuoy759/)  
-      - Or use the water temperature and salinity of nearby bay water.
+       - Or use the water temperature and salinity of nearby bay water.
     - [Surf City Yacht Club Weather Station](https://www.wunderground.com/dashboard/pws/KNJSURFC12)
-      -[Back-up Station](https://www.wunderground.com/dashboard/pws/KNJSURFC7)
+       -[Back-up Station](https://www.wunderground.com/dashboard/pws/KNJSURFC7)
     - [LBI Ocean NDBC 44091 Buoy](https://www.ndbc.noaa.gov/station_page.php?station=44091)
     
     

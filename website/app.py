@@ -8,6 +8,40 @@ import os
 
 st.set_page_config(page_title="Barnegat Bay Wind Prediction", layout="centered")
 
+PRIMARY_BG = "#486e8d"
+PANEL_BG = "#4d6070"
+ACCENT = "#FFC94A"
+TEXT_LIGHT = "#F5F5F5"
+
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-color: {PRIMARY_BG};
+        color: {TEXT_LIGHT};
+    }}
+    .stSidebar {{
+        background-color: {PANEL_BG} !important;
+    }}
+    <style>
+    [data-testid="stDecoration"] {{
+        background-color: {PANEL_BG};
+        background-image: none;
+    }}
+    .stButton>button {{
+        background-color: {ACCENT};
+        color: #333333;
+        border-radius: 8px;
+        border: none;
+    }}
+    .stButton>button:hover {{
+        opacity: 0.9;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 #Load models and scaler
 scaler_x = load("models/scaler_x.joblib")
 reg_speed = load("models/wind_speed_linear.joblib")
@@ -26,19 +60,19 @@ data_main_air_temp = st.sidebar.number_input(
     "Mainland air temperature (C or F)", value=25.0, step=0.1
 )
 data_humidity_per = st.sidebar.number_input(
-    "Humidity (%)", value=60.0, min_value=0.0, max_value=100.0, step=0.1
+    "Humidity (%)", value=100.0, min_value=0.0, max_value=100.0, step=0.1
 )
 data_wind_direction = st.sidebar.selectbox(
     "Wind direction (Cardinal)", list(direction_map.keys())
 )
 data_wind_speed = st.sidebar.number_input(
-    "Wind speed (mph)", value=8.0, min_value=0.0, step=0.1
+    "Wind speed (mph)", value=5.0, min_value=0.0, step=0.1
 )
 data_gusting = st.sidebar.number_input(
-    "Gusting Wind Speeds (max wind speed, mph)", value=12.0, min_value=0.0, step=0.1
+    "Gusting Wind Speeds (max wind speed, mph)", value=10.0, min_value=0.0, step=0.1
 )
 data_pressure = st.sidebar.number_input(
-    "Atmospheric pressure (IN)", value=29.92, step=0.01
+    "Atmospheric pressure (IN)", value=29.95, step=0.01
 )
 data_rainfall = st.sidebar.number_input(
     "Precipitation (inches)", value=0.0, min_value=0.0, step=0.01
@@ -70,7 +104,7 @@ water_celsius = st.sidebar.radio(
     "Are water temperatures in Celsius?", ["Yes", "No"], index=0
 )
 
-if st.button("Run prediction"):
+if st.button("Run prediction", width="stretch"):
     # Copy your conversion logic
     if air_celsius == "No":
         data_main_air_temp = round((data_main_air_temp - 32) * 5.0 / 9.0, 1)

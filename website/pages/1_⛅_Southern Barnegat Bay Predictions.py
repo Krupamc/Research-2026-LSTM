@@ -43,9 +43,12 @@ st.markdown(
 )
 
 #Load models and scaler
-scaler_x = load("models/scaler_x.joblib")
-reg_speed = load("models/wind_speed_linear.joblib")
-reg_gust = load("models/wind_gust_linear.joblib")
+dir = os.path.dirname(__file__)
+model_dir = os.path.join(dir, "models")
+
+scaler_x = load(os.path.join(model_dir, "scaler_x.joblib"))
+reg_speed = load(os.path.join(model_dir, "wind_speed_linear.joblib"))
+reg_gust = load(os.path.join(model_dir, "wind_gust_linear.joblib"))
 
 direction_map = {'N': 0,'NNE': 1,'NE': 2,'ENE': 3,'E': 4,'ESE': 5,'SE': 6,'SSE': 7,'S': 8,'SSW': 9,'SW': 10,'WSW': 11,'W': 12,'WNW': 13,'NW': 14,'NNW': 15}
 allowed_dirs_deg = np.array([0,22.5,45,67.5,90,112.5,135,157.5,180,202.5,225,247.5,270,292.5,315,337.5])

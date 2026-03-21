@@ -250,6 +250,7 @@ bouncing_bar()
 
 #Predict
 speed_pred_lr = reg_speed.predict(scaledx)
+speed_pred_lr = float(speed_pred_lr.squeeze())
 speed_pred_lr = np.maximum(speed_pred_lr, 0.0)
 speed_pred_lr = np.round(speed_pred_lr, 1)
 print("-----Loading 4/4...-----")
@@ -289,6 +290,7 @@ bouncing_bar()
 
 #Predict
 gust_pred_lr = reg_gust.predict(scaledx)
+gust_pred_lr = float(gust_pred_lr.squeeze())
 gust_pred_lr = np.maximum(gust_pred_lr, 0.0)
 gust_pred_lr = np.round(gust_pred_lr, 1)
 print("-----Loading 4/4...-----")

@@ -1,1 +1,7 @@
+__pycache__/
+*.py[cod]
+.states
+.web
+*.db
+assets/external/
 .vscode/settings.json

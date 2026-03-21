@@ -49,6 +49,15 @@ st.markdown(
     This project explores whether a local LSTM model trained on detailed hourly observations can provide more accurate, location‑specific, one‑hour‑ahead warnings.
     
     **<== Select a model from the sidebar** to predict wind speed and direction for the next hour!
+    ### For Southern Barnegat Bay, you can get the current temperatures from these locations:
+    - [Stafford Weather Station](https://www.wunderground.com/dashboard/pws/KNJMANAH7)
+        - [Back-up Station](https://www.wunderground.com/dashboard/pws/KNJMANAH87)
+    -[Ship Bottom NJDEP MB_01 Buoy](https://njdep.rutgers.edu/continuous/station/NJBuoy759/)
+        - Or Use the Water Temperature and Salinity of Nearby Bay Water.
+    -[Surf City Yacht Club Weather Station](https://www.wunderground.com/dashboard/pws/KNJSURFC12)
+    -[LBI Ocean NDBC 44091 Buoy](https://www.ndbc.noaa.gov/station_page.php?station=44091)
+    
+    
     ### Want to learn more?
     - Check out the github documentation[github.com/Krupamc/Research-2026-LSTM](https://github.com/Krupamc/Research-2026-LSTM)
     

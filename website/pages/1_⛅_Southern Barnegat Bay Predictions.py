@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 
 
-st.set_page_config(page_title="Barnegat Bay Wind Prediction", layout="centered")
+st.set_page_config(page_title="Southern Barnegat Bay Predictions", page_icon="⛅", layout="centered")
 
 PRIMARY_BG = "#486e8d"
 PANEL_BG = "#4d6070"

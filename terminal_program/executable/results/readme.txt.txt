@@ -1,2 +1,0 @@
------Hello! This folder is where all of your results will be saved to-----
------They will be saved as a csv and txt that will get appended every time the program is ran-----

@@ -87,9 +87,25 @@ print("-----Please keep water temperature in the same unit (C or F) and air temp
 print()
 print("-----Please enter the following variables from the Stafford Weather Station-----")
 print()
-data_main_air_temp = float(input("------What is the current air temperature? (C or F)-----"))
+while True:
+    try:
+        data_main_air_temp = float(input("------What is the current air temperature? (C or F)-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
-data_humidity_per = float(input("------What is the current humidity percentage?-----"))
+while True:
+    try:
+        data_humidity_per = float(input("------What is the current humidity percentage?-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
 
 #replace the direction column with the corresponding degree values
@@ -131,27 +147,96 @@ direction_label = compass[direction_label]
 
 
 #Get variables continued
-data_wind_speed = float(input("------What is the current wind speed in mph?-----"))
+while True:
+    try:
+        data_wind_speed = float(input("------What is the current wind speed in mph?-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
-data_gusting = float(input("------What is the current gusting (max wind speed) in mph?-----"))
+
+while True:
+    try:
+        data_gusting = float(input("------What is the current gusting (max wind speed) in mph?-----"))
+        break
+    except ValueError:
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+
 bouncing_bar()
-data_pressure = float(input("------What is the current atmospheric pressure in IN?-----"))
+
+while True:
+    try:
+        data_pressure = float(input("------What is the current atmospheric pressure in IN?-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
-data_rainfall = float(input("------What is the current rainfall in inches?-----"))
+
+while True:
+    try:
+        data_rainfall = float(input("------What is the current rainfall in inches?-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
 
 print("-----Please enter the following variables from the nearby water body or the NJDEP MB_01 Buoy-----")
-data_bay_temp = float(input("------What is the current bay temperature in degrees (C or F)?-----"))
+
+while True:
+    try:
+        data_bay_temp = float(input("------What is the current bay temperature in degrees (C or F)?-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
-data_salinity = float(input("------What is the current salinity in ppt?-----"))
+
+while True:
+    try:
+        data_salinity = float(input("------What is the current salinity in ppt?-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
 
 print("-----Please enter the following variables from the SCYC Weather Station-----")
-data_lbi_temp = float(input("------What is the current LBI temperature in degrees (C or F)?-----"))
+
+while True:
+    try:
+        data_lbi_temp = float(input("------What is the current LBI temperature in degrees (C or F)?-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
 
 print("-----Please enter the following variables from the NDBC Station 44091-----")
-data_ocean_temp = float(input("------What is the current ocean temperature in degrees (C or F)?-----"))
+
+while True:
+    try:
+        data_ocean_temp = float(input("------What is the current ocean temperature in degrees (C or F)?-----"))
+        break
+    except ValueError:
+        print()
+        print("-----Please enter a valid number (like 23 or 23.5)-----")
+        print()
+
 bouncing_bar()
 
 #make sure values are in celsius

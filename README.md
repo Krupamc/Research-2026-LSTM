@@ -186,7 +186,12 @@ The models were all evaulated using the `Mean Absolute Error` or MAE. MAE values
 - The Onshore wind model using values derived from the wind prediction is called the **Derived MAE**.
 
 ### MAE values of every model tested, with the chosen models highlighted.
-<img width="734" height="187" alt="image" src="https://github.com/user-attachments/assets/e340c875-0073-4993-8ad4-a02eabd9e278" />
+| Model MAE's | Wind Speed | Wind Gusting | Wind Direction | Onshore | Upwelling |
+|-------------|------------|--------------|----------------|---------|-----------|
+| Linear MAE  | `0.56`     | `0.96`       | 3.92           | 0.55    | Collapsed |
+| Naive MAE   | 1.13       |  1.17        | `1.17`         | 0.17    | Collapsed |
+| LSTM MAE    | Collapsed  | Collapsed    | Collapsed      | Collapsed | Collapsed |
+| Derived MAE | -          | -            | -         | `0.13`       | -         |
 
 ---
 
@@ -238,6 +243,7 @@ The data cleaned before being graphed using `Matplotlib`. All variables are grap
 ## Raspberry Pi Program
 
 The same Train and Terminal program was used for application on a 3.5 `Raspberry Pi` screen. Functionality is all the same except for the print lines being reshaped to fit on the smaller screen.
+![IMG_5223](https://github.com/user-attachments/assets/4cb88fa4-cdf2-4a95-830b-f8b3907c9355)
 
 ---
 

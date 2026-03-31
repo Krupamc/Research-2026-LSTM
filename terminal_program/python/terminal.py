@@ -473,11 +473,11 @@ bouncing_bar()
 pred_path = "results/prediction_results.txt"
 os.makedirs(os.path.dirname(pred_path), exist_ok=True)
 
-# Build a one-line, human-readable string (key=value; ...)
+# Build a one line string
 line_parts = [f"{k}={v}" for k, v in record.items()]
 line = "; ".join(line_parts)
 
-# Append to the txt file (create if it doesn't exist)
+# Append to the txt file
 with open(pred_path, "a", encoding="utf-8") as f:
     f.write(line + "\n")
 print(f"-----Saved results to {pred_path}-----")

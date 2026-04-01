@@ -366,7 +366,7 @@ Once you give the program the weather conditions and it predicts what is going t
 <img width="1144" height="652" alt="image" src="https://github.com/user-attachments/assets/59bbdd49-c496-44c1-8fbf-c400b421bde7" />
 <img width="1138" height="643" alt="image" src="https://github.com/user-attachments/assets/290d1722-35c2-49cf-be59-c5f88fc0751c" />
 4. Double click the `Terminal Program` app to run it. (The one with the weather icon!)
-5. Depending on your computer, you may encounter a pop up about a unknown app. (This program is safe. But if you would like to be make sure that the file was not modified you can run the file through a `SHA256` checksum (You can use: https://emn178.github.io/online-tools/sha256_checksum.html). If the result is not `c9aebca26523454a67853b6cc1e40ffc4ce1c1fc9f966f42a6f66629c722e3a3`, you downloaded a modified file, please delete it and then empty the `Recycling Bin`.
+5. Depending on your computer, you may encounter a pop up about a unknown app. (This program is safe. But if you would like to be make sure that the file was not modified you can run the file through a `SHA256` checksum (You can use: https://emn178.github.io/online-tools/sha256_checksum.html). If the result is not `09ceb8deb4724834b81d81af3c793c059fdd8af307375865a399b974ed38253c` for the entire ziped folder, you downloaded a modified file, please delete it and then empty the `Recycling Bin`.
 <img width="1153" height="668" alt="image" src="https://github.com/user-attachments/assets/0e6b0208-40d8-42f6-9eb7-723cdda4b0b0" />
 6. Now hit the `More info` button.
 <img width="1152" height="667" alt="image" src="https://github.com/user-attachments/assets/0085ad4d-974e-43c5-9c46-b3567a50d911" />

@@ -5,7 +5,8 @@
 
 A time‑series deep learning project that uses an LSTM (Long Short‑Term Memory) neural network, Linear Regression model, and Naive persistance model to predict sudden onshore wind events and upwelling conditions in southern Barnegat Bay, New Jersey. The model learns from hourly data to forecast the **next hour’s** wind speed, wind gusting speed, wind direction, onshore status, and upwelling status to help local boaters avoid hazardous conditions.
 
-You can try out the model for yourself here: [barnegatbaywindprediction.streamlit.app](https://barnegatbaywindprediction.streamlit.app/)
+You can try out the model for yourself here: [wind.krupamlab.com](https://wind.krupamlab.com)
+- Here is a backup website: [barnegatbaywindprediction.streamlit.app](https://barnegatbaywindprediction.streamlit.app/)
 
 ---
 
@@ -61,7 +62,8 @@ This project explores whether a **local LSTM model** trained on detailed hourly 
 3. **Evaluate accuracy of the models** using Mean Absolute Error (MAE), targeting **< 10% error** for wind speed/direction, comparable to short‑range weather forecasts.
 
 4. **Deploy the trained model** via:
-   - [x] A simple website: [barnegatbaywindprediction.streamlit.app](https://barnegatbaywindprediction.streamlit.app/)
+   - [x] A simple website: [wind.krupamlab.com](https://wind.krupamlab.com)
+     - Backup website: [barnegatbaywindprediction.streamlit.app](https://barnegatbaywindprediction.streamlit.app/)
    - [x] A local desktop/terminal script.
    - [x] A executable program.
 

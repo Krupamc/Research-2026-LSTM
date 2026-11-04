@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+
+        <style>
+            body {
+                font-family:'Times New Roman', Times, serif
+            }
+        </style>
+
+        <meta name="decription" content="Barnegat Bay Onshore Wind Predictions">
+        <meta name="author" content="Krupam Patel">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta property="og:title" content="Onshore Wind Model Predictions">
+        <meta property="og:type" content="website">
+
+        <link rel="icon" href="{{ url_for('static', path='/icons/favicon.icon') }}" sizes="any">
+
+    </head>
+    <body>
+        <title>
+            {% if title %}
+                {{ title }} | Onshore Wind Predictions
+            {% else %}
+                Barnegat Bay Onshore Wind Predictions
+            {% endif %}
+        </title>
+
+        <div id="top-menu-bar" class="top_menu_bar">
+
+            <nav class="menu_bar" aria-label="Main navigation">
+                <!-- Logo link -->
+                <a href="/" class="logo_link">
+                    <!-- <img src="{{ url_for('static', path='/icons/logo.jpg') }}" alt="logo" loading="eager"> -->
+                    <p>Onshore Wind Predictions</p>
+                </a>
+
+                <!--Mobile button-->
+                <button type="button" class="mobile_nav_toggle" id="mobile-nav-toggle" aria-controls="main-nav-links" aria-expanded="false" aria-label="Open Navigation"><span aria-hidden="true">☰</span></button>
+
+                <!-- Menu Bar -->
+                 <!-- Button to open submenu with list of links -->
+                <div class="nav_links" id="main-nav-links">
+
+                    <!-- MATES Dropdown-->
+                    <!-- <div class="nav_dropdown">
+                        <button type="button" class="nav_item submenu_toggle" aria-expanded="false" aria-controls="mates-submenu">MATES<span class="submenu_arrow" aria-hidden="true">▼</span></button>
+                    
+                        <ul class="nav_submenu" id="mates-submenu" hidden>
+                            <li>
+                                <a href="/mates" class="nav_item {% if active_page == 'mates' %}active{% endif %}">MATES?</a>
+                            </li>
+                        </ul>
+                    </div> -->
+
+                    <!-- Reg. links-->
+                    <a href="/south-barnegat" class="nav_item {% if active_page == 'south-barnegat' %}active{% endif %}">South Barnegat Bay</a>
+                    
+
+                </div>
+            </nav>
+        </div>
+
+        <script>
+            (() => {
+                const button = document.getElementById("mobile-nav-toggle");
+                const navigation = document.getElementById("main-nav-links");
+                const mobileScreen = window.matchMedia("(max-width: 900px)");
+
+                if (!button || !navigation) return;
+
+                const submenuButtons = [
+                    ...navigation.querySelectorAll(".submenu_toggle")
+                ];
+
+                function setSubmenuOpen(toggle, open) {
+                    const submenu = document.getElementById(
+                        toggle.getAttribute("aria-controls")
+                    );
+
+                    if (!submenu) return;
+
+                    toggle.setAttribute("aria-expanded", String(open));
+                    submenu.hidden = !open;
+                }
+
+                function closeSubmenus(except = null) {
+                    submenuButtons.forEach((toggle) => {
+                        if (toggle !== except) {
+                            setSubmenuOpen(toggle, false);
+                        }
+                    });
+                }
+
+                function setMenuOpen(open) {
+                    navigation.classList.toggle("is_open", open);
+
+                    button.setAttribute("aria-expanded", String(open));
+                    button.setAttribute(
+                        "aria-label",
+                        open ? "Close navigation" : "Open navigation"
+                    );
+
+                    button.querySelector("span").textContent = open ? "✕" : "☰";
+
+                    if (!open) {
+                        closeSubmenus();
+                    }
+                }
+
+                // Main mobile hamburger
+                button.addEventListener("click", () => {
+                    const open = button.getAttribute("aria-expanded") === "true";
+                    setMenuOpen(!open);
+                });
+
+                // Individual dropdown buttons
+                submenuButtons.forEach((toggle) => {
+                    toggle.addEventListener("click", () => {
+                        const open = toggle.getAttribute("aria-expanded") === "true";
+
+                        // Keep only one submenu open at a time
+                        closeSubmenus(toggle);
+                        setSubmenuOpen(toggle, !open);
+                    });
+                });
+
+                // Close menus when a navigation link is selected
+                navigation.addEventListener("click", (event) => {
+                    if (event.target.closest("a[href]")) {
+                        setMenuOpen(false);
+                    }
+                });
+
+                // Close when clicking outside the navigation
+                document.addEventListener("click", (event) => {
+                    if (
+                        !navigation.contains(event.target) &&
+                        !button.contains(event.target)
+                    ) {
+                        setMenuOpen(false);
+                    }
+                });
+
+                // Escape closes a submenu first, then the hamburger panel
+                document.addEventListener("keydown", (event) => {
+                    if (event.key !== "Escape") return;
+
+                    const openSubmenuButton = submenuButtons.find(
+                        (toggle) => toggle.getAttribute("aria-expanded") === "true"
+                    );
+
+                    if (openSubmenuButton) {
+                        setSubmenuOpen(openSubmenuButton, false);
+                        openSubmenuButton.focus();
+                        event.preventDefault();
+                        return;
+                    }
+
+                    if (button.getAttribute("aria-expanded") === "true") {
+                        setMenuOpen(false);
+                        button.focus();
+                        event.preventDefault();
+                    }
+                });
+
+                // Reset menus when crossing the desktop/mobile breakpoint
+                mobileScreen.addEventListener("change", () => {
+                    setMenuOpen(false);
+                });
+
+                // Start with all menus closed
+                setMenuOpen(false);
+            })();
+        </script>
+
+    </body>
+</html> 

@@ -1,10 +1,10 @@
 /* Overall */
 :root {
     /* Primary colors */
-    --primary-color: #4d6070;
-    --secondary-color: #50808E;
+    --primary-color: #659299;
+    --secondary-color: #c8e1e1;
     --accent-color: #FFC94A;
-    --surface-color: #A3C9A8;
+    --surface-color: #9ad6d1;
     --background-color: #486e8d;
     --text-base: #F5F5F5;
     --off-white: #f3f3f3;
@@ -318,4 +318,40 @@ button.nav_item {
     display: flex;
     justify-content: center;
     padding-top: 180px;
+}
+
+/* Text */
+.title_header {
+    size: 16px;
+    font-size: 48px;
+    color: var(--secondary-color);
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 28px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.subsubtitle {
+    font-size: 24px;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.side_by_side {
+    display: flex; 
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.paragraph {
+    text-decoration: none;
+    flex: 1;
+}
+
+.paragraph p {
+    font-size: 20px;
+    color: var(--text-color);
 }

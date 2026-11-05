@@ -14,7 +14,7 @@
     --button-text: #111;
     --button-text-hover: var(--off-white);
     --button-color: #FFC94A;
-    --button-color-hover: #f9cb60;
+    --button-color-hover: #d49d1d;
 }
 
 body {
@@ -354,4 +354,33 @@ button.nav_item {
 .paragraph p {
     font-size: 20px;
     color: var(--text-color);
+}
+
+.subtitle {
+    font-size: 28px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 12px 18px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--button-text);
+    background-color: var(--button-color);
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.button:hover {
+    background: var(--button-color-hover);
+    color: var(--button-text-hover);
+    transform: translateY(-3px)
 }

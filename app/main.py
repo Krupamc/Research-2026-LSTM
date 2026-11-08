@@ -118,4 +118,38 @@ def south_barnegat_input(mainland_temp: float = Form(), humidity: float = Form()
     scaledx = scaler_x.transform(data)
 
     # Predict wind
-    
+    scaled_wind = lr_speed.predict(scaledx)
+    wind_pred = float(scaled_wind.squeeze())
+    wind_pred = np.maximum(wind_pred, 0.0)
+    wind_pred = np.round(wind_pred, 2)
+
+    # Input into another array
+    data = np.array([
+        mainland_temp,
+        humidity,
+        wind_dir_bin,
+        wind_speed,
+        pressure,
+        precipitation,
+        bay_temp,
+        salinty,
+        lbi_temp,
+        ocean_temp,
+        onshore_flag,
+        upwelling_flag,
+    ])
+
+    scaledx = scaler_x.transform(data)
+
+    # predict wind gust
+    scaled_gust = lr_gust.predict(scaledx)
+    gust_pred = float(scaled_gust.squeeze())
+    gust_pred = np.maximum(gust_pred, 0.0)
+    gust_pred = np.round(gust_pred, 2)
+
+    return {
+        "wind_pred": wind_pred,
+        "gust_pred": gust_pred,
+        "direction": {"degree": direction_deg, "label": direction_label},
+        "onshore": onshore_flag
+    }

@@ -1,9 +1,13 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import PlainTextResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-import requests
+import requests, os
 from pathlib import Path
+from joblib import load
+import numpy as np
+import pandas as pd
+from datetime import datetime
 
 # Turn on 
 # fastapi dev --host 0.0.0.0  --port 8002 app/main.py
@@ -32,4 +36,86 @@ Allow: /
 
 """
 
+@app.get("/south-barnegat", response_class=HTMLResponse)
+def south_barnegat(request: Request):
+    return templates.TemplateResponse(request, "south-barnegat.html", {"request": request})
 
+@app.post("/south-barnegat")
+def south_barnegat_input(mainland_temp: float = Form(), humidity: float = Form(), wind_dir: str = Form(), wind_speed: float = Form(), wind_gust: float = Form(), pressure: float = Form(), precipitation: float = Form(), salinty: float = Form(), lbi_temp: float = Form(), bay_temp: float = Form(), ocean_temp: float = Form(), air_in_celsius: bool = Form(), water_in_celsius: bool = Form()):
+    # Load models/scaler
+    dir = os.path.dirname(__file__)
+    model_dir = os.path.join(dir, "models")
+
+    scaler_x = load(os.path.join(model_dir, "scaler_x.joblib"))
+    lr_speed = load(os.path.join(model_dir, "wind_speed_linear.joblib"))
+    lr_gust = load(os.path.join(model_dir, "wind_gust_linear.joblib"))
+
+    direction_map = {
+        "N": 0, "NNE": 1, "NE": 2, "ENE": 3, 
+        "E": 4, "ESE": 5, "SE": 6, "SSE": 7, 
+        "S": 8, "SSW": 9, "SW": 10, "WSW": 11, 
+        "W": 12, "WNW": 13, "NW": 14, "NNW": 15
+    }
+
+    allowed_dirs_deg = np.array([0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5, 180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5])
+    compass = [
+        "N","NNE","NE","ENE",
+        "E","ESE","SE","SSE",
+        "S","SSW","SW","WSW",
+        "W","WNW","NW","NNW"
+    ]
+
+    if air_in_celsius is False:
+        mainland_temp = round((mainland_temp - 32) * 5.0 / 9.0, 2)
+        lbi_temp = round((lbi_temp - 32) * 5.0/9.0, 2)
+    if water_in_celsius is False:
+        ocean_temp = round((ocean_temp - 32) * 5.0/9.0, 2)
+        bay_temp = round((bay_temp - 32) * 5.0/9.0, 2)
+
+    # Map direction convert.
+    wind_dir_bin = direction_map[wind_dir]
+    direction_deg = allowed_dirs_deg[wind_dir_bin]
+    direction_label = compass[wind_dir_bin]
+
+
+    print("Variables Recieved")
+
+    #rounding
+    mainland_temp = round(mainland_temp, 2)
+    humidity = round(humidity, 2)
+    wind_speed = round(wind_speed, 2)
+    wind_gust = round(wind_gust, 2)
+    pressure = round(wind_gust, 2)
+    precipitation = round(precipitation, 2)
+    bay_temp = round(bay_temp, 2)
+    salinty = round(bay_temp, 2)
+    lbi_temp = round(bay_temp, 2)
+    ocean_temp = round(bay_temp, 2)
+    upwelling_flag = 0
+
+    onshore_degrees = [8, 7, 6, 4, 3, 2, 1]
+    onshore_flag = 0
+    if wind_dir_bin in onshore_degrees:
+        onshore_flag = 1
+
+
+    # Input data into one array
+    data = np.array([
+        mainland_temp,
+        humidity,
+        wind_dir_bin,
+        wind_gust,
+        pressure,
+        precipitation,
+        bay_temp,
+        salinty,
+        lbi_temp,
+        ocean_temp,
+        onshore_flag,
+        upwelling_flag,
+    ]).reshape(1, -1)
+
+    scaledx = scaler_x.transform(data)
+
+    # Predict wind
+    

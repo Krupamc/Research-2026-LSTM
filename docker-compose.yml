@@ -1,0 +1,14 @@
+services:
+  web:
+    build:
+      context: .
+    command: uvicorn main:app --host 0.0.0.0 --port ${FASTAPI_PORT}
+    env_file:
+      - .env
+    ports:
+      - "${FASTAPI_PORT}:${FASTAPI_PORT}" # Exposing port
+    volumes:
+      - app_data:/app/data
+
+volumes:
+  app_data:

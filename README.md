@@ -5,7 +5,7 @@
 
 A time‑series deep learning project that uses an LSTM (Long Short‑Term Memory) neural network, Linear Regression model, and Naive persistance model to predict sudden onshore wind events and upwelling conditions in southern Barnegat Bay, New Jersey. The model learns from hourly data to forecast the **next hour’s** wind speed, wind gusting speed, wind direction, onshore status, and upwelling status to help local boaters avoid hazardous conditions.
 
-You can try out the model for yourself here: [wind.krupamlab.com](https://wind.krupamlab.com)
+You can try out the model for yourself here: [onshore.krupamlab.com](https://onshore.krupamlab.com)
 - Here is a backup website: [barnegatbaywindprediction.streamlit.app](https://barnegatbaywindprediction.streamlit.app/)
 
 ---
@@ -30,6 +30,7 @@ You can try out the model for yourself here: [wind.krupamlab.com](https://wind.k
 - [How to Run](#how-to-run)
   - [Executable Program](#executable-program)
   - [Python Program](#python-program)
+  - [The Website](#the-website)
 - [Limitations](#limitations)
 - [Planned Development](#planned-development)
 - [Acknowledgments](#acknowledgments)
@@ -391,6 +392,32 @@ Once you give the program the weather conditions and it predicts what is going t
 9. Finally run `python terminal.py` to open the program.
 <img width="1312" height="502" alt="image" src="https://github.com/user-attachments/assets/aaf0dcbb-40ca-4940-bee9-824bb7220083" />
 10. The program is now running and ready for your inputs!
+
+### Website
+Docker (linux): 
+- Make sure docker is installed (this is not a docker guide. Check out their [https://docs.docker.com/engine/install/](docs)). - Open folder
+  - Edit the .env file for what port you want the website run on. Edit the "FASTAPI_PORT" value (default is 8001)
+<img width="1105" height="135" alt="image" src="https://github.com/user-attachments/assets/c9f94908-0da2-4b80-ad19-374937d18eaa" />
+
+-Run docker compose up -d (-d flag is for detached mode or running in background. To watch for any errors, run without flag) 
+  - If it does not work, try running it with "sudo in front of it.
+  - To turn off, run docker compose down (-v flag will delete all of the containers fully. Does not delete the repo folder) 
+<img width="1458" height="240" alt="image" src="https://github.com/user-attachments/assets/31c2365b-c8d9-421e-b2ab-635f9f4e94f9" />
+- Navigate to your browser and then to http://127.0.0.1:8001 (or change the port or the numbers after the colon)
+Python:
+- Make sure python is installed (this is not a python guide. Check out their [https://www.python.org/downloads/](docs)). - Open folder
+- Unzip the folder.
+- Open `CMD` on windows (type CMD) or open terminal in Mac.
+- Do the command `cd` (change directory also known as a folder`) and move to where the unzipped folder is.
+- Make a virtual environment `python -m venv env`
+  - You can replace python with `python3` if it doesn't work. You can also change the name of the environment by replacing `env`
+- Now we must activate the virtual environment. Run: `<env_name>\Scripts\activate.bat` (Make sure you use \'s and not /)
+  - `source .venv/bin/activate` for mac
+- Run: pip install -r requirements.txt to install from the list in requirements.txt.
+- cd into the `app` folder
+- Run  `uvicorn main:app --reload --port 8001` (can also change the port)
+- Navigate to your browser and then to http://127.0.0.1:8001 (or change the port or the numbers after the colon)
+- TADA you are now running the website. (I would question why you would want to run a website of me, but you do you ig).
 
 ---
 

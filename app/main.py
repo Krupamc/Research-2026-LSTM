@@ -41,7 +41,7 @@ def south_barnegat(request: Request):
     return templates.TemplateResponse(request, "south-barnegat.html", {"request": request})
 
 @app.post("/south-barnegat")
-def south_barnegat_input(mainland_temp: float = Form(), humidity: float = Form(), wind_dir: str = Form(), wind_speed: float = Form(), wind_gust: float = Form(), pressure: float = Form(), precipitation: float = Form(), salinty: float = Form(), lbi_temp: float = Form(), bay_temp: float = Form(), ocean_temp: float = Form(), air_in_celsius: bool = Form(), water_in_celsius: bool = Form()):
+def south_barnegat_input(request: Request, mainland_temp: float = Form(), humidity: float = Form(), wind_dir: str = Form(), wind_speed: float = Form(), wind_gust: float = Form(), pressure: float = Form(), precipitation: float = Form(), salinity: float = Form(), lbi_temp: float = Form(), bay_temp: float = Form(), ocean_temp: float = Form(), air_in_celsius: bool = Form(), water_in_celsius: bool = Form()):
     # Load models/scaler
     dir = os.path.dirname(__file__)
     model_dir = os.path.join(dir, "models")
@@ -85,19 +85,18 @@ def south_barnegat_input(mainland_temp: float = Form(), humidity: float = Form()
     humidity = round(humidity, 2)
     wind_speed = round(wind_speed, 2)
     wind_gust = round(wind_gust, 2)
-    pressure = round(wind_gust, 2)
+    pressure = round(pressure, 2)
     precipitation = round(precipitation, 2)
     bay_temp = round(bay_temp, 2)
-    salinty = round(bay_temp, 2)
-    lbi_temp = round(bay_temp, 2)
-    ocean_temp = round(bay_temp, 2)
+    salinity = round(salinity, 2)
+    lbi_temp = round(lbi_temp, 2)
+    ocean_temp = round(ocean_temp, 2)
     upwelling_flag = 0
 
     onshore_degrees = [8, 7, 6, 4, 3, 2, 1]
     onshore_flag = 0
     if wind_dir_bin in onshore_degrees:
         onshore_flag = 1
-
 
     # Input data into one array
     data = np.array([
@@ -108,7 +107,7 @@ def south_barnegat_input(mainland_temp: float = Form(), humidity: float = Form()
         pressure,
         precipitation,
         bay_temp,
-        salinty,
+        salinity,
         lbi_temp,
         ocean_temp,
         onshore_flag,
@@ -132,12 +131,12 @@ def south_barnegat_input(mainland_temp: float = Form(), humidity: float = Form()
         pressure,
         precipitation,
         bay_temp,
-        salinty,
+        salinity,
         lbi_temp,
         ocean_temp,
         onshore_flag,
         upwelling_flag,
-    ])
+    ]).reshape(1, -1)
 
     scaledx = scaler_x.transform(data)
 
@@ -147,9 +146,15 @@ def south_barnegat_input(mainland_temp: float = Form(), humidity: float = Form()
     gust_pred = np.maximum(gust_pred, 0.0)
     gust_pred = np.round(gust_pred, 2)
 
-    return {
+    if onshore_flag == 1:
+        onshore_flag = "Yes!"
+    else: onshore_flag = "No"
+
+    data = {
         "wind_pred": wind_pred,
         "gust_pred": gust_pred,
         "direction": {"degree": direction_deg, "label": direction_label},
         "onshore": onshore_flag
     }
+    print(data)
+    return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "data": data})

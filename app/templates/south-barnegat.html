@@ -1,5 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
+{% if data %}
+<dialog id="prediction_popup" class="prediction_popup" aria-labelledby="prediction_popup_title" aria-describedby="prediction_popup_description">
+<div class="popup_overlay">
+    <div class="popup_box">
+        <div class="paragraph">
+            <p><b>Predicted wind speed:</b> {{ data["wind_pred"] }}</p>
+            <p><b>Predicted wind gust:</b> {{ data["gust_pred"] }}</p>
+            <p><b>Predicted direction:</b> {{ data["direction"]["degree"] }}° ({{ data["direction"]["label"] }})</p>
+            <p><b>Is this a Onshore Breeze?</b> {{ data["onshore"] }}</p>
+        </div>
+        <a href="/south-barnegat" class="button">OK</a>
+    </div>
+</div>
+{% endif %}
 <div class="main_page">
     <div class="main_container">
         <h1 class="title_header">Southern Barnegat Bay Predictions</h1>
@@ -33,8 +47,117 @@
 
         <a href="https://www.ndbc.noaa.gov/station_page.php?station=44091" target="_blank" rel="noopener" class="button">LBI Ocean NDBC 44091 Buoy</a>
     
-        <form>
-            
+        <form action="/south-barnegat" method="post" class="prediction_form">
+            <h2>Enter Current Weather Conditions</h2>
+
+            <p>Enter observations from the same time.</p>
+
+            <fieldset> <!-- Temp choice-->
+                <legend>Temperature Units</legend>
+                <!-- Choose Air-->
+                <div class="form_field">
+                    <label for="air_in_celsius">Air temperature units</label>
+                    <select id="air_in_celsius" name="air_in_celsius" required>
+                        <option value="false">Fahrenheit (°F)</option>
+                        <option value="true" selected>Celsius (°C)</option>
+                    </select>
+                </div>
+                <!-- Choose Water-->
+                <div class="form_field">
+                    <label for="water_in_celsius">Water temperature units</label>
+                    <select id="water_in_celsius" name="water_in_celsius" required>
+                        <option value="false">Fahrenheit (°F)</option>
+                        <option value="true" selected>Celsius (°C)</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Stafford Weather Station</legend>
+
+                <!-- Temp -->
+                <div class="form_field">
+                    <label for="mainland_temp">Air Temperature</label>
+                    <input type="number" id="mainland_temp" name="mainland_temp" step="0.1" value="25.0" required>
+                </div>
+
+                <!-- Humidity -->
+                <div class="form_field">
+                    <label for="humidity">Humidity (%)</label>
+                    <input type="number" id="humidity" name="humidity" min="0" max="100" step="0.1" value="50" required>
+                </div>
+
+                <!-- Wind Direction -->
+                <div class="form_field">
+                    <label for="wind_dir">Wind direction (Cardinal)</label>
+                    <select id="wind_dir" name="wind_dir" required>
+                        <option value="" disabled selected>Select a direction</option>
+
+                        {% for direction in [
+                            "N", "NNE", "NE", "ENE",
+                            "E", "ESE", "SE", "SSE",
+                            "S", "SSW", "SW", "WSW",
+                            "W", "WNW", "NW", "NNW"
+                        ] %}
+                            <option value="{{ direction }}">{{ direction }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Wind Speed -->
+                <div class="form_field">
+                    <label for="wind_speed">Wind Speed (mph)</label>
+                    <input type="number" id="wind_speed" name="wind_speed" min="0" step="0.1" value="5.0" required>
+                </div>
+
+                <!-- Wind Gust -->
+                <div class="form_field">
+                    <label for="wind_gust">Wind Gust (mph)</label>
+                    <input type="number" id="wind_gust" name="wind_gust" min="0" step="0.1" value="10.0" required>
+                </div>
+
+                <!-- Pressure -->
+                <div class="form_field">
+                    <label for="pressure">Air pressure (inHg)</label>
+                    <input type="number" id="pressure" name="pressure" min="0" step="0.01" value="29.95" required>
+                </div>
+
+                <!-- Precipitation -->
+                <div class="form_field">
+                    <label for="precipitation">Precipitation (in)</label>
+                    <input type="number" id="precipitation" name="precipitation" min="0" step="0.01" value="0.00" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Surf City Yacht Club Weather Station</legend>
+
+                <div class="form_field">
+                    <label for="lbi_temp">Air Temperature</label>
+                    <input type="number" id="lbi_temp" name="lbi_temp" step="0.1" value="25.0" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Bay and Ocean Conditions</legend>
+
+                <div class="form_field">
+                    <label for="bay_temp">Bay Water Temperature</label>
+                    <input type="number" id="bay_temp" name="bay_temp" step="0.1" value="22" required> 
+                </div>
+
+                <div class="form_field">
+                    <label for="salinity">Bay Salinity (ppt)</label>
+                    <input type="number" id="salinity" name="salinity" min="0" step="0.1" value="30.00" required>
+                </div>
+
+                <div class="form_field">
+                    <label for="ocean_temp">Ocean Water Temperature</label>
+                    <input type="number" id="ocean_temp" name="ocean_temp" step="0.1" value="20.00" required>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="button">Predict Wind Conditions</button>
         </form>
     </div>
 </div>

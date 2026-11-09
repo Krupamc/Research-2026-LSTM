@@ -320,6 +320,59 @@ button.nav_item {
     padding-top: 180px;
 }
 
+/* Predictions */
+.prediction_form {
+    width: 100%;
+    max-width: 700px;
+    margin: 32px auto;
+    text-align: left;
+    background-color: var(--primary-color);
+    border-radius: 16px;
+    padding: 10px 16px;
+    border: 3px solid var(--accent-color)
+}
+
+.prediction_form fieldset {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    min-width: 0;
+    margin-bottom: 24px;
+    padding: 20px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+}
+
+.prediction_form legend {
+    padding: 0 8px;
+    font-weight: 600;
+}
+
+.form_field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.form_field input,
+.form_field select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px;
+    font: inherit;
+    border: 5px solid var(--surface-color);
+    border-radius: 4px;
+}
+
+
+@media (max-width: 600px) {
+    .prediction_form fieldset {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Text */
 .title_header {
     size: 16px;

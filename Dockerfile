@@ -7,8 +7,6 @@ WORKDIR /app
 
 # Update system and delete lists to save space
 RUN apt-get update
-# Install Postgres info
-RUN apt-get install -y curl postgresql-client --no-install-recommends
 RUN rm -rf /var/lib/apt/lists*
 
 COPY requirements.txt /app/requirements.txt

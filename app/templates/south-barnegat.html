@@ -2,7 +2,40 @@
 {% block content %}
 <div class="main_page">
     <div class="main_container">
-        <h1 class="title_header">test</h1>
+        <h1 class="title_header">Southern Barnegat Bay Predictions</h1>
+
+        <div class="paragraph">
+            <p>
+                These predictions are created for the Stafford (KNJMANAH7) or MATES School Weather Station (my school!).
+                They use weather stations and buoys around the area. To run a prediction, go the station pages and 
+                input the variables to predict wind conditions!
+
+            </p>
+            <img src="{{ url_for('static', path='/icons/s_barnegat_stations.jpg') }}" class="image" alt="Map of the stations" style="display: flex; width: 50%; justify-content: center; align-items: center; ">
+            <p></p>
+        </div>
+
+        <!-- Links -->
+        <a href="https://www.wunderground.com/dashboard/pws/KNJMANAH7" target="_blank" rel="noopener" class="button">Stafford Weather Station (MATES)</a>
+        <div style="padding-top: 5px;"></div>
+        <a href="https://www.wunderground.com/dashboard/pws/KNJMANAH111" target="_blank" rel="noopener" class="small_button">Backup Station: Stafford Municipal Complex</a>
+        <p></p>
+
+        <a href="https://www.wunderground.com/dashboard/pws/KNJSURFC12" target="_blank" rel="noopener" class="button">Surf City Yacht Club Weather Station</a>
+        <div style="padding-top: 5px;"></div>
+        <a href="https://www.wunderground.com/dashboard/pws/KNJSURFC7" target="_blank" rel="noopener" class="small_button">Backup Station: Surf City - 5th Street - Bayside</a>
+        <p></p>
+
+        <a href="https://njdep.rutgers.edu/continuous/station/NJBuoy759" target="_blank" rel="noopener" class="button">Ship Bottom NJDEP MB_01 Buoy</a>
+        <div style="padding-top: 5px;"></div>
+        <a href="https://njdep.rutgers.edu/continuous/station/SS_CR1000" target="_blank" rel="noopener" class="small_button">Backup Station: Seaside Park Yacht Club Buoy</a>
+        <p></p>
+
+        <a href="https://www.ndbc.noaa.gov/station_page.php?station=44091" target="_blank" rel="noopener" class="button">LBI Ocean NDBC 44091 Buoy</a>
+    
+        <form>
+            
+        </form>
     </div>
 </div>
 {% endblock %}

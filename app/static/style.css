@@ -379,8 +379,38 @@ button.nav_item {
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
+.small_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 6px 9px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--button-text);
+    background-color: var(--surface-color);
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
 .button:hover {
     background: var(--button-color-hover);
     color: var(--button-text-hover);
     transform: translateY(-3px)
+}
+.small_button:hover {
+    background: var(--primary-color);
+    color: var(--button-text-hover);
+    transform: translateY(-3px)
+}
+
+.image {
+    border-radius: 16px;
+    border: 5px solid var(--off-white);
+    max-width: 100%;
+    height: auto;
 }

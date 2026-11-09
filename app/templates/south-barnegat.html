@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 {% if data %}
-<dialog id="prediction_popup" class="prediction_popup" aria-labelledby="prediction_popup_title" aria-describedby="prediction_popup_description">
 <div class="popup_overlay">
     <div class="popup_box">
+        <h2>Wind Prediction Results:</h2>
         <div class="paragraph">
             <p><b>Predicted wind speed:</b> {{ data["wind_pred"] }}</p>
             <p><b>Predicted wind gust:</b> {{ data["gust_pred"] }}</p>
@@ -25,7 +25,7 @@
                 input the variables to predict wind conditions!
 
             </p>
-            <img src="{{ url_for('static', path='/icons/s_barnegat_stations.jpg') }}" class="image" alt="Map of the stations" style="display: flex; width: 50%; justify-content: center; align-items: center; ">
+            <img src="{{ url_for('static', path='/icons/s_barnegat_stations.jpg') }}" class="image" alt="Map of the stations" style="display: block; width: 50%; height: auto; margin: 20px auto; box-sizing: border-box; ">
             <p></p>
         </div>
 

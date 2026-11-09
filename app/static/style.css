@@ -355,6 +355,13 @@ button.nav_item {
     min-width: 0;
 }
 
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
 .form_field input,
 .form_field select {
     box-sizing: border-box;
@@ -364,6 +371,7 @@ button.nav_item {
     font: inherit;
     border: 5px solid var(--surface-color);
     border-radius: 4px;
+    font: inherit;
 }
 
 
@@ -371,6 +379,48 @@ button.nav_item {
     .prediction_form fieldset {
         grid-template-columns: 1fr;
     }
+}
+
+.popup_overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.popup_box {
+    background: var(--background-color);
+    color: var(--text-color);
+    padding: 28px;
+    width: 100%;
+    max-width: 440px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    border: 3px solid var(--accent-color);
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.popup_box h2 {
+    margin: 0 0 20px;
+    color: var(--accent-color);
+}
+
+.popup_box .paragraph p {
+    margin: 12px 0;
+    font-size: 20px;
+    color: var(--text-color);
+}
+
+.popup_box .button {
+    margin-top: 24px;
 }
 
 /* Text */

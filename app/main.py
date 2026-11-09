@@ -36,6 +36,10 @@ Allow: /
 
 """
 
+@app.get("/weather", response_class=HTMLResponse)
+def weather(request: Request):
+    return templates.TemplateResponse(request, "weather.html", {"request": request})
+
 @app.get("/south-barnegat", response_class=HTMLResponse)
 def south_barnegat(request: Request):
     return templates.TemplateResponse(request, "south-barnegat.html", {"request": request})

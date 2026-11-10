@@ -433,7 +433,7 @@ textarea {
 
 .subtitle {
     font-size: 28px;
-    color: var(--surface-color);
+    color: var(--secondary-color);
     font-weight: 600;
 }
 

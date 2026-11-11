@@ -44,6 +44,10 @@ def weather(request: Request):
 def models(request: Request):
     return templates.TemplateResponse(request, "models.html", {"request": request, "active_page": "models"})
 
+@app.get("/results", response_class=HTMLResponse)
+def results(request: Request):
+    return templates.TemplateResponse(request, "results.html", {"request": request, "active_page": "results"})
+
 @app.get("/south-barnegat", response_class=HTMLResponse)
 def south_barnegat(request: Request):
     return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "active_page": "south-barnegat"})

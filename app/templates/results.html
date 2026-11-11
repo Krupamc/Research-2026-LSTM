@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="main_page">
+    <div class="main_container">
+        <div class="paragraph">
+            <h1 class="title_header">Results:</h1>
+            <p>
+                Models were choosen for the final prediction setup based on accuracy (lowest MAE). In the future,
+                there will be a option to choose what model to use but until then, the models will 
+                be the default.
+            </p>
+            
+            <p>
+                Linear regression produced the lowest errors for wind speed and wind gust speed, 
+                with MAEs of 0.56 and 0.96 mph, respectively. The naive persistence model 
+                performed best for wind direction, with an MAE of 0.73 direction bins. 
+                Each of the 16 bins represented 22.5°, corresponding to an approximate angular error of 16.5°.
+                Predicted directions within the onshore range of NNE through S were classified as onshore. 
+                This classification produced an MAE of 0.13
+            </p>
+            <img src="{{ url_for('static', path='/icons/table.jpg')}}" class="image" loading="lazy" alt="Table of MAEs" style="display: block; width: 50%; height: auto; margin: 20px auto; box-sizing: border-box;">
+            
+            <img src="{{ url_for('static', path='/icons/predicted_wind.jpg') }}" class="image" loading="lazy" alt="Predicted wind speed vs observations" style="display: block; width: 50%; height: auto; margin: 20px auto; box-sizing: border-box;">
+            <p>Observed Wind Speed and Wind Speed Prediction over time (September 13-23). Speed is shown in mph. The last 10% of the dataset is shown to include predictions.</p>
+
+            <img src="{{ url_for('static', path='/icons/predicted_gust.jpg') }}" class="image" loading="lazy" alt="Predicted gust vs observations" style="display: block; width: 50%; height: auto; margin: 20px auto; box-sizing: border-box;">
+            <p>Wind Gusting Speed and Wind Gusting Speed Prediction over time  (September 13-23). Speed is shown in mph. The last 10% of the dataset is shown to include predictions.</p>
+
+            <img src="{{ url_for('static', path='/icons/naive.jpg') }}" class="image" loading="lazy" alt="Predicted direction vs observations" style="display: block; width: 50%; height: auto; margin: 20px auto; box-sizing: border-box;">
+            <p>Observed Wind Directions and Predicted Wind Direction over time (September 13-23) during the test period (last 10%). Directions are shown in compass order.</p>
+            
+
+            
+        </div>
+
+        <div class="paragraph">
+            <h2 class="subtitle">Analysis:</h2>
+            <p>
+                The MAE values highlight the strengths and weaknesses of each model. Linear regression performed best predicting values
+                that have a linear relationship between the input and output. The naive persistence models performed best for wind 
+                direction, suggesting that recent direction was a useful one-hour forecasting baseline in this dataset.
+            </p>
+            <p>
+                The relative performance of the models differed for wind direction. The naive persistence model produced a MAE of 
+                0.73 compared to linear regression’s 3.82. Though not as accurate as expected, this direction prediction is 
+                accurate enough for recreational boaters and paddlers out on the water. Classifying the predicted wind 
+                directions as onshore or offshore produced an MAE of 0.13, corresponding to approximately 87% 
+                classification accuracy. Even though it came so close to LSTM’s 0.14, this approach was 
+                surprisingly more accurate than using any model 
+            </p>
+            <p>
+                The rarity of upwelling events during the end of the dataset made prediction difficult for all models.
+                There was only one upwelling event in the last 10% of the dataset (September 18, 2026) as most upwelling 
+                events occurred in the summer months. No model predicted that event. Thus, the models remain untested for upwelling (Figure 14).
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

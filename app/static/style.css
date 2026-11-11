@@ -130,7 +130,7 @@ a {
     transform: translateY(-3px)
 }
 
-.nav_item.active
+.nav_item.active,
 .nav_item:active {
     color: var(--button-text-hover);
     background-color: var(--button-color-hover);
@@ -435,8 +435,9 @@ textarea {
 
 .subtitle {
     font-size: 28px;
-    color: var(--secondary-color);
+    color: var(--surface-color);
     font-weight: 600;
+    text-align: center;
 }
 
 .subsubtitle {
@@ -459,12 +460,6 @@ textarea {
 .paragraph p {
     font-size: 20px;
     color: var(--text-color);
-}
-
-.subtitle {
-    font-size: 28px;
-    color: var(--primary-color);
-    font-weight: 600;
 }
 
 .button {

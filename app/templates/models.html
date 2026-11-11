@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="main_page">
+    <div class="main_container">
+        <h1 class="title_header">Models:</h1>
+        <div class="paragraph">
+            <p>
+                This project's original purpose was to use a long short-term memory model (LSTM) to predict 
+                the wind conditions and compare it to using more mathematical approaches such as linear regressions
+                and naive persistence models. However, the current prediction models on this site do not defaultly
+                use the LSTM for reasons we will get into later.
+            </p>
+            <h2 class="subtitle">What is an LSTM?</h2>
+            <p>
+                Glad you asked...(you will regret this).
+                LSTM networks are a specialized form of Recurrent Neural Network (RNN), a neural network 
+                designed to process sequential data, maintain a “memory” of previous outputs, and predict sequential data.
+                LSTMs store memory differently compared to other neural networks, which allows them to “recall”, “update”,
+                or “forget” data through different logic gates. These gates regulate the flow of information, 
+                allowing the model to remember long-term patterns and train on large datasets without gradients 
+                (signals used to update network weights) decaying, a major disadvantage in typical RNNs.
+                It was hypothesized that an LSTM using the previous 24 hours of observations would 
+                produce lower one-hour-ahead wind-speed and direction errors than linear regression and persistence. 
+            </p>
+        </div>
+        
+        <div class="paragraph">
+            <h2 class="subtitle">Evaluation:</h2>
+            <p>
+                The naive and linear regression algorithms were tested along with the LSTM to verify the necessity
+                of the deep learning model. A separate model was developed for each target variable. The most accurate of the three is used in the final program.
+                The Mean Absolute Error (MAE) is calculated and noted for all the predictions compared to the corresponding hourly 
+                observations from the Stafford Weather Station, NJ, and then compared to find the most accurate prediction. 
+            </p>
+            <p>
+                <ul>
+                    <li>Wind-speed and gust-speed predictions were evaluated using MAE in mph.</li>
+                    <li>Direction predictions were evaluated using circular MAE, which measures the shortest distance around the 16-bin compass.</li>
+                    <li>Binary predictions were evaluated using MAE on the predicted 0/1 flags, precision, recall, and confusion matrices.</li>
+                    <li>Upwelling detection could not be assessed in evaluation periods containing no labeled upwelling events.</li>
+                </ul>
+            </p>
+        </div>
+
+        <!-- Ship the cutscene... -->
+        <a href="smwhere" class="button">Skip the lingo... (NEEDS UPDATE)</a>
+
+        <div class="paragraph">
+            <h2 class="subtitle">Linear Regression and Naive Persistance:</h2>
+            <p>
+                <ul>
+                    <li>
+                        Naive Algorithm: This algorithm assumes that the value presented/predicted before is correct 
+                        and uses this value for its prediction. It also assumes that values change slowly over time.
+                    </li>
+                    <li>
+                        Linear Regression Algorithm: This algorithm assumes that there is a linear relation between
+                        the input and output as the best-fit line for the prediction. In multiple-variable
+                        situations like this, it uses weighted sums of the current values.
+                    </li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="paragraph">
+            <h2 class="subtitle">Original Model Structure:</h2>
+            <p>
+                LSTM Input and Prediction: 
+                <ul>
+                    <li>After training, the LSTM used the previous 24 hours of weather data from the selected stations and buoys to predict conditions for the following hour. Windows crossing missing hours were excluded.</li>
+                    <li>Each model contained a 32-unit LSTM layer followed by a 32-unit dense layer. </li>
+                    <li>Output depended on the target: One numerical output for wind speed or gust, 16 class probabilities for directions, or one sigmoid (activation function like tahn) output (binary) for onshore and upwelling flags.</li>
+                    <li>Models were trained using training data (80% training, 10% validation, 10% testing), while validation loss monitored performance and controlled early stopping.</li>
+                    <li>
+                        Several training settings were adjusted to improve LSTM performance, including the following:
+                        <ul>
+                            Models were trained without shuffling, and validation loss controlled early stopping. Epochs were set for 100.
+                            <ul>
+                                <li>Epoch Number - The number of passes through a dataset.</li>
+                                <li>Validation Split - Splitting Factor of how much of the data is set aside for testing to avoid over-fitting or making the model inefficient in predicting new data.</li>
+                                <li>Shuffling - Whether or not the data is shuffled around to prevent over-fitting.</li>
+                            </ul>
+                        </ul>
+                    </li>
+                </ul>
+
+            </p>
+            <p>
+                Naive and Linear Regression Input and Prediction: 
+                <ul>
+                    <li>The naive algorithm will only need to pull the last data point to predict.</li>
+
+                    <li>
+                        The linear regression was trained with the same training data (Similar to the LSTM) but only needs a single hour of data to predict the next hour.
+                        <ul>
+                            <li>Separate linear regression models used the current hour’s observations to predict each target one hour ahead. </li>
+                            <li>Models were fitted using the training data and applied to the held-out test period. (Same as LSTM)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="paragraph">
+            <h2 class="subtitle">Current Model Setup</h2>
+            <p>
+                <ul>
+                    <li><b>Linear Regression:</b> Wind Speed</li>
+                    <li><b>Linear Regression:</b> Wind Gusting Speed</li>
+                    <li><b>Naive:</b> Wind Direction</li>
+                    <li><b>Derived from Direction Prediction:</b> Onshore flag (binary)</li>
+                    <li>No models were able to predict for upwelling events as there was only one upwelling events in the testing part of the dataset.</li>
+                </ul>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -38,11 +38,15 @@ Allow: /
 
 @app.get("/weather", response_class=HTMLResponse)
 def weather(request: Request):
-    return templates.TemplateResponse(request, "weather.html", {"request": request})
+    return templates.TemplateResponse(request, "weather.html", {"request": request, "active_page": "weather"})
+
+@app.get("/models", response_class=HTMLResponse)
+def models(request: Request):
+    return templates.TemplateResponse(request, "models.html", {"request": request, "active_page": "models"})
 
 @app.get("/south-barnegat", response_class=HTMLResponse)
 def south_barnegat(request: Request):
-    return templates.TemplateResponse(request, "south-barnegat.html", {"request": request})
+    return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "active_page": "south-barnegat"})
 
 @app.post("/south-barnegat")
 def south_barnegat_input(request: Request, mainland_temp: float = Form(), humidity: float = Form(), wind_dir: str = Form(), wind_speed: float = Form(), wind_gust: float = Form(), pressure: float = Form(), precipitation: float = Form(), salinity: float = Form(), lbi_temp: float = Form(), bay_temp: float = Form(), ocean_temp: float = Form(), air_in_celsius: bool = Form(), water_in_celsius: bool = Form()):
@@ -161,4 +165,4 @@ def south_barnegat_input(request: Request, mainland_temp: float = Form(), humidi
         "onshore": onshore_flag
     }
     print(data)
-    return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "data": data})
+    return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "data": data, "active_page": "south-barnegat"})

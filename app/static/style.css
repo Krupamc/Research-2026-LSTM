@@ -151,13 +151,15 @@ a {
 /* Active page hovering color logic */
 .nav_item.active,
 .nav_submenu a.active {
-    color: var(--off-white);
-    background-color: var(--text-base);
+    color: var(--button-text-hover);
+    background-color: var(--button-color-hover);
 }
 
-.nav_item.active:hover {
-    color: var(--off-white);
-    background-color: var(--text-base);
+/* Hover over the current page */
+.nav_item.active:hover,
+.nav_submenu a.active:hover {
+    color: var(--button-text);
+    background-color: var(--button-color-hover);
 }
 
 /* Submenus */

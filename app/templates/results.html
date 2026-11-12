@@ -55,6 +55,26 @@
             </p>
         </div>
 
+        <div class="paragraph">
+            <h2 class="subtitle">Conclusion:</h2>
+            <p>
+                Although the LSTM did not perform as hypothesized, the simpler models produced useful next-hour predictions 
+                of wind speed, wind gust speed, and wind direction. Linear regression achieved the lowest wind-speed and
+                gust-speed errors, while persistence achieved the lowest direction error. Predicted wind directions were 
+                used to classify onshore conditions. The LSTM did not outperform the strongest baseline for these targets. 
+            </p>
+            <p>
+                These results suggest that a locally focused forecasting program could provide useful information for 
+                recreational boaters and paddlers. However, the absence of labeled upwelling events in the evaluated 
+                test targets prevented assessment of event-detection performance. The program and website provide a foundation 
+                for further development. Future work could evaluate additional model designs, improve predictions of rare 
+                events, and expand the existing website’s forecasting capabilities.
+            </p>
+        </div>
+
+        <iframe src="{{ url_for('static', path='/research_paper_febuary.pdf') }}" frameborder="0" width="100%" height="600px" class="pdf"></iframe>
+        <p style="padding-bottom:25px;"></p>
+
         <div style="display: flex; gap: 16px">
             <a href="/models" class="button" style="flex: 1">← Models</a>
             <a href="/south-barnegat" class="button" style="flex: 1;">South Barnegat Bay Predictions →</a>

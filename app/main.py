@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Request, Form
-from fastapi.responses import PlainTextResponse, HTMLResponse
+from fastapi.responses import PlainTextResponse, HTMLResponse, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-import requests, os
+import os, csv, io
 from pathlib import Path
 from joblib import load
 import numpy as np
@@ -53,7 +53,7 @@ def south_barnegat(request: Request):
     return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "active_page": "south-barnegat"})
 
 @app.post("/south-barnegat")
-def south_barnegat_input(request: Request, mainland_temp: float = Form(), humidity: float = Form(), wind_dir: str = Form(), wind_speed: float = Form(), wind_gust: float = Form(), pressure: float = Form(), precipitation: float = Form(), salinity: float = Form(), lbi_temp: float = Form(), bay_temp: float = Form(), ocean_temp: float = Form(), air_in_celsius: bool = Form(), water_in_celsius: bool = Form()):
+def south_barnegat_input(request: Request, observed_time: str = Form(), mainland_temp: float = Form(), humidity: float = Form(), wind_dir: str = Form(), wind_speed: float = Form(), wind_gust: float = Form(), pressure: float = Form(), precipitation: float = Form(), salinity: float = Form(), lbi_temp: float = Form(), bay_temp: float = Form(), ocean_temp: float = Form(), air_in_celsius: bool = Form(), water_in_celsius: bool = Form()):
     # Load models/scaler
     dir = os.path.dirname(__file__)
     model_dir = os.path.join(dir, "models")
@@ -169,4 +169,42 @@ def south_barnegat_input(request: Request, mainland_temp: float = Form(), humidi
         "onshore": onshore_flag
     }
     print(data)
-    return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "data": data, "active_page": "south-barnegat"})
+
+    # CSV
+    datafields = {
+        "observed_time": observed_time,
+        "mainland_air_temp (c)": mainland_temp,
+        "humidity (%)": humidity,
+        "wind_dir_label": direction_label,
+        "wind_dir_angle": direction_deg,
+        "wind_speed (mph)": wind_speed,
+        "wind_gust (mph)": wind_gust,
+        "atmospheric_pressure (inHg)": pressure,
+        "precipitation (in)": precipitation,
+        "lbi_air_temp (c)": lbi_temp,
+        "bay_temp (c)": bay_temp,
+        "bay_salinity (ppt)": salinity,
+        "ocean_temp (c)": ocean_temp,
+        "pred_wind_speed (mph)": wind_pred,
+        "pred_wind_gust": gust_pred,
+        "pred_dir_label": direction_label,
+        "pred_dir_angle": direction_deg,
+        "onshore": onshore_flag
+    }
+
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=list(datafields.keys()))
+    writer.writeheader()
+    writer.writerow(datafields)
+
+    csv_text = output.getvalue()
+    output.close()
+
+    # safe filename
+    filename = f"south_barnegat_bay_predictions_{observed_time}.csv"
+    filename = filename.replace(" ", "_")
+
+    headers = {"Content-Disposition": f'attachment; filename="{filename}"'}
+
+
+    return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "data": data, "active_page": "south-barnegat", "csv_text": csv_text, "csv_filename": filename})

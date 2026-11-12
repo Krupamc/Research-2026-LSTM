@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 {% if data %}
+<!-- Popup -->
 <div class="popup_overlay">
     <div class="popup_box">
         <h2>Wind Prediction Results:</h2>
@@ -10,10 +11,38 @@
             <p><b>Predicted direction:</b> {{ data["direction"]["degree"] }}° ({{ data["direction"]["label"] }})</p>
             <p><b>Is this a Onshore Breeze?</b> {{ data["onshore"] }}</p>
         </div>
+        <button type="button" class="button" id="download_csv">Download CSV</button>
         <a href="/south-barnegat" class="button">OK</a>
     </div>
 </div>
+
+<!-- Script to download csv-->
+<script>
+    document.getElementById("download_csv").addEventListener("click", () => {
+        const csvText = {{ csv_text | tojson}};
+        const filename = {{ csv_filename | tojson }};
+
+        const blob = new Blob([csvText], {
+            type: "text/csv;charset=utf-8;"
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = filename;
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    });
+</script>
 {% endif %}
+
+<!-- Main Page-->
 <div class="main_page">
     <div class="main_container">
         <h1 class="title_header">Southern Barnegat Bay Predictions</h1>
@@ -50,6 +79,14 @@
             <h2>Enter Current Weather Conditions</h2>
 
             <p>Enter observations from the same time.</p>
+
+            <fieldset>
+                <legend>Time</legend>
+                <div class="form_field">
+                    <label for="observed_time">Observed Time of Weather Conditions</label>
+                    <input type="datetime-local" id="observed_time" name="observed_time" required>
+                </div>
+            </fieldset>
 
             <fieldset> <!-- Temp choice-->
                 <legend>Temperature Units</legend>

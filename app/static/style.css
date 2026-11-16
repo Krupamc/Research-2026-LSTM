@@ -396,6 +396,60 @@ textarea {
     
 }
 
+.slider {
+    accent-color: var(--background-color)
+}
+
+.replay_box {
+    padding: 24px;
+}
+
+.replay_box > .subsubtitle {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.replay_count {
+    margin-top: 0;
+    margin-bottom: 24px;
+    text-align: center;
+    color: var(--secondary-color);
+}
+
+.replay_section {
+    padding: 16px 0;
+    border-top: 1px solid var(--secondary-color);
+}
+
+.replay_section h3 {
+    margin: 0 0 16px;
+    font-size: 24px;
+    color: var var(--accent-color);
+}
+
+.replay_section p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.replay_picker {
+    padding-top: 20px;
+    border-top: 1px solid var(--secondary-color);
+}
+
+.replay_picker label {
+    font-size: 20px;
+}
+
+.replay_picker .small_button {
+    margin-top: 16px;
+    font-size: 18px;
+}
+
+#replay_index {
+    accent-color: var(--accent-color);
+}
+
 
 @media (max-width: 600px) {
     .prediction_form fieldset {

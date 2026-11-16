@@ -62,16 +62,26 @@ def historical_replay(request: Request, index: int = Query(default=0, ge=0)):
 
     df["Date"] = pd.to_datetime(df["Date"], format="%Y-%m-%d %H:%M:%S")
 
-    prediction_columns = [
+    numeric_columns = [
         "wind_speed_pred_linear",
         "wind_gust_pred_linear",
         "onshore_pred_direction",
-    	"wind_direction_pred_naive"
+        "wind_direction_pred_naive",
+        "Wind Speed (A)",
+        "Gusting",
+        "Direction (A)",
+        "Onshore",
     ]
-    for column in prediction_columns:
+
+    for column in numeric_columns:
         df[column] = pd.to_numeric(df[column], errors="coerce")
 
-    df = (df.dropna(subset=["Date"] + prediction_columns).sort_values("Date").reset_index(drop=True))
+    df = df.dropna(subset=["Date"] + numeric_columns)
+
+    # Keep only bins and binary flags.
+    valid_rows = (df["wind_direction_pred_naive"].isin(range(16)) & df["Direction (A)"].isin(range(16)) & df["onshore_pred_direction"].isin([0, 1]) & df["Onshore"].isin([0, 1]))
+
+    df = (df.loc[valid_rows].sort_values("Date").reset_index(drop=True))
 
     if df.empty:
         return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "error": "No historical forcasts are available."})
@@ -79,21 +89,41 @@ def historical_replay(request: Request, index: int = Query(default=0, ge=0)):
     index = min(index, len(df) - 1)
     row = df.iloc[index]
 
+    compass = [
+        "N", "NNE", "NE", "ENE",
+        "E", "ESE", "SE", "SSE",
+        "S", "SSW", "SW", "WSW",
+        "W", "WNW", "NW", "NNW",
+    ]
+
+    pred_dir_bin = int(row["wind_direction_pred_naive"])
+    actual_dir_bin = int(row["Direction (A)"])
+    pred_onshore = int(row["onshore_pred_direction"])
+    actual_onshore = int(row["Onshore"])
+
     forecast = {
         "date": row["Date"].strftime("%Y-%m-%d %H:%M:%S"),
         "pred_speed": float(row["wind_speed_pred_linear"]),
         "actual_speed": row["Wind Speed (A)"],
         "pred_gust": float(row["wind_gust_pred_linear"]),
         "actual_gust": row["Gusting"],
-        "pred_dir": row["wind_direction_pred_naive"],
-        "actual_dir": row["Direction (A)"],
-        "pred_onshore": row["onshore_pred_direction"],
-        "actual_onshore": row["Onshore"]
+        "pred_dir": pred_dir_bin * 22.5,
+        "pred_dir_label": compass[pred_dir_bin],
+        "actual_dir": actual_dir_bin * 22.5,
+        "actual_dir_label": compass[actual_dir_bin],
+        "pred_onshore": "Yes" if pred_onshore else "No",
+        "actual_onshore": "Yes" if actual_onshore else "No"
     }
+
+    # get maes and get direction and onshore too.
+    forecast["speed_error"] = round(abs(forecast["pred_speed"] - forecast["actual_speed"]), 2)
+    forecast["gust_error"] = round(abs(forecast["pred_gust"] - forecast["actual_gust"]), 2)
+    forecast["dir_error"] = abs((forecast["pred_dir"] - forecast["actual_dir"] + 180) % 360 - 180)
+    forecast["onshore_match"] = ("Correct" if pred_onshore == actual_onshore else "Incorrect")
 
     return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "forecast": forecast, "index": index, "total": len(df)})
 
-@app.post("/soutth-barnegat")
+@app.post("/south-barnegat")
 def south_barnegat_input(request: Request, observed_time: str = Form(), mainland_temp: float = Form(), humidity: float = Form(), wind_dir: str = Form(), wind_speed: float = Form(), wind_gust: float = Form(), pressure: float = Form(), precipitation: float = Form(), salinity: float = Form(), lbi_temp: float = Form(), bay_temp: float = Form(), ocean_temp: float = Form(), air_in_celsius: bool = Form(), water_in_celsius: bool = Form()):
     # Load models/scaler
     dir = os.path.dirname(__file__)

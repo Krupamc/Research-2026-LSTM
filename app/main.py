@@ -75,7 +75,7 @@ def historical_replay(request: Request, index: int = Query(default=0, ge=0)):
         "pred_gust": row["pred_wind_gust"],
         "actual_gust": row["actual_wind_gust"],
     }
-
+    # get maes and get direction and onshore too.
     forecast["speed_error"] = abs(forecast["pred_speed"] - forecast["actual_speed"])
     forecast["gust_error"] = abs(forecast["pred_gust"] - forecast["actual_speed"])
 

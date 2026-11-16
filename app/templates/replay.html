@@ -3,14 +3,11 @@
 <div class="main_page">
     <div class="main_container">
         <h1 class="title_header">South Barnegat Bay Historical Forecast Replay</h1>
-        <div class="paragraph">
-            <p>
-                Look through the training and testing data forecasts.
-            </p>
-        </div>
+        
+        <h2 class="subsubtitle">Look through the training and testing data forecasts.</h2>
 
         {% if error %}
-            <p>{{ error }}</p>
+            <h1 class="subtitle">{{ error }}</h1>
         {% else %}
             <div class="prediction_form">
                 <h2>Forecast {{ index + 1 }} of {{ total }}</h2>
@@ -20,6 +17,23 @@
                 <h3>Model Prediction</h3>
                 <p><b>Wind Speed:</b> {{ forecast.pred_wind }} mph</p>
                 <p><b>Wind Gust:</b> {{ forecast.pred_gust }} mph</p>
+                <p><b>Wind Direction:</b> {{ forecast.pred_dir }}° ({{ forecast.pred_dir_label}})</p>
+                <p>ZZZZZZZZZZZZZZZZZZZZZZZ</p>
+            </div>
+
+            <h3>Actual Wind Conditions:</h3>
+            <p><b>Actual Wind Speed:</b> {{ forecast.actual_wind }} mph</p>
+            <p><b>Actual Wind Gust:</b> {{ forecast.actual_gust }} mph</p>
+            <p></p>
+
+            <div>
+                <p><b>Wind Speed Absolute Error:</b> {{ forecast.speed_error }} mph</p>
+                <p><b>Wind Speed MAE:</b> {{ forecast.wind_mae }} mph</p>
+                <p></p>
+
+                <p><b>Wind Gust Absolute Error:</b> {{ forecast.gust_error}} mph</p>
+                <p><b>Wind Speed MAE:</b> {{ forecast.gust_mae }} mph</p>
+                <p></p>
             </div>
         {% endif %}
     </div>

@@ -579,7 +579,7 @@ textarea {
     transform: translateY(-3px)
 }
 .small_button:hover {
-    background: var(--primary-color);
+    background: var(--surface-color);
     color: var(--button-text-hover);
     transform: translateY(-3px)
 }

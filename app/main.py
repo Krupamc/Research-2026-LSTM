@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Form, Query
 from fastapi.responses import PlainTextResponse, HTMLResponse, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -52,7 +52,36 @@ def results(request: Request):
 def south_barnegat(request: Request):
     return templates.TemplateResponse(request, "south-barnegat.html", {"request": request, "active_page": "south-barnegat"})
 
-@app.post("/south-barnegat")
+@app.get("/replay", response_class=HTMLResponse)
+def historical_replay(request: Request, index: int = Query(default=0, ge=0)):
+    csv_path = STATIC_DIR / "data" / "replay.csv"
+    if not csv_path.exists():
+        return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "error": "Historical Replay data is not available yet."})
+
+    df = pd.read_csv(csv_path)
+
+    if df.empty:
+        return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "error": "No historical forcasts are available yet."})
+
+    df = df.sort_values("target_time", key=lambda values: pd.to_datetime(values, utc=True)).reset_index(drop=True)
+    index = min(index, len(df) - 1)
+    row = df.iloc[index]
+
+    forecast = {
+        "observed_time": row["observed_time"],
+        "target_time": row["target_time"],
+        "pred_speed": row["pred_wind_speed"],
+        "actual_speed": row["actual_wind_speed"],
+        "pred_gust": row["pred_wind_gust"],
+        "actual_gust": row["actual_wind_gust"],
+    }
+
+    forecast["speed_error"] = abs(forecast["pred_speed"] - forecast["actual_speed"])
+    forecast["gust_error"] = abs(forecast["pred_gust"] - forecast["actual_speed"])
+
+    return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "forecast": forecast, "index": index, "total": len(df)})
+
+@app.post("/soutth-barnegat")
 def south_barnegat_input(request: Request, observed_time: str = Form(), mainland_temp: float = Form(), humidity: float = Form(), wind_dir: str = Form(), wind_speed: float = Form(), wind_gust: float = Form(), pressure: float = Form(), precipitation: float = Form(), salinity: float = Form(), lbi_temp: float = Form(), bay_temp: float = Form(), ocean_temp: float = Form(), air_in_celsius: bool = Form(), water_in_celsius: bool = Form()):
     # Load models/scaler
     dir = os.path.dirname(__file__)

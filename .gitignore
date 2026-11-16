@@ -5,3 +5,4 @@ __pycache__/
 *.db
 assets/external/
 .vscode/settings.json
+.venv/

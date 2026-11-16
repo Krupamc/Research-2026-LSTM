@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="main_page">
+    <div class="main_container">
+        <h1 class="title_header">South Barnegat Bay Historical Forecast Replay</h1>
+        <div class="paragraph">
+            <p>
+                Look through the training and testing data forecasts.
+            </p>
+        </div>
+
+        {% if error %}
+            <p>{{ error }}</p>
+        {% else %}
+            <div class="prediction_form">
+                <h2>Forecast {{ index + 1 }} of {{ total }}</h2>
+                <p><b>Last input observations:</b> {{ forecast.observed_time }}</p>
+                <p><b>Forecast target time</b> {{ forecast.target_time }}</p>
+            
+                <h3>Model Prediction</h3>
+                <p><b>Wind Speed:</b> {{ forecast.pred_wind }} mph</p>
+                <p><b>Wind Gust:</b> {{ forecast.pred_gust }} mph</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

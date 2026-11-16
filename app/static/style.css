@@ -407,6 +407,7 @@ textarea {
 .replay_box > .subsubtitle {
     margin-top: 0;
     margin-bottom: 8px;
+    font-size: 26px;
 }
 
 .replay_count {

@@ -22,8 +22,8 @@
                 </p>
             </div>
 
-            <div class="prediction_form replay_box">
-                <h2 class="subsubtitle">Timestamp: {{ forecast.date }}:</h2>
+            <div class="prediction_form replay_box" >
+                <h2 class="subsubtitle"id="replay_results">Timestamp: {{ forecast.date }}</h2>
 
                 <p class="replay_count">
                     Forecast {{ index + 1 }} of {{ total }}
@@ -62,11 +62,11 @@
                 <!-- Move replay -->
                 <div class="replay_controls">
                     {% if index > 0 %}
-                        <a href="/replay?index={{ index - 1 }}" class="button">Previous Forecast</a>
+                        <a href="/replay?index={{ index - 1 }}#replay_results" class="button">Previous Forecast</a>
                     {% endif %}
 
                     {% if index < total - 1 %}
-                        <a href="/replay?index={{ index + 1 }}" class="button">Next Forecast</a>
+                        <a href="/replay?index={{ index + 1 }}#replay_results" class="button">Next Forecast</a>
                     {% endif %}
                 </div>
 

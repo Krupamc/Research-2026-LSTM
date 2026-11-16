@@ -5,7 +5,7 @@
         <div class="paragraph">
             <h1 class="title_header">Results:</h1>
             <p>
-                Models were choosen for the final prediction setup based on accuracy (lowest MAE). In the future,
+                Models were choosen for the final prediction setup based on accuracy (lowest MAE). MAE values show the mean value of error. In the future,
                 there will be a option to choose what model to use but until then, the models will 
                 be the default.
             </p>
@@ -16,7 +16,7 @@
                 performed best for wind direction, with an MAE of 0.73 direction bins. 
                 Each of the 16 bins represented 22.5°, corresponding to an approximate angular error of 16.5°.
                 Predicted directions within the onshore range of NNE through S were classified as onshore. 
-                This classification produced an MAE of 0.13
+                This classification produced an MAE of 0.13.
             </p>
             <img src="{{ url_for('static', path='/icons/table.jpg')}}" class="image" loading="lazy" alt="Table of MAEs" style="display: block; width: 50%; height: auto; margin: 20px auto; box-sizing: border-box;">
             

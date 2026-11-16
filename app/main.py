@@ -54,16 +54,29 @@ def south_barnegat(request: Request):
 
 @app.get("/replay", response_class=HTMLResponse)
 def historical_replay(request: Request, index: int = Query(default=0, ge=0)):
-    csv_path = STATIC_DIR / "data" / "replay.csv"
+    csv_path = STATIC_DIR / "data" / "all_predictions.csv"
     if not csv_path.exists():
         return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "error": "Historical Replay data is not available yet."})
 
     df = pd.read_csv(csv_path)
 
-    if df.empty:
-        return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "error": "No historical forcasts are available yet."})
+    df["Date"] = pd.to_datetime(df["Date"], format="%Y-%m-%d %H:%M:%S")
 
-    df = df.sort_values("target_time", key=lambda values: pd.to_datetime(values, utc=True)).reset_index(drop=True)
+    prediction_columns = [
+        "wind_speed_pred_linear",
+        "wind_gust_pred_linear",
+        "onshore_pred_direction",
+    	"wind_direction_pred_naive"
+    ]
+    for column in prediction_columns:
+        df[column] = pd.to_numeric(df[column], errors="coerce")
+
+    df = (df.dropna(subset=["Date"] + prediction_columns).sort_values("Date").reset_index(drop=True))
+
+    if df.empty:
+        return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "error": "No historical forcasts are available."})
+
+    df = df.sort_values("Date", key=lambda values: pd.to_datetime(values, utc=True)).reset_index(drop=True)
     index = min(index, len(df) - 1)
     row = df.iloc[index]
 

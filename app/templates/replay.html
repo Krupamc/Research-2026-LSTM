@@ -5,20 +5,33 @@
         <h1 class="title_header">South Barnegat Bay Historical Forecast Replay</h1>
         
         <h2 class="subsubtitle">Look through the training and testing data forecasts.</h2>
-
+        
         {% if error %}
             <h1 class="subtitle">{{ error }}</h1>
+
         {% else %}
+
+            <!-- Shameless plug -->
+            <a href="/results" class="button">More about the projects accuracy</a>
+            <img src="{{ url_for('static', path='/icons/table.jpg')}}" class="image" loading="eager" alt="Overall model error in MAE"  style="display: block; width: 50%; height: auto; margin: 20px auto; box-sizing: border-box;">
+            <div class="paragraph">
+                <p>
+                    The overall projects's accuracy and where is the strongest. 
+                    Error is measured using mean absolute error (MAE). 
+                    MAE values show the mean value of error. 
+                </p>
+            </div>
+
             <div class="prediction_form">
                 <h2>Forecast {{ index + 1 }} of {{ total }}</h2>
                 <p><b>Last input observations:</b> {{ forecast.observed_time }}</p>
                 <p><b>Forecast target time</b> {{ forecast.target_time }}</p>
             
-                <h3>Model Prediction</h3>
+                <h3>Model Prediction:</h3>
                 <p><b>Wind Speed:</b> {{ forecast.pred_wind }} mph</p>
                 <p><b>Wind Gust:</b> {{ forecast.pred_gust }} mph</p>
                 <p><b>Wind Direction:</b> {{ forecast.pred_dir }}° ({{ forecast.pred_dir_label}})</p>
-                <p>ZZZZZZZZZZZZZZZZZZZZZZZ</p>
+                <p><b>Onshore Detection:</b> {{ forecast.onshore }}</p>
             </div>
 
             <h3>Actual Wind Conditions:</h3>
@@ -28,14 +41,28 @@
 
             <div>
                 <p><b>Wind Speed Absolute Error:</b> {{ forecast.speed_error }} mph</p>
-                <p><b>Wind Speed MAE:</b> {{ forecast.wind_mae }} mph</p>
-                <p></p>
-
                 <p><b>Wind Gust Absolute Error:</b> {{ forecast.gust_error}} mph</p>
-                <p><b>Wind Speed MAE:</b> {{ forecast.gust_mae }} mph</p>
-                <p></p>
+                <p><b>Wind Direction Absolute Error:</b>{{ forecast}}</p>
             </div>
+
+            <!-- Move replay -->
+            <div class="replay_controls">
+                {% if index > 0 %}
+                    <a href="/replay?index={{ index - 1 }}" class="button">Previous Forecast</a>
+                {% endif %}
+                {% if index < total -1 %}
+                    <a href="/replay?index={{ index + 1}}" class="button">Next Forecast</a>
+                {% endif %}
+            </div>
+
+            <form action="/replay" method="get">
+                <label for="replay_index">Choose a forecast:</label>
+                <input type="range" id="replay_index" name="index" min="0" max="{{ total -1}}" value="{{ index }}" step="1">
+
+                <button type="submit" class="small_button"></button>
+            </form>
         {% endif %}
+
     </div>
 </div>
 {% endblock %}

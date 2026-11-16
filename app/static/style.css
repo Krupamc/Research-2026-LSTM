@@ -331,7 +331,8 @@ button.nav_item {
     background-color: var(--primary-color);
     border-radius: 16px;
     padding: 10px 16px;
-    border: 3px solid var(--accent-color)
+    border: 3px solid var(--accent-color);
+    box-sizing: border-box;
 }
 
 .prediction_form fieldset {
@@ -374,6 +375,25 @@ textarea {
     border: 5px solid var(--surface-color);
     border-radius: 4px;
     font: inherit;
+}
+
+.replay_controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.replay_controls .button {
+    margin: 0;
+}
+
+#replay_index {
+    display: block;
+    width: 100%;
+    margin: 16px 0;
+    
 }
 
 

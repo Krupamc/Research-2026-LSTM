@@ -76,21 +76,20 @@ def historical_replay(request: Request, index: int = Query(default=0, ge=0)):
     if df.empty:
         return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "error": "No historical forcasts are available."})
 
-    df = df.sort_values("Date", key=lambda values: pd.to_datetime(values, utc=True)).reset_index(drop=True)
     index = min(index, len(df) - 1)
     row = df.iloc[index]
 
     forecast = {
-        "observed_time": row["observed_time"],
-        "target_time": row["target_time"],
-        "pred_speed": row["pred_wind_speed"],
-        "actual_speed": row["actual_wind_speed"],
-        "pred_gust": row["pred_wind_gust"],
-        "actual_gust": row["actual_wind_gust"],
+        "date": row["Date"].strftime("%Y-%m-%d %H:%M:%S"),
+        "pred_speed": float(row["wind_speed_pred_linear"]),
+        "actual_speed": row["Wind Speed (A)"],
+        "pred_gust": float(row["wind_gust_pred_linear"]),
+        "actual_gust": row["Gusting"],
+        "pred_dir": row["wind_direction_pred_naive"],
+        "actual_dir": row["Direction (A)"],
+        "pred_onshore": row["onshore_pred_direction"],
+        "actual_onshore": row["Onshore"]
     }
-    # get maes and get direction and onshore too.
-    forecast["speed_error"] = abs(forecast["pred_speed"] - forecast["actual_speed"])
-    forecast["gust_error"] = abs(forecast["pred_gust"] - forecast["actual_speed"])
 
     return templates.TemplateResponse(request, "replay.html", {"active_page": "replay", "forecast": forecast, "index": index, "total": len(df)})
 

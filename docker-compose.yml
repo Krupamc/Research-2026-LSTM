@@ -9,8 +9,7 @@ services:
       - "${FASTAPI_PORT}:${FASTAPI_PORT}" # Exposing port
     volumes:
       - app_data:/app/data
-    restart:
-      - unless-stopped
+    restart: unless-stopped
 
 volumes:
   app_data:

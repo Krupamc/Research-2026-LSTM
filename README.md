@@ -15,6 +15,7 @@ You can try out the model for yourself here: [onshore.krupamlab.com](https://ons
 - [Background](#background)
 - [Project Goals](#project-goals)
 - [Current Model Setup](#current-model-setup)
+- [Prediction Website](#prediction-website)
 - [Data Sources](#data-sources)
 - [Data Cleaning](#data-cleaning)
 - [Model Design](#model-design)
@@ -138,6 +139,14 @@ Typical variables include:
 - Ocean water temperature
 
 All data are combined into a single time‑indexed CSV with one row per hour.
+
+---
+
+## Prediction Website:
+Test out the project yourself at [my website!](https://onshore.krupamlab.com/) This website is meant to be used as a user-friendlier version of this Github repo to the general public and whoever I want to quickly explain this project. It contains several pages that explain the project (similar to my paper) but in a less-formal and easier to understand tone. I also have the prediction model on there as well as a historical replay feature page. The prediction page works just like the terminal program but in the web and accessible from any device with a browser! The replay page lets you look at all the testing and predictions used for the models to see just how accurate the models are with the real world data. This page shows predicted data and the recorded data for a certain timestamped forecast. Users can change what forecast they are looking at using buttons or a slider.
+<img width="1706" height="1202" alt="image" src="https://github.com/user-attachments/assets/a0e004ef-88a1-437f-89bd-11d95924f0ee" />
+<img width="835" height="740" alt="image" src="https://github.com/user-attachments/assets/284a7d12-0a1a-4b9f-b271-ed344c0d79e1" />
+
 
 ---
 
